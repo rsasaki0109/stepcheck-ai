@@ -1,0 +1,10 @@
+# Runtime dependencies for the StepCheck AI backend.
+# The provider package lives at ../providers and is installed separately
+# (see Dockerfile / README). Install this file with:  pip install -r requirements.txt
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+pydantic>=2.6
+pydantic-settings>=2.2
+# Optional, for the OpenAI provider:
+# openai>=1.30
