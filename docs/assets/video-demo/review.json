@@ -1,0 +1,85 @@
+{
+  "reviewer": "Codex visual review in this session",
+  "method": "Host vision review of extracted video frames; recorded results, not live inference",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "procedure": "handwashing.md",
+  "duration_seconds": 23.003,
+  "confidence_note": "Subjective model estimates, not calibrated probabilities",
+  "steps": [
+    {
+      "index": 1,
+      "status": "unknown",
+      "confidence": 0.98,
+      "reason": "The clip starts with soap in a palm. No sampled frame shows hands being wetted before soap is applied.",
+      "evidence_seconds": [
+        0.3,
+        1.5,
+        3.5,
+        5.5,
+        9.5,
+        12.5,
+        14.5,
+        18.5,
+        21.5,
+        22.0,
+        22.4,
+        22.8
+      ],
+      "text": "Wet hands before applying soap"
+    },
+    {
+      "index": 2,
+      "status": "completed",
+      "confidence": 0.97,
+      "reason": "A palm is held under a wall-mounted dispenser with a white dollop of soap visible on it.",
+      "evidence_seconds": [
+        0.3
+      ],
+      "text": "Dispense soap onto a hand"
+    },
+    {
+      "index": 3,
+      "status": "completed",
+      "confidence": 0.97,
+      "reason": "The hands rub together with visible lather; another view shows one palm rubbing the back of the other hand.",
+      "evidence_seconds": [
+        1.5,
+        3.5
+      ],
+      "text": "Rub lather over palms and backs of hands"
+    },
+    {
+      "index": 4,
+      "status": "completed",
+      "confidence": 0.98,
+      "reason": "A visible stream from the faucet falls onto the hands as they are held beneath it.",
+      "evidence_seconds": [
+        12.5
+      ],
+      "text": "Rinse hands under running water"
+    },
+    {
+      "index": 5,
+      "status": "completed",
+      "confidence": 0.95,
+      "reason": "Paper is pulled from a dispenser, then held between both hands as they are rubbed with it.",
+      "evidence_seconds": [
+        14.5,
+        18.5
+      ],
+      "text": "Dry hands with a paper towel"
+    },
+    {
+      "index": 6,
+      "status": "completed",
+      "confidence": 0.93,
+      "reason": "The used paper towel is moved over the lined bin and lowered into its opening.",
+      "evidence_seconds": [
+        21.5,
+        22.4,
+        22.8
+      ],
+      "text": "Discard the used paper towel"
+    }
+  ]
+}

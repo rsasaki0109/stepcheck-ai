@@ -6,6 +6,22 @@ on:
   pull_request:
 
 jobs:
+  video-demo:
+    name: MCP video demo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install FFmpeg and demo dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install -r scripts/requirements-demo.txt
+      - name: Exercise MCP video tools
+        run: python -m unittest discover -s scripts/tests -v
+
   python:
     name: Python (providers + backend)
     runs-on: ubuntu-latest

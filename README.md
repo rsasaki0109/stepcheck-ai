@@ -8,9 +8,9 @@ Markdown procedure + work images → vision-language model → per-step verdicts
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
-![StepCheck AI animated workflow: write a Markdown procedure, attach a work image, and review per-step verdicts](docs/assets/demo.gif)
+![Real handwashing video with Codex vision observations, evidence timestamps, and an updating procedure checklist](docs/assets/demo.gif)
 
-<sub>Illustrated workflow using the included mock provider. Mock verdicts are deterministic; image contents are not analyzed.</sub>
+<sub>Real video + Codex visual frame review via local MCP tools. The GIF replays recorded observations and their evidence timestamps.</sub>
 
 </div>
 
@@ -20,8 +20,13 @@ steps and work images to a multimodal model (configured as `gpt-4o` by default),
 judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
 score and a human-readable reason grounded in the images.
 
-The `mock` provider is for offline development and tests. The GIF above illustrates the
-workflow with mock results; it does not show a live VLM inference run.
+The GIF above shows **real footage and actual Codex visual observations**, rather than
+mock verdicts. The local MCP tools extract frames for a vision-capable host to review;
+the GIF replays the saved results alongside the video. It is a recorded analysis, not
+live inference or a recording of the web UI. See [the video demo guide](docs/video-demo.md).
+
+The web app currently accepts images. Its `mock` provider is for offline development
+and tests; `openai` performs image analysis.
 
 The image model sits behind a model-agnostic `VisionProvider` interface. Add and register
 a provider to change the model without rewriting the use case or UI.
@@ -41,7 +46,7 @@ select `openai` for image analysis.
 ## Features
 
 - 📋 **Markdown procedures** — ordered lists, bullets, or checkboxes.
-- 🖼️ **One or many images** per check.
+- 🖼️ **One or many images** per check, plus a [video frame-review demo through MCP](docs/video-demo.md).
 - ✅❌⚠️ **Per-step verdicts** with confidence and an explanation of the reason.
 - 🔌 **Pluggable providers** — `mock` (no API key) and `openai` (GPT-4o) included; add your
   own in one file.
@@ -174,18 +179,23 @@ The GIF is stored at [`docs/assets/demo.gif`](docs/assets/demo.gif). Embed it fr
 repository root with:
 
 ```markdown
-![StepCheck AI workflow](docs/assets/demo.gif)
+![StepCheck AI video recognition demo](docs/assets/demo.gif)
 ```
 
-To regenerate it with verdicts from the included `MockProvider`:
+To regenerate the GIF from the included video and saved Codex observations (requires FFmpeg):
 
 ```bash
 python -m pip install Pillow
 python scripts/generate_readme_gif.py
 ```
 
-The generator draws a workflow illustration with a schematic evidence image;
-it is not a recording of the web UI. No running app or API key is needed.
+Rendering replays the saved review; it does not run inference. To perform a new visual
+review, use the [MCP frame tools](docs/video-demo.md). A vision-capable host supplies
+the recognition, so the MCP server itself needs no model API key.
+
+Video: CDC's [Clean hands short](https://commons.wikimedia.org/wiki/File:Clean_hands_short.webm),
+identified as public domain on its source page. See [source attribution](docs/assets/video-demo/SOURCE.md)
+and the [timestamped observations](docs/assets/video-demo/review.json).
 
 ---
 
@@ -207,7 +217,7 @@ npm run build
 ## Roadmap
 
 - [ ] JEPA / representation-model provider
-- [ ] Video input (frame sampling) and video-native models
+- [ ] Native video upload in the web app / API and video-native models (MCP frame-review demo available)
 - [ ] PDF procedure ingestion
 - [ ] Audio narration as an additional signal
 - [ ] Batch processing API
@@ -228,4 +238,5 @@ method.
 
 ## License
 
-[MIT](LICENSE) © StepCheck AI contributors
+[MIT](LICENSE) © StepCheck AI contributors. The included CDC footage is public domain;
+see [video attribution](docs/assets/video-demo/SOURCE.md).
