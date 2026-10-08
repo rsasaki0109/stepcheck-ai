@@ -71,14 +71,16 @@ if(report.actions.length)select(report.actions[0]);else{get('flow').textContent=
 
 async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.5-VL-3B-Instruct",
                          max_frames: int = 24, interval: float = 0.75, provider=None,
-                         load_in_4bit: bool = False) -> dict:
+                         load_in_4bit: bool = False, image_patches: int = 256,
+                         framewise: bool = False) -> dict:
     output.mkdir(parents=True, exist_ok=True)
     for name in ("flow.json", "viewer.html", "execution.json", "model-response.txt"):
         (output / name).unlink(missing_ok=True)
     if video.stat().st_size > 50 * 1024 * 1024:
         raise ValueError("Video exceeds the 50 MiB limit.")
     sampled = await asyncio.to_thread(sample_video, video, interval, 120, max_frames)
-    provider = provider or create_provider("qwen-local", model=model, load_in_4bit=load_in_4bit)
+    provider = provider or create_provider("qwen-local", model=model, load_in_4bit=load_in_4bit,
+                                           max_pixels=image_patches * 28 * 28, framewise=framewise)
     executed_at = datetime.now(timezone.utc).isoformat()
     started = time.monotonic()
     print(f"Recognizing {len(sampled.frames)} source frames with {model}; first run downloads model weights.", flush=True)
@@ -105,6 +107,7 @@ async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.
         "repo_commit": commit, "model": model,
         "model_revision": getattr(getattr(getattr(provider, "_model", None), "config", None), "_commit_hash", None),
         "load_in_4bit": getattr(provider, "load_in_4bit", False),
+        "framewise": getattr(provider, "framewise", False),
         "max_pixels": getattr(provider, "max_pixels", None), "sample_count": len(sampled.frames),
         "gpu": torch.cuda.get_device_name(0) if torch is not None and torch.cuda.is_available() else None,
         "packages": packages, "source_sha256": report["source_sha256"]}
@@ -119,9 +122,14 @@ async def main():
     parser.add_argument("--max-frames", type=int, default=24, choices=range(2, 33))
     parser.add_argument("--model", default="Qwen/Qwen2.5-VL-3B-Instruct")
     parser.add_argument("--load-in-4bit", action="store_true")
+    parser.add_argument("--framewise", action="store_true",
+                        help="Recognize each sampled image separately, then group its observations.")
+    parser.add_argument("--image-patches", type=int, choices=(64, 128, 256), default=256,
+                        help="Maximum image pixels = patches * 28 * 28; use 64 for 7B on T4.")
     args = parser.parse_args()
     result = await run_local_flow(args.video, args.output, max_frames=args.max_frames,
-                                  model=args.model, load_in_4bit=args.load_in_4bit)
+                                  model=args.model, load_in_4bit=args.load_in_4bit,
+                                  image_patches=args.image_patches, framewise=args.framewise)
     print(f"Recognized {len(result['actions'])} actions. Open {args.output / 'viewer.html'}")
 
 

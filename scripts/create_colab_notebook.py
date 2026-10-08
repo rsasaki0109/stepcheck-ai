@@ -55,6 +55,7 @@ print("VRAM:", round(torch.cuda.get_device_properties(0).total_memory / 2**30, 1
 MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct" #@param ["Qwen/Qwen2.5-VL-3B-Instruct", "Qwen/Qwen2.5-VL-7B-Instruct"]
 LOAD_IN_4BIT = False #@param {type:"boolean"}
 MAX_FRAMES = 24  # GPUメモリーが足りない場合は16または8へ減らす
+MAX_IMAGE_PATCHES = 64 if "7B" in MODEL_ID else 256  # 7B/T4は低解像度から試す
 print("Local model:", MODEL_ID)'''),
         nbf.v4.new_code_cell('''# 3. 動画を選択（標準は同梱の公開動画）
 UPLOAD_VIDEO = False #@param {type:"boolean"}
@@ -76,7 +77,19 @@ from run_local_video_flow import run_local_flow
 
 OUTPUT_DIR = Path("/content/stepcheck-output")
 if "provider" not in globals() or provider.model_id != MODEL_ID or provider.load_in_4bit != LOAD_IN_4BIT:
+    if "provider" in globals():
+        import gc
+        provider._model = None
+        provider._processor = None
+        gc.collect()
+        torch.cuda.empty_cache()
     provider = create_provider("qwen-local", model=MODEL_ID, load_in_4bit=LOAD_IN_4BIT)
+if provider.max_pixels != MAX_IMAGE_PATCHES * 28 * 28:
+    provider.max_pixels = MAX_IMAGE_PATCHES * 28 * 28
+    if provider._processor is not None:
+        from transformers import AutoProcessor
+        provider._processor = AutoProcessor.from_pretrained(MODEL_ID, min_pixels=64*28*28,
+                                                           max_pixels=provider.max_pixels)
 started = time.monotonic()
 report = await run_local_flow(VIDEO_PATH, OUTPUT_DIR, model=MODEL_ID,
                                max_frames=MAX_FRAMES, provider=provider)
@@ -105,7 +118,9 @@ if DOWNLOAD_RESULTS:
 
 ダウンロードセルの `DOWNLOAD_RESULTS` を有効にすると、これらをZIPで取得できます。
 
-別の動画は動画選択セルから、GPUメモリー不足は `MAX_FRAMES` を減らして再実行します。
+別の動画は動画選択セルから選択します。7B/T4は `LOAD_IN_4BIT=True` と小さい画像設定で試してください。
+GPUメモリー不足は `MAX_IMAGE_PATCHES`（64 / 128 / 256）や `MAX_FRAMES` を減らして再実行します。
+画像を小さくすると細かい動作が見えにくくなるため、結果の根拠確認が必要です。
 JSONや根拠IDが不正なモデル出力はエラーにします。見えない動作を補完したり、成功結果に置き換えたりしません。
 手順全体の正しさを検証するには、別に期待フローを定義して比較する必要があります。
 
