@@ -29,7 +29,7 @@ def render(timestamp, cache, report):
     canvas = Image.new("RGB", (1120, video_top + 832), "#0b1120")
     draw = ImageDraw.Draw(canvas)
     text(draw, (32, 24), "StepCheck AI  /  One video -> detected flow", "title")
-    method = "Colab GPU -> Qwen local VLM" if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
+    method = ("Colab GPU -> " + report["model"].split("/")[-1]) if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
     text(draw, (32, 70), method + " -> actions + evidence times", color=MUTED)
     text(draw, (32, 103), "Model output replay  |  Inspect the source to verify cited evidence", "label", AMBER)
     visible = seen_actions(report, timestamp)
@@ -38,7 +38,9 @@ def render(timestamp, cache, report):
         x, y = 32 + (index % 4) * 268, 144 + (index // 4) * 110
         action = report["actions"][index] if report["actions"] else None
         observed = action is not None and action in visible
-        box(draw, (x, y, x + 252, y + 94), outline=TEAL if observed else "#27364c")
+        review = next((item for item in report.get("_audit", {}).get("actions", []) if action and item["id"] == action["id"]), None)
+        mismatch = observed and review is not None and review["status"] != "supported"
+        box(draw, (x, y, x + 252, y + 104), outline=AMBER if mismatch else TEAL if observed else "#27364c")
         text(draw, (x + 12, y + 9), f"{index + 1:02d}" if action else "--", "label", TEAL if observed else MUTED)
         if observed:
             lines = []
@@ -56,6 +58,8 @@ def render(timestamp, cache, report):
                 text(draw, (x + 42, y + 8 + line_index * 20), line, "body")
             times = [t for t in action["evidence_seconds"] if t <= timestamp]
             text(draw, (x + 12, y + 62), f"Evidence cited: {times[0]:.2f} - {times[-1]:.2f}s", "small", TEAL)
+            if review:
+                text(draw, (x + 12, y + 79), "Review: " + review["status"].replace("_", " "), "small", AMBER if mismatch else TEAL)
         else:
             text(draw, (x + 42, y + 24), "Awaiting source evidence", "small", MUTED)
         if index < len(report["actions"]) - 1 and index % 4 < 3:
@@ -80,7 +84,8 @@ def render(timestamp, cache, report):
     footer = video_top + 754
     text(draw, (32, footer), f"Source {timestamp:.2f}/{report['duration_seconds']:.2f}s  |  {len(visible)} reported actions", "label", TEAL)
     text(draw, (32, footer + 27), "Times mark reviewed samples, not action boundaries. Short actions may be missed.", "small", MUTED)
-    text(draw, (32, footer + 49), "No attention map. '?' marks ambiguous order. Model evidence can be wrong.", "small", AMBER)
+    note = "Amber cards: reviewer found unsupported or mistimed evidence. Model output is unchanged." if report.get("_audit") else "No attention map. '?' marks ambiguous order. Model evidence can be wrong."
+    text(draw, (32, footer + 49), note, "small", AMBER)
     return canvas.resize((960, round(canvas.height * 960 / 1120)), Image.Resampling.LANCZOS)
 
 
@@ -88,8 +93,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, default=ASSETS / "detected-flow.json")
     parser.add_argument("--output", type=Path, default=ROOT / "docs/assets/detected-flow.gif")
+    parser.add_argument("--audit", type=Path)
     args = parser.parse_args()
     report = json.loads(args.report.read_text(encoding="utf-8"))
+    if args.audit:
+        audit = json.loads(args.audit.read_text(encoding="utf-8"))
+        report_digest = hashlib.sha256(json.dumps(report, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+        if audit["source_sha256"] != report["source_sha256"] or audit["report_sha256"] != report_digest:
+            raise ValueError("Review differs from the replayed model report or video.")
+        report["_audit"] = audit
     if any(ord(character) > 127 for action in report["actions"] for character in action["label"]):
         candidates = [Path("C:/Windows/Fonts/meiryo.ttc"),
                       Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc")]
@@ -121,7 +133,7 @@ def main():
     target = args.output
     frames[0].save(target, save_all=True, append_images=frames[1:], duration=durations,
                    loop=0, optimize=True, disposal=1)
-    print(f"Created {target.relative_to(ROOT)} ({target.stat().st_size:,} bytes)")
+    print(f"Created {target.resolve()} ({target.stat().st_size:,} bytes)")
 
 
 if __name__ == "__main__":

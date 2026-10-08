@@ -1,0 +1,49 @@
+{
+  "reviewer": "Codex visual review of actual source frames",
+  "method": "Independent review after inference; not supplied to the VLM. Model labels and cited times remain unchanged.",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "report_sha256": "7ab1bc8293800fe412d7390800637393fca3248f4db30a211fa09b42dbafb8ef",
+  "report_hash_format": "SHA-256 of UTF-8 JSON, sorted keys, compact separators, ensure_ascii=False",
+  "run": {
+    "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "gpu": "Tesla T4",
+    "load_in_4bit": false,
+    "sample_count": 24,
+    "max_pixels": 100352,
+    "inference_seconds_including_download": 150.1,
+    "repo_commit": "e0e69d4",
+    "date": "2026-10-08"
+  },
+  "actions": [
+    {
+      "id": 1,
+      "status": "unsupported",
+      "note": "At 0s the hand is under a wall-mounted soap dispenser. Faucet operation is not visible."
+    },
+    {
+      "id": 2,
+      "status": "uncertain",
+      "note": "The position under the dispenser is consistent with taking soap, but this single cited frame does not establish dispensing or visible soap on the hand."
+    },
+    {
+      "id": 3,
+      "status": "wrong_time",
+      "note": "The 0s frame does not show rubbing. Later sampled frames show lathered hands rubbing together."
+    },
+    {
+      "id": 4,
+      "status": "wrong_time",
+      "note": "At the cited 9.957826s frame the hands still rub with lather. Rinsing is visible in later samples around 11.949391s and 12.945174s."
+    },
+    {
+      "id": 5,
+      "status": "supported",
+      "note": "The cited 19.915652s frame shows hands using a paper towel near the towel dispenser. Exact movement boundaries remain unknown."
+    }
+  ],
+  "limitations": [
+    "A single demo video is not an accuracy benchmark.",
+    "This audit concerns the initial run capped at 100352 pixels per image, before interleaved image labels and higher resolution were introduced.",
+    "No attention tensor, heatmap, or model confidence was measured."
+  ]
+}

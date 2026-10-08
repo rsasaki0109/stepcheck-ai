@@ -63,6 +63,20 @@ It runs Qwen2.5-VL-3B-Instruct on the runtime GPU and generates a flow/evidence 
 from the chosen video. See [Colab/local GPU setup](docs/colab-local-vlm.md). The same
 provider can be selected in the backend with `STEPCHECK_PROVIDER=qwen-local`.
 
+<details>
+<summary>Actual Colab local-VLM run: inspect the errors, too</summary>
+
+![Actual Qwen 3B model output and independent source-frame review](docs/assets/qwen-3b-initial.gif)
+
+Qwen2.5-VL-3B ran on a T4 with 24 real source frames. This initial run contains
+incorrect actions and evidence times. Model output is unchanged; amber cards show
+an independent Codex review after inference, not attention or model confidence.
+The current input binds each image directly to its ID and time. See the
+[raw output, review, and execution notes](docs/colab-local-vlm.md#colabで実行して確認したこと).
+The 7B comparison was started; its result has not yet been retrieved or verified.
+
+</details>
+
 ### Verify a written procedure from images
 
 1. **Write the procedure.** Paste a Markdown ordered list, bullet list, or checklist.
@@ -80,7 +94,7 @@ select `openai` for image analysis.
 - 📋 **Markdown procedures** — ordered lists, bullets, or checkboxes.
 - 🖼️ **One or many images** per check, plus a [video frame-review demo through MCP](docs/video-demo.md).
 - 🎬 **Single-video flow detection** — upload, recognize actions, and inspect supporting
-  frames in the web UI. Timestamp overlap stays ambiguous; missing actions are not invented.
+  frames in the web UI. Timestamp overlap stays ambiguous; compare predictions with the source.
 - ✅❌⚠️ **Per-step verdicts** with confidence and an explanation of the reason.
 - 🔌 **Pluggable providers** — `mock`, `openai` (GPT-4o), and `qwen-local` (CUDA, no API key); add your
   own in one file.

@@ -35,6 +35,8 @@ REPO_REF = "main"
 if not REPO.exists():
     subprocess.run(["git", "clone", "--depth", "1", "--branch", REPO_REF,
                     "https://github.com/rsasaki0109/stepcheck-ai.git", str(REPO)], check=True)
+else:
+    subprocess.run(["git", "-C", str(REPO), "pull", "--ff-only"], check=True)
 subprocess.run(["apt-get", "-qq", "update"], check=True)
 subprocess.run(["apt-get", "-qq", "install", "-y", "ffmpeg"], check=True)
 subprocess.run([sys.executable, "-m", "pip", "install", "-q",

@@ -107,6 +107,7 @@ class QwenLocalProvider(VisionProvider):
         from PIL import Image
         import torch
         with self._lock:
+            self.last_raw_response = ""
             self._load()
             pictures = [Image.open(io.BytesIO(image.data)).convert("RGB") for image in images]
             content = [{"type": "text", "text": prompt}]

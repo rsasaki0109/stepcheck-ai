@@ -1,0 +1,35 @@
+```json
+{
+  "title": "Hand Washing Demonstration",
+  "actions": [
+    {
+      "label": "Turn on the faucet",
+      "reason": "The hand is shown turning on the faucet.",
+      "evidence_frame_ids": [0]
+    },
+    {
+      "label": "Apply soap to hands",
+      "reason": "Soap is seen on the hands.",
+      "evidence_frame_ids": [0]
+    },
+    {
+      "label": "Rub hands together",
+      "reason": "Hands are rubbing together with soap.",
+      "evidence_frame_ids": [0]
+    },
+    {
+      "label": "Rinse hands under running water",
+      "reason": "Water is flowing over the hands.",
+      "evidence_frame_ids": [10]
+    },
+    {
+      "label": "Dry hands with paper towel",
+      "reason": "A paper towel is used to dry hands.",
+      "evidence_frame_ids": [20]
+    }
+  ],
+  "limitations": [
+    "Sampling and visibility limits."
+  ]
+}
+```
