@@ -2,9 +2,9 @@
 
 # StepCheck AI
 
-**Turn work images into a step-by-step check.**
+**VLM-powered verification of work procedures from images.**
 
-Markdown procedure + work images → verdicts, confidence, and reasons.
+Markdown procedure + work images → vision-language model → per-step verdicts and reasons.
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
@@ -14,10 +14,14 @@ Markdown procedure + work images → verdicts, confidence, and reasons.
 
 </div>
 
-StepCheck AI checks whether work was carried out **according to a written procedure** by
-looking at photos of the work. You provide a procedure in Markdown and one or more images;
-StepCheck judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a
-confidence score and a human-readable reason.
+StepCheck AI uses a **vision-language model (VLM)** to check whether work was carried out
+**according to a written procedure**. The included `OpenAIProvider` sends the Markdown
+steps and work images to a multimodal model (configured as `gpt-4o` by default), which
+judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
+score and a human-readable reason grounded in the images.
+
+The `mock` provider is for offline development and tests. The GIF above illustrates the
+workflow with mock results; it does not show a live VLM inference run.
 
 The image model sits behind a model-agnostic `VisionProvider` interface. Add and register
 a provider to change the model without rewriting the use case or UI.
