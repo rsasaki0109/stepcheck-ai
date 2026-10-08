@@ -60,7 +60,7 @@ class QwenLocalProvider(VisionProvider):
     max_flow_frames = 24
 
     def __init__(self, model: str = DEFAULT_MODEL, max_new_tokens: int = 2400,
-                 max_pixels: int = 128 * 28 * 28):
+                 max_pixels: int = 256 * 28 * 28):
         self.model_id = model
         self.max_new_tokens = max_new_tokens
         self.max_pixels = max_pixels
@@ -126,6 +126,8 @@ class QwenLocalProvider(VisionProvider):
             "Discover visible work actions and their observed order. No expected procedure is provided. "
             "Do not add customary missing steps. Group adjacent views of the same activity, but keep repeated "
             "occurrences separate. Include only actions supported by supplied images; mark uncertain interpretations. "
+            "Separate actions when the interaction with an object changes. Use specific short action labels, "
+            "rather than merging the entire scene into a broad activity. Do not cite empty or transition images. "
             "Each image is immediately preceded by its own frame_id and timestamp. "
             "For EACH action, look at those specific images again before citing their IDs. "
             "Do not reuse the first image as evidence for actions only visible later. "
