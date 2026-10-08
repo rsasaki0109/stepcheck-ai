@@ -10,9 +10,9 @@ One video → vision-language model → observed actions, order, and evidence fr
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
 
-![Actual local VLM predictions from one video, with source-flow comparison in four chronological panels](docs/assets/qwen3-4b-framewise.gif)
+![Actual local VLM predictions from one video, with source-flow comparison in four chronological panels](docs/assets/qwen3-native-video.gif)
 
-<sub>One real video → Qwen3-VL-4B / FP16 on Colab T4 → frame observations → flow. Recorded inference replay; amber cards are an independent evidence review, not attention.</sub>
+<sub>One real video → Qwen3-VL-4B / native video on a local GPU → flow. NF4 language + FP16 vision; recorded inference replay. Amber cards are an independent evidence review, not attention.</sub>
 
 </div>
 
@@ -23,9 +23,10 @@ steps and work images to a multimodal model (configured as `gpt-4o` by default),
 judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
 score and a human-readable reason grounded in the images.
 
-The GIF above replays **actual local VLM inference on one real video**. Qwen observes
-24 source frames individually, then groups its descriptions into actions and evidence
-times. It receives no expected procedure. Four panels play equal time quarters in
+The GIF above replays **actual local VLM inference on one real video**. Qwen3 receives
+46 chronological frames as native video at 2 fps, with explicit source timestamps.
+It returns actions and supporting frame-pair IDs, which are checked against the real
+inputs. It receives no expected procedure. Four panels play equal time quarters in
 source order. Model predictions remain unchanged, including mistakes.
 
 An independent review compares the output with the earlier
@@ -33,12 +34,14 @@ An independent review compares the output with the earlier
 soap → lather → rinse → pull towel → dry → hold door handle → lower towel into bin.
 Amber cards identify unsupported or mistimed evidence; the final comparison states
 whether the whole flow was verified. This single-video demo is not an accuracy benchmark.
-See [the raw predictions and review](docs/colab-local-vlm.md), or the separate
+See [the native-video predictions, input images and review](docs/qwen3-native-video.md),
+[earlier Colab framewise results](docs/colab-local-vlm.md), or the separate
 [recorded Codex/MCP flow demo](docs/video-demo.md).
 The [controlled input diagnostics](docs/vlm-input-diagnostics.md) compare identical frames,
 Qwen2.5-VL 3B/7B and Qwen3-VL 4B, preprocessing, vision precision, and native video input.
-The Qwen3 full run reports three coarse actions; it mixes drying with towel retrieval
-and cites the door-handle frame for disposal. The full flow remains unverified.
+The native-video run reports three coarse actions; it mixes drying with towel retrieval
+and cites the door-handle frames for drying/disposal. The supplied bin frames are not
+cited. **The seven-step flow and its order remain unverified.**
 
 The web app now accepts **a single video** and lets you inspect each recognized
 action's supporting frames, source timestamps, reasons, and uncertainties. Video

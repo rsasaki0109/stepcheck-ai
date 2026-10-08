@@ -35,6 +35,8 @@ def render(timestamp, cache, report):
     method = ("GPU -> " + report["model"].split("/")[-1]) if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
     if report.get("_audit", {}).get("run", {}).get("framewise"):
         method += " / frame observations"
+    elif report.get("input_modality") == "native_video":
+        method += " / sampled video input"
     text(draw, (32, 70), method + " -> actions + evidence times", color=MUTED)
     text(draw, (32, 103), "Model output replay  |  Inspect the source to verify cited evidence", "label", AMBER)
     if reference:
@@ -135,8 +137,9 @@ def main():
     video = ASSETS / "source.webm"
     if hashlib.sha256(video.read_bytes()).hexdigest() != report["source_sha256"]:
         raise ValueError("Video differs from the detected source.")
-    end = max(report["sampled_seconds"])
-    timeline = sorted(set([round(i / FPS, 6) for i in range(math.floor(end * FPS) + 1)] + report["sampled_seconds"]))
+    # Replay the near-end source frame even when the last model sample is earlier.
+    end = max(max(report["sampled_seconds"]), report["duration_seconds"] - 0.1)
+    timeline = sorted(set([round(i / FPS, 6) for i in range(math.floor(end * FPS) + 1)] + report["sampled_seconds"] + [end]))
     with tempfile.TemporaryDirectory() as directory:
         cache = {}
         for timestamp in timeline:

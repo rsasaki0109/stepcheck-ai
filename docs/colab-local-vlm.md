@@ -1,5 +1,8 @@
 # ColabでローカルVLMを使う
 
+READMEの最新GIFは、別の[ローカルGPUでのQwen3動画入力実験](qwen3-native-video.md)です。
+以下のノートブックと記録は、Colabでの個別フレーム認識・整理の結果です。
+
 [Colabで開く](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
 
 `Qwen/Qwen2.5-VL-3B-Instruct` の公開重みをダウンロードし、ColabランタイムのGPUで推論します。

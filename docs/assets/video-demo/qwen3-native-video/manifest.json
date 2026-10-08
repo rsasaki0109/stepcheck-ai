@@ -1,0 +1,15 @@
+{
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "files": {
+    "docs/assets/qwen3-native-video.gif": "5757daaabfc973786646082992fc8fc40f1b39c5f5f337974146543ee2018d7f",
+    "docs/assets/video-demo/qwen3-native-video/diagnostics.json": "b9b924513951aaf290c99e08165cc2b0769654b9e100142405eb73626c6b920e",
+    "docs/assets/video-demo/qwen3-native-video/experiment-source.py": "beb6b75ba660d2cffca73d86a67e74891b7410b5f08041d96f56cc4d9a1bfa31",
+    "docs/assets/video-demo/qwen3-native-video/flow.json": "defc4e1f7c93612f575fa8fe6c5920fde21380014369a1b436c5003772b6a794",
+    "docs/assets/video-demo/qwen3-native-video/input-whole.json": "828c7d80100805f56187dcbbc9ce580925ba43b4ac57b87ef0e5753f81d446a5",
+    "docs/assets/video-demo/qwen3-native-video/input-whole.png": "fb393e4f3c49b76f30b01b2c1386fa484009ef330600c8190feddff8d2d53d69",
+    "docs/assets/video-demo/qwen3-native-video/prompt-whole.txt": "71b8c20d43b8d4d027d9b7697e4e6214f70cb6ae62e6772fe347715cb4afb758",
+    "docs/assets/video-demo/qwen3-native-video/response-whole.txt": "ab7dd0f13c41ba4d6e9a686db43a982a19d9d6323df1c896c4d1c86e7889666a",
+    "docs/assets/video-demo/qwen3-native-video/review.json": "ecfade5aa834e7bd74a22963246012285a9001a2995d1d07ad5833704ab79e72"
+  },
+  "validated": "Source/video hashes, all 46 supplied JPEG hashes/times, exact raw labels/reasons/uncertainty/pair-to-frame citations, report review hash, 23 video time tokens, FP16 vision Linear modules. This does not validate semantic correctness."
+}

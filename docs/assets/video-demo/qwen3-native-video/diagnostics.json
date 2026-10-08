@@ -1,0 +1,941 @@
+{
+  "executed_at_utc": "2026-10-08T09:24:07.023874+00:00",
+  "status": "completed",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+  "load_in_4bit": true,
+  "keep_vision_fp16": true,
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.1",
+    "accelerate": "1.15.0",
+    "bitsandbytes": "0.48.2"
+  },
+  "repo_commit": "5631b8bc699af54eb3c95d3bebc3b5f3a4000ea9",
+  "script_sha256": "beb6b75ba660d2cffca73d86a67e74891b7410b5f08041d96f56cc4d9a1bfa31",
+  "input_modality": "native_video",
+  "expected_actions_supplied": false,
+  "sample_fps": 4.0,
+  "duration_seconds": 23.003,
+  "sample_timestamps_seconds": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0,
+    2.25,
+    2.5,
+    2.75,
+    3.0,
+    3.25,
+    3.5,
+    3.75,
+    4.0,
+    4.25,
+    4.5,
+    4.75,
+    5.0,
+    5.25,
+    5.5,
+    5.75,
+    6.0,
+    6.25,
+    6.5,
+    6.75,
+    7.0,
+    7.25,
+    7.5,
+    7.75,
+    8.0,
+    8.25,
+    8.5,
+    8.75,
+    9.0,
+    9.25,
+    9.5,
+    9.75,
+    10.0,
+    10.25,
+    10.5,
+    10.75,
+    11.0,
+    11.25,
+    11.5,
+    11.75,
+    12.0,
+    12.25,
+    12.5,
+    12.75,
+    13.0,
+    13.25,
+    13.5,
+    13.75,
+    14.0,
+    14.25,
+    14.5,
+    14.75,
+    15.0,
+    15.25,
+    15.5,
+    15.75,
+    16.0,
+    16.25,
+    16.5,
+    16.75,
+    17.0,
+    17.25,
+    17.5,
+    17.75,
+    18.0,
+    18.25,
+    18.5,
+    18.75,
+    19.0,
+    19.25,
+    19.5,
+    19.75,
+    20.0,
+    20.25,
+    20.5,
+    20.75,
+    21.0,
+    21.25,
+    21.5,
+    21.75,
+    22.0,
+    22.25,
+    22.5,
+    22.75
+  ],
+  "frame_sha256": [
+    "3df4a6fb54734e2fe4b50202c4cb083c4cd6ba9013ce784f2c313c8664ea3aef",
+    "7d1a4d944112de78bddf030681d06cab7d206085344aa5c441b5b1261d61fe6c",
+    "8bbef9ff706cb4926aaf6e0022237ad2af834cf9beda41e935a5e3ea38c4fdab",
+    "ae1c87c427df51f7d6269be941b8b66fffe6766306f8487dbc7e5c1d57c6b754",
+    "a5dbb7b95512e69654ae86251d3f7ba7041695f5bad6c87afa8cfcfd6145dce0",
+    "3e09ec6d7ee48ceee505a8b2363ffc5e71d1d1bee7718162cf7989b6304419b9",
+    "cc7878b153a157f23eae691e68f7f7416fb95fa36dca0563bc112ed8033aebb9",
+    "e82b6b25fab13ca3f61c5f69b5b08ea1939bff28ed4803e020a5d6ae2d6ff566",
+    "066b0e019ddb88f7b3715ff6dc1bacc98252f1cf95627b937b1dec24ad835ac4",
+    "ab48b3b5b89649455416daf43d5d7403745a7fe6bb83f64bf1c072971aec7082",
+    "3edd7401091f564d9366673d223d402b8b02f244cbfee6d6c1ea53c25c2dd50b",
+    "52cfdffdbcf22a390a8a43155d2588690d7605d068a930d3ea64a2ad9c04aa00",
+    "cfb406393ff3bc1871b82f3de6635755c67a53f81bd2434cf552349f4dfc4a6a",
+    "c88167e4b1b7d122a11593935acb41121fb7edad388bd32d27220b7eb2a0062b",
+    "de322bdae4d631751b58bf1590e1f681358d21bb15a46fe292d9f9f969727b09",
+    "62ea606443e72743771e5ee42c68901ac7279abc592bfd1a9079023fffd4f09d",
+    "ce0f5d408a5015f075d0107ad559bcc621882c35524a8583c36c804766de9767",
+    "723f5384eef87e6abc6a2ea208cc48f038d6cf3098a0423b5446c65f761e5c36",
+    "c7d986d2e4d92869811102312f7df30aef996beca2e2aaf994d010c21cb2388e",
+    "b32f6aad0c75f53d28102da3669b00766a25925a6c8888250f6ccfb432156f8a",
+    "3277ab8ca5ab6679ccf4e927f41cf1324fdfa33ada76a80ef5369e5a46e8b02c",
+    "c862ccf81a451f15a5956133b9316d1c7c20ea3288495a9abdb3d9f261e3cc61",
+    "09a4c8eb796cd8c9aceebb400a72b2d417c9911494d3897440ec7c4102c9985c",
+    "bcf132d342d5fe1adaf35413e05a89eb84640ae4bff0a87a03d658e1df3869fc",
+    "02b1f9c17507e485b28103ae03a8a18c4ce2152bac6af945864c01c2425d4532",
+    "c7fb7ffc3fcac97349ed94bcce63d5739fe4cb6d525b95f0fc2fac0da8ef268b",
+    "cd24170508e1e7557c9c21ef0999e215bb205c1c3b4ec9c552712622d9119bbd",
+    "912de7feac0a587aa9852fce7ac3263afb043099c1778349a249bc0f01d8bff8",
+    "e8513fe5613c10a3d54416d07744fc3ff6b8ec0a7bde73a99d0f67b532a9c126",
+    "f8c690d3237825ac0ceb23ad170559db48fb2be875971bbeeb6f13ac68d6b20d",
+    "0a6bba69a3c02a229f48289ad2d40aa1acec2f0788cb2832f15f63dee79139e6",
+    "b4e34687af3b8291303019e27acafb1a9fa7b62f9de3644c27b07575afcd503c",
+    "925999a854d7b05d3ab8e81d62190fa2a1ca41c4a55f04ec5101cf12b7f1452b",
+    "e176c9c0dc4f4e3b72d43e7c11a09e1813bbab112d0941b351844d2e374c3cad",
+    "94719c5a84c7d4277195b58486f966f6fe71ce12db0d911c356f7497ad8eec82",
+    "8df5a1b3369380e54acd495d0657eee366f5b765f89a72fc83b8dfeb458238ba",
+    "e2cc1df70de84dcf232f3ea82dfe0c769fd4a16f8e8abd4ee10645f0cddf1394",
+    "e5d66a3c99661296e157b4a8c139e1b7b1fc33f81d42711031df2ac2db58a3be",
+    "bc442a75414e0dbbb1822d1cc3feef82905bd3cace8b3689b9174a0ca62361a5",
+    "c7b01a26613162a69c40faf163c09e8af54a0afc64b4b495dc3ee549aea0683c",
+    "c34cf9512b4f9a66d3038a4b6accb57912e867ebb19da751304dcc58c69852a8",
+    "622babe93d209121ae3a7bebf9b48dd78fadebb70a951a1bdf3d64d4f70f8627",
+    "f966c6098aecf1ccf0e4229c8184385ab3f1113683c9f09998fe0c02cfa2b4a0",
+    "09151708d0b7ef6627fbd1661d91770614b9ae8025f1288b91d8b9689480c9de",
+    "d7ca2b5920f20c3f21832f05d0ea849989a92d874754e4b75edf7449a3da055e",
+    "f827835a8ae4b5d0e8f54ac651fb05213e44740a5b909ba1441f9cf1f4b2df87",
+    "d86de8d5ba488b25e9d15ac1283ccec3b7a9dde0307f564e25b1adb3d0ef58f0",
+    "02d521869bd5c2d0c0b92a2b7392c01643440438e2b60b718770824c3355a703",
+    "432e6c908af6d72bfb388c76652d2480a3d33f464b83cd4ef960fd0f787becc3",
+    "284f745268f4694e9c276f972e57e1849c6bf85ea2df997a52538dce71447c99",
+    "9dc71cfd8bfb5902cb26e5bde20c540fcc38c213589c03d75134e50a5c50101d",
+    "290ecaebf324287b5dccecf34b59a9d34cf42a703b18a648f0f82c51c07fc32c",
+    "a1e9198b6d4ad109f4de1380ba612b7e3b7992ac4eb065a150d9051ac6750430",
+    "fcc8f6c249d28124378b571e4f139355cba66c575e82895cbd0c6a38a5fed7ec",
+    "d071ad8065e033895b81d4dc15642326678b3b55e63f4c755a84392f17d81143",
+    "bce9c61161b3f5854976aa9c49448e4a13bc1a15b5afcea9a3622492566b9dec",
+    "0adafff07c6387824069a685df01dbad68a64f69649b94abd61f9692e69627dc",
+    "9fb56d5d088b5af33c24c4c7124d07fd836285d2f852f3d1c2bcb88cd25d8801",
+    "733c55633a1028d6417c2b7ae7cc45d48ea616ecd08baaf81eec503916c66cfc",
+    "33f32183e3a02c102e5633f4d00a73d61df3148b20d8c3432b0436e01d6b3dcb",
+    "20fcf7a42b1af93b9c5def92f84077d5a55c296bd399c18fabe17d878ada3dc1",
+    "9514a1c9567f37c758446129f816b10d976948545f4685f88fc36ff88e6e758d",
+    "6fc1e0e61b378ba7f157c8b927d0b069fc849c3fc25dfd85d876e8a96ce39c56",
+    "2720706ea9f0faf6048ad73ab58a2efba69264308e93c4be495beeadbeace657",
+    "96c585ef7d00b271550c0b345ee367c2b73f46ee42313a775eb0c8c61821bd8c",
+    "bde11b2b4b1a58f1377d982c9e4ccacd60dcfab1ebd5f37ef8f8e4cda036d3bd",
+    "55c58d55ab2fe7d1c4c1253524a60459147c137812496377fa149d333ebddd0f",
+    "1ce7fd3942f5bd95cee73097b96a0dbebea8cf77d1c1a2782d5543cf118a0bce",
+    "9fc010cc3eecbb9f10870925c67d15597223d4010961d50e4879e607e28c41a4",
+    "c52521965ea62bb8f80c5427bc60adceeaa52f9f9524e54c5b76117535c389fa",
+    "2f038b136e01b3b31b92f461a6c108f7a1995e3582fc05d1bd916f2aad8a9d0d",
+    "73c337f65f96525b6fb17ca2032fd546a2f3539f431f92255a5e21839e441901",
+    "695cf47abe1166079700adda40041e05ab4f294430e4e54e5f496a1adaeecd0d",
+    "8f9918efea10eff60afb9f598ff6401ed005abc9c13b863caad1afecf50c24e3",
+    "396419856515dd05392e344bec863034b7f6a87af20e37120a6130d5363f2c02",
+    "b624bf3f82c31cbbedb0cc98b9ed41a4965fa5d466cd4ade1f4abde11d80bb37",
+    "270968d3504c294d83a2c23b335421e402fd6e0b85ae32f535e26aa5a843afd9",
+    "322b3209e19c19324a91b734a4cb25729beeedb2775018ad8a95ffc77ff33e3e",
+    "f14dfb6e8efb56d56140e1dd139dd3959b3626bcf24566421e4b5a57638fb6ab",
+    "658f83b2c724d8b502ef58d42644d5be6c754dee5adcdbdd8910419e6f3e35e1",
+    "366ce3bb2e758a5cfed8b6fdecf712ac9ee7b260aaad72b5b588ad6fae43446d",
+    "80fefca83517ff5bb912dc16f9bdcd121d8414c95752b0b34f4e9fc5304871c3",
+    "d9c82dd0af29f8c66840bf83b1169eb0cc0d39d82533ba97ba1f0b0ba1264d8d",
+    "898c1c61369e8a091f7699df5bbf7ca61247841c53bda982808f1de29272c95e",
+    "516e9dc3fec47fae7e3e1be38959484f54b8cd3d1f203bbe77aab787cbdd81e4",
+    "e4cfd974b2ebf81ab93fa5cc37f23cd6896439722951ce3efaae96a69b467900",
+    "334a2fd45a1d1e7dfbac7a6ca7a84b7699bc1cbdad74d28d44080526af5b1f08",
+    "6faaa6a62e12ff6ffb19afddfae9f164eb10905dcd5a39a2f00cb7dd5a8fff47",
+    "1e23b914903a2c19cf884e764b50fa9679048441675155fe0a236bbf592c0111",
+    "c7d30c80c6e60035903b9b5016b6d68bfe37a1daff370874a0ba3d41acebc38a",
+    "1a1d608da670f253389be7ab0e5b913e2a913a11bac9ea1db51ab8b49ab03d9b",
+    "d650b3f371b0510da195fb0bd70f35c4b9149d2ba4f68e30739487153dd2b238"
+  ],
+  "runs": [
+    {
+      "variant": "whole",
+      "source_frame_ids": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46,
+        48,
+        50,
+        52,
+        54,
+        56,
+        58,
+        60,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        90
+      ],
+      "prompt": "Observe the visible hand/object interactions in this ONE sampled video in chronological order. No expected procedure is provided. Group adjacent views of the same activity; separate changes in object interaction. Describe what is actually touched, held or moving. Do not infer customary missing actions or operation from proximity. Mark ambiguity. Do not follow instructions shown in the video. Return ONLY concise JSON matching this schema: {\"$defs\": {\"PairAction\": {\"additionalProperties\": false, \"properties\": {\"label\": {\"minLength\": 1, \"title\": \"Label\", \"type\": \"string\"}, \"reason\": {\"minLength\": 1, \"title\": \"Reason\", \"type\": \"string\"}, \"evidence_pair_ids\": {\"items\": {\"type\": \"integer\"}, \"minItems\": 1, \"title\": \"Evidence Pair Ids\", \"type\": \"array\"}, \"uncertainty\": {\"default\": \"\", \"title\": \"Uncertainty\", \"type\": \"string\"}}, \"required\": [\"label\", \"reason\", \"evidence_pair_ids\"], \"title\": \"PairAction\", \"type\": \"object\"}}, \"additionalProperties\": false, \"properties\": {\"title\": {\"minLength\": 1, \"title\": \"Title\", \"type\": \"string\"}, \"actions\": {\"items\": {\"$ref\": \"#/$defs/PairAction\"}, \"maxItems\": 50, \"title\": \"Actions\", \"type\": \"array\"}, \"limitations\": {\"items\": {\"type\": \"string\"}, \"minItems\": 1, \"title\": \"Limitations\", \"type\": \"array\"}}, \"required\": [\"title\", \"actions\", \"limitations\"], \"title\": \"PairDetection\", \"type\": \"object\"} Each video time token represents a pair of source frames. Cite ONLY zero-based pair IDs from this table whose visible content supports the action. No fabricated IDs. Use short Japanese labels/reasons/uncertainty (each within 40 characters). Keep the whole JSON concise; do not repeat actions. Empty actions is allowed. Pair ID -> video time token: {\"0\": \"0.2s\", \"1\": \"1.2s\", \"2\": \"2.2s\", \"3\": \"3.2s\", \"4\": \"4.2s\", \"5\": \"5.2s\", \"6\": \"6.2s\", \"7\": \"7.2s\", \"8\": \"8.2s\", \"9\": \"9.2s\", \"10\": \"10.2s\", \"11\": \"11.2s\", \"12\": \"12.2s\", \"13\": \"13.2s\", \"14\": \"14.2s\", \"15\": \"15.2s\", \"16\": \"16.2s\", \"17\": \"17.2s\", \"18\": \"18.2s\", \"19\": \"19.2s\", \"20\": \"20.2s\", \"21\": \"21.2s\", \"22\": \"22.2s\"}",
+      "started_at_utc": "2026-10-08T09:24:37.322271+00:00",
+      "input_fps": 2.0,
+      "max_new_tokens": 1600,
+      "per_frame_pixel_budget": 50176,
+      "total_video_pixel_budget": 2308096,
+      "structured": true,
+      "actual_input": {
+        "video_grid_thw": [
+          [
+            23,
+            12,
+            16
+          ]
+        ],
+        "pixel_values_shape": [
+          4416,
+          1536
+        ],
+        "image_processor_class": "Qwen3VLVideoProcessor",
+        "pixel_values_sha256": "7ec75fe50bea91dd65b792a37d7a0f9a635da0c2b0d172da933005a3d56b4793",
+        "image_token_count": 1104,
+        "expected_image_token_count": 1104,
+        "reconstructed_size": [
+          256,
+          192
+        ],
+        "reconstructed_frame_count": 46,
+        "reconstructed_image": "input-whole.png",
+        "time_tokens_seconds": [
+          "0.2",
+          "1.2",
+          "2.2",
+          "3.2",
+          "4.2",
+          "5.2",
+          "6.2",
+          "7.2",
+          "8.2",
+          "9.2",
+          "10.2",
+          "11.2",
+          "12.2",
+          "13.2",
+          "14.2",
+          "15.2",
+          "16.2",
+          "17.2",
+          "18.2",
+          "19.2",
+          "20.2",
+          "21.2",
+          "22.2"
+        ],
+        "pair_source_frame_ids": [
+          [
+            0,
+            2
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            12,
+            14
+          ],
+          [
+            16,
+            18
+          ],
+          [
+            20,
+            22
+          ],
+          [
+            24,
+            26
+          ],
+          [
+            28,
+            30
+          ],
+          [
+            32,
+            34
+          ],
+          [
+            36,
+            38
+          ],
+          [
+            40,
+            42
+          ],
+          [
+            44,
+            46
+          ],
+          [
+            48,
+            50
+          ],
+          [
+            52,
+            54
+          ],
+          [
+            56,
+            58
+          ],
+          [
+            60,
+            62
+          ],
+          [
+            64,
+            66
+          ],
+          [
+            68,
+            70
+          ],
+          [
+            72,
+            74
+          ],
+          [
+            76,
+            78
+          ],
+          [
+            80,
+            82
+          ],
+          [
+            84,
+            86
+          ],
+          [
+            88,
+            90
+          ]
+        ],
+        "rendered_prompt_sha256": "2e4de4e5df07e92f824481540572cf4991445e14cd191ef8e73dcd42d17556d7"
+      },
+      "model_response": "{\n  \"title\": \"Handwashing and Drying\",\n  \"actions\": [\n    {\n      \"label\": \"Handwashing\",\n      \"reason\": \"Water flows from faucet, hands rubbed together with soap\",\n      \"evidence_pair_ids\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7,\n        8,\n        9,\n        10,\n        11,\n        12\n      ],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"Tissue Dispensing\",\n      \"reason\": \"Hand reaches for tissue dispenser, pulls out tissue\",\n      \"evidence_pair_ids\": [\n        13,\n        14,\n        15,\n        16,\n        17,\n        18,\n        19\n      ],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"Tissue Use\",\n      \"reason\": \"Tissue used to dry hands, then discarded\",\n      \"evidence_pair_ids\": [\n        20,\n        21\n      ],\n      \"uncertainty\": \"\"\n    }\n  ],\n  \"limitations\": [\n    \"No visible soap application or rinsing beyond initial water flow\",\n    \"No visible hand drying beyond tissue use\",\n    \"No visible trash disposal beyond tissue discard\"\n  ]\n}",
+      "generated_token_count": 295,
+      "peak_cuda_allocated_bytes": 5177819648,
+      "validated_flow_action_count": 3,
+      "inference_seconds": 121.5
+    }
+  ],
+  "vision_linear_modules": [
+    {
+      "name": "blocks.0.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.0.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.0.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.0.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.1.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.1.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.1.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.1.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.2.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.2.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.2.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.2.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.3.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.3.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.3.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.3.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.4.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.4.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.4.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.4.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.5.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.5.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.5.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.5.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.6.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.6.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.6.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.6.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.7.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.7.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.7.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.7.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.8.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.8.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.8.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.8.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.9.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.9.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.9.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.9.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.10.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.10.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.10.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.10.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.11.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.11.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.11.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.11.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.12.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.12.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.12.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.12.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.13.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.13.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.13.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.13.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.14.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.14.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.14.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.14.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.15.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.15.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.15.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.15.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.16.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.16.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.16.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.16.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.17.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.17.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.17.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.17.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.18.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.18.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.18.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.18.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.19.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.19.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.19.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.19.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.20.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.20.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.20.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.20.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.21.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.21.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.21.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.21.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.22.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.22.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.22.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.22.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.23.attn.qkv",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.23.attn.proj",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.23.mlp.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "blocks.23.mlp.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "merger.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "merger.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "deepstack_merger_list.0.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "deepstack_merger_list.0.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "deepstack_merger_list.1.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "deepstack_merger_list.1.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "deepstack_merger_list.2.linear_fc1",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "deepstack_merger_list.2.linear_fc2",
+      "class": "Linear",
+      "dtype": "torch.float16"
+    }
+  ],
+  "load_seconds": 30.172
+}

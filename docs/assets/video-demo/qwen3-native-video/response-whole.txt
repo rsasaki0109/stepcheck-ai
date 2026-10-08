@@ -1,0 +1,53 @@
+{
+  "title": "Handwashing and Drying",
+  "actions": [
+    {
+      "label": "Handwashing",
+      "reason": "Water flows from faucet, hands rubbed together with soap",
+      "evidence_pair_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "uncertainty": ""
+    },
+    {
+      "label": "Tissue Dispensing",
+      "reason": "Hand reaches for tissue dispenser, pulls out tissue",
+      "evidence_pair_ids": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "uncertainty": ""
+    },
+    {
+      "label": "Tissue Use",
+      "reason": "Tissue used to dry hands, then discarded",
+      "evidence_pair_ids": [
+        20,
+        21
+      ],
+      "uncertainty": ""
+    }
+  ],
+  "limitations": [
+    "No visible soap application or rinsing beyond initial water flow",
+    "No visible hand drying beyond tissue use",
+    "No visible trash disposal beyond tissue discard"
+  ]
+}

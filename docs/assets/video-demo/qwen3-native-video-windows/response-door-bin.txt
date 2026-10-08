@@ -1,0 +1,4 @@
+1. Hand pulls tissue from dispenser, then moves toward trash can.  
+2. Hand drops tissue into trash can lined with plastic bag.  
+3. Hand briefly touches trash can rim before exiting frame.  
+Ambiguity: No clear visual confirmation of hand’s full motion or object release timing.
