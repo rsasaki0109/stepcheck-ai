@@ -62,12 +62,13 @@ class QwenLocalProvider(VisionProvider):
 
     def __init__(self, model: str = DEFAULT_MODEL, max_new_tokens: int = 2400,
                  max_pixels: int = 256 * 28 * 28, load_in_4bit: bool = False,
-                 framewise: bool = False):
+                 framewise: bool = False, keep_vision_fp16: bool = False):
         self.model_id = model
         self.max_new_tokens = max_new_tokens
         self.max_pixels = max_pixels
         self.load_in_4bit = load_in_4bit
         self.framewise = framewise
+        self.keep_vision_fp16 = keep_vision_fp16
         self._model = None
         self._processor = None
         self._lock = threading.Lock()
@@ -99,7 +100,8 @@ class QwenLocalProvider(VisionProvider):
         if self.load_in_4bit:
             from transformers import BitsAndBytesConfig
             options["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True,
-                bnb_4bit_compute_dtype=torch.float16, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True)
+                bnb_4bit_compute_dtype=torch.float16, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True,
+                llm_int8_skip_modules=["visual", "lm_head"] if self.keep_vision_fp16 else None)
         self._model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             self.model_id, torch_dtype=torch.float16, device_map="cuda:0", attn_implementation="sdpa",
             **options,

@@ -59,6 +59,7 @@ def inspect_input(inputs, processor, destination: Path, image_token_id: int) -> 
     if token_count != expected:
         raise ValueError(f"Image-token count {token_count} differs from the vision grid {expected}.")
     return {"image_grid_thw": grid.tolist(), "pixel_values_shape": list(pixels.shape),
+            "image_processor_class": type(ip).__name__,
             "pixel_values_sha256": hashlib.sha256(pixels.tobytes()).hexdigest(),
             "image_token_count": token_count, "expected_image_token_count": expected,
             "reconstructed_size": [w * p, h * p], "reconstructed_image": destination.name}
@@ -114,6 +115,7 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None,
         "source_sha256": source_hash,
         "frame_source": "Exact saved inference JPEGs" if saved is not None else "ffmpeg extraction",
         "model": provider.model_id, "load_in_4bit": provider.load_in_4bit,
+        "keep_vision_fp16": getattr(provider, "keep_vision_fp16", False),
         "gpu": torch.cuda.get_device_name(0), "prompt": PROMPT,
         "expected_actions_supplied": False, "runs": []}
     old_processor = provider._processor
@@ -121,6 +123,9 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None,
     try:
         provider.max_new_tokens = 220
         provider._load()
+        metadata["vision_linear_modules"] = [{"name": name, "class": type(module).__name__,
+            "weight_dtype": str(module.weight.dtype)} for name,module in provider._model.named_modules()
+            if "visual" in name and hasattr(module, "weight") and type(module).__name__ in {"Linear", "Linear4bit"}]
         for use_fast, patches in variants:
             label = f"{'fast' if use_fast else 'slow'}-{patches}"
             provider.max_pixels = patches * 28 * 28
