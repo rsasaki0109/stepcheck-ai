@@ -18,6 +18,7 @@ class Settings(BaseSettings):
 
     #: Model identifier passed to the provider (provider-specific).
     model: str = "gpt-4o"
+    local_model: str = "Qwen/Qwen2.5-VL-3B-Instruct"
 
     #: Credentials for hosted providers. Read directly (no prefix) for convenience.
     openai_api_key: str | None = Field(default=None, alias="OPENAI_API_KEY")

@@ -138,7 +138,9 @@ export default function VideoFlowPanel() {
           最大 {Math.round((status?.max_video_bytes ?? 50 * 1024 * 1024) / 1024 / 1024)} MB / {status?.max_video_seconds ?? 120} 秒。長い動画では間隔を広げて全体から抽出します。
         </p>
         {status && !status.ready && <p role="status" className="mt-3 text-sm text-amber-700 dark:text-amber-300">{status.reason} 記録済みデモはキーなしで確認できます。</p>}
-        {status?.ready && <p className={`mt-3 text-xs ${muted}`}>解析には動画から抽出したフレームをOpenAIに送信します。</p>}
+        {status?.ready && <p className={`mt-3 text-xs ${muted}`}>
+          {status.provider === "qwen-local" ? "動画から抽出したフレームを、この実行環境のローカルVLMで解析します。初回はモデルのダウンロードと読み込みに時間がかかります。" : "解析には動画から抽出したフレームをOpenAIに送信します。"}
+        </p>}
       </div>
 
       {error && <div role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">{error}</div>}

@@ -63,6 +63,11 @@ and preserves ambiguous order when sightings overlap. OpenAI implements this thr
 image input and structured output; mock and existing image-only providers remain
 unsupported instead of inventing video observations.
 
+`qwen-local` implements the same capability using public model weights on a CUDA GPU,
+without an inference API key. It is loaded once per backend process, limits sampled
+frames for GPU memory, and maps validated model frame IDs to actual source timestamps.
+See [Colab/local VLM setup](colab-local-vlm.md).
+
 The contract was chosen so the roadmap items need **no application changes**:
 
 | Future capability | How the contract already supports it |

@@ -15,6 +15,7 @@ from .types import (
 # Importing the modules registers the providers as a side effect.
 from . import mock_provider  # noqa: E402,F401
 from . import openai_provider  # noqa: E402,F401
+from . import qwen_local_provider  # noqa: E402,F401
 
 __all__ = [
     "VisionProvider",

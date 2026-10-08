@@ -8,6 +8,8 @@ One video → vision-language model → observed actions, order, and evidence fr
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
+
 ![One handwashing video in four chronological panels with the action flow detected from visual evidence](docs/assets/detected-flow.gif)
 
 <sub>One video → observed actions → flow. Labels appear with their supporting frames. Recorded Codex recognition through MCP; no attention heatmap.</sub>
@@ -33,7 +35,7 @@ and, separately, comparing observations against an expected flow.
 
 The web app now accepts **a single video** and lets you inspect each recognized
 action's supporting frames, source timestamps, reasons, and uncertainties. Video
-recognition uses the `openai` provider; the `mock` provider does not generate video
+recognition uses `openai` or the GPU-based `qwen-local` provider; `mock` does not generate video
 verdicts. The **recorded demo** works without a key and is explicitly labeled as a
 replay. Image-based procedure verification remains available in its own tab.
 
@@ -51,10 +53,15 @@ a provider to change the model without rewriting the use case or UI.
    exact extracted frames, reasons, and uncertainties. Overlapping evidence is
    shown as ambiguous order.
 
-Requires `STEPCHECK_PROVIDER=openai`, `OPENAI_API_KEY`, and a vision model supporting
-structured output (the existing default is `gpt-4o`). For a keyless preview, choose
+For OpenAI inference, set `STEPCHECK_PROVIDER=openai`, `OPENAI_API_KEY`, and a vision model supporting
+structured output (the existing default is `gpt-4o`). For a recorded preview, choose
 **記録済みデモを見る** to replay the saved Codex review of the bundled video.
 Live recognition of a new upload is separate from that recorded demo.
+
+For **keyless live recognition**, open the [local-VLM Colab notebook](notebooks/stepcheck_local_vlm.ipynb).
+It runs Qwen2.5-VL-3B-Instruct on the runtime GPU and generates a flow/evidence viewer
+from the chosen video. See [Colab/local GPU setup](docs/colab-local-vlm.md). The same
+provider can be selected in the backend with `STEPCHECK_PROVIDER=qwen-local`.
 
 ### Verify a written procedure from images
 
@@ -188,8 +195,9 @@ For local development, place them in `backend/.env`; Compose reads the `.env` at
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `STEPCHECK_PROVIDER` | `mock` | Provider name (`mock`, `openai`, …) |
+| `STEPCHECK_PROVIDER` | `mock` | Provider name (`mock`, `openai`, `qwen-local`, …) |
 | `STEPCHECK_MODEL` | `gpt-4o` | Model id passed to the provider |
+| `STEPCHECK_LOCAL_MODEL` | `Qwen/Qwen2.5-VL-3B-Instruct` | GPU model used by `qwen-local`; requires the local extra |
 | `OPENAI_API_KEY` | — | Required when provider is `openai` |
 | `STEPCHECK_MAX_IMAGES` | `8` | Max images per request |
 | `STEPCHECK_MAX_IMAGE_BYTES` | `10485760` | Max bytes per image (10 MiB) |
@@ -256,7 +264,8 @@ npm run build
 - [ ] Audio narration as an additional signal
 - [ ] Batch processing API
 - [ ] Per-step image/region evidence highlighting
-- [ ] Gemini and Qwen2.5-VL providers
+- [x] Qwen2.5-VL local GPU provider and Colab notebook
+- [ ] Gemini provider
 
 The contract is designed so these are **additive** — see [`docs/providers.md`](docs/providers.md).
 

@@ -38,6 +38,9 @@ No expected procedure or earlier observations are included in the sampling reque
 
 ## Upload a video in the web app
 
+For GPU inference without an API key, use the [Colab local-VLM notebook](colab-local-vlm.md)
+or select the `qwen-local` provider. Its output is generated from the chosen video.
+
 Start the backend and frontend using the [README quick start](../README.md#quick-start).
 For local video decoding, install `ffmpeg` and `ffprobe` on the backend `PATH`;
 the Docker image includes them. Set `STEPCHECK_PROVIDER=openai` and `OPENAI_API_KEY`

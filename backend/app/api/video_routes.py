@@ -31,14 +31,16 @@ async def video_flow_status(settings: Settings = Depends(get_settings),
                             provider: VisionProvider = Depends(get_provider)) -> dict:
     reason = None
     if not provider.supports_flow:
-        reason = "動画を解析するには STEPCHECK_PROVIDER=openai と OPENAI_API_KEY を設定してください。"
+        reason = "動画解析にはOpenAI接続、またはColabでローカルVLMを選択してください。"
     elif not await provider.health():
-        reason = "動画を解析するにはバックエンドに OPENAI_API_KEY を設定してください。"
+        reason = ("ローカルVLMにはGPUとlocal依存パッケージが必要です。" if provider.name == "qwen-local"
+                  else "動画を解析するにはバックエンドに OPENAI_API_KEY を設定してください。")
     elif not decoder_ready():
         reason = "バックエンドに ffmpeg と ffprobe をインストールしてください。"
-    return {"ready": reason is None, "provider": provider.name, "model": settings.model,
+    return {"ready": reason is None, "provider": provider.name, "model": getattr(provider, "model_id", settings.model),
             "reason": reason, "max_video_bytes": settings.max_video_bytes,
-            "max_video_seconds": settings.max_video_seconds, "max_video_frames": settings.max_video_frames}
+            "max_video_seconds": settings.max_video_seconds,
+            "max_video_frames": min(settings.max_video_frames, getattr(provider, "max_flow_frames", settings.max_video_frames))}
 
 
 @router.post("", response_model=VideoFlowOut, summary="Discover an action flow from one uploaded video")
@@ -50,9 +52,9 @@ async def discover_video_flow(
 ) -> dict:
     try:
         if not provider.supports_flow:
-            raise FlowUnavailableError("Select an actual video-capable provider (STEPCHECK_PROVIDER=openai); mock does not recognize videos.")
+            raise FlowUnavailableError("Select openai or qwen-local; mock does not recognize videos.")
         if not await provider.health():
-            raise FlowUnavailableError("Configure OPENAI_API_KEY to analyze uploaded videos.")
+            raise FlowUnavailableError("The selected provider is not ready. Check its credentials or local GPU/dependencies.")
         with tempfile.TemporaryDirectory(prefix="stepcheck-video-") as directory:
             path = Path(directory) / "upload.video"
             size = 0
@@ -66,9 +68,10 @@ async def discover_video_flow(
                     digest.update(chunk)
             if size == 0:
                 raise HTTPException(400, "A non-empty video is required.")
+            frame_limit = min(settings.max_video_frames, getattr(provider, "max_flow_frames", settings.max_video_frames))
             sampled = await asyncio.to_thread(sample_video, path, sample_interval_seconds,
-                                              settings.max_video_seconds, settings.max_video_frames)
-            report = await DiscoverFlowUseCase(provider, settings.model).execute(sampled, digest.hexdigest())
+                                              settings.max_video_seconds, frame_limit)
+            report = await DiscoverFlowUseCase(provider, getattr(provider, "model_id", settings.model)).execute(sampled, digest.hexdigest())
         return report
     except (FlowUnavailableError, DecoderUnavailableError) as exc:
         raise HTTPException(503, str(exc)) from exc
