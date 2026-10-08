@@ -25,17 +25,24 @@ def seen_actions(report, timestamp):
 
 def render(timestamp, cache, report):
     rows = max(1, math.ceil(len(report["actions"]) / 4))
-    video_top = 144 + rows * 110
-    canvas = Image.new("RGB", (1120, video_top + 832), "#0b1120")
+    reference = report.get("_audit", {}).get("reference_flow")
+    action_top = 180 if reference else 144
+    video_top = action_top + rows * 110
+    canvas = Image.new("RGB", (1120, video_top + (860 if reference else 832)), "#0b1120")
     draw = ImageDraw.Draw(canvas)
     text(draw, (32, 24), "StepCheck AI  /  One video -> detected flow", "title")
     method = ("Colab GPU -> " + report["model"].split("/")[-1]) if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
+    if report.get("_audit", {}).get("run", {}).get("framewise"):
+        method += " / frame observations"
     text(draw, (32, 70), method + " -> actions + evidence times", color=MUTED)
     text(draw, (32, 103), "Model output replay  |  Inspect the source to verify cited evidence", "label", AMBER)
+    if reference:
+        text(draw, (32, 132), "Source-review baseline: " + reference["sequence"], "small", MUTED)
+        text(draw, (32, 151), "Baseline was not supplied to the model. Cards below are its unmodified predictions.", "small", MUTED)
     visible = seen_actions(report, timestamp)
     # Only reveal labels once supporting evidence has appeared in source time.
     for index in range(max(1, len(report["actions"]))):
-        x, y = 32 + (index % 4) * 268, 144 + (index // 4) * 110
+        x, y = 32 + (index % 4) * 268, action_top + (index // 4) * 110
         action = report["actions"][index] if report["actions"] else None
         observed = action is not None and action in visible
         review = next((item for item in report.get("_audit", {}).get("actions", []) if action and item["id"] == action["id"]), None)
@@ -86,6 +93,9 @@ def render(timestamp, cache, report):
     text(draw, (32, footer + 27), "Times mark reviewed samples, not action boundaries. Short actions may be missed.", "small", MUTED)
     note = "Amber cards: reviewer found unsupported or mistimed evidence. Model output is unchanged." if report.get("_audit") else "No attention map. '?' marks ambiguous order. Model evidence can be wrong."
     text(draw, (32, footer + 49), note, "small", AMBER)
+    if reference:
+        outcome = reference["summary"] if timestamp >= max(report["sampled_seconds"]) else "Review comparison: pending until all source quarters have played."
+        text(draw, (32, footer + 72), outcome, "small", AMBER)
     return canvas.resize((960, round(canvas.height * 960 / 1120)), Image.Resampling.LANCZOS)
 
 

@@ -13,7 +13,10 @@ OpenAI APIキーや有料の推論APIは使いません。GPUの割り当てはC
 
 モデルはFP16、SDPAで読み込みます。初回にはモデルのダウンロードが必要です。
 既定では動画全体から最大24フレームを抽出し、画像あたりの解像度を抑えてGPUメモリーを制限します。
-メモリー不足の場合は `MAX_FRAMES` を16または8に減らしてください。
+既定の `FRAMEWISE=True` は1枚ずつ画像を認識し、観測文を同じモデルでフローに整理します。
+モデルの観測文と整理結果は両方保存します。各段階に誤認・要約の誤りがありえるため、元画像との照合が必要です。
+`FRAMEWISE=False` で全画像を一度に渡す方法も比較できます。
+メモリー不足の場合は `MAX_IMAGE_PATCHES` または `MAX_FRAMES` を減らしてください。
 
 モデルはフレームIDを根拠として返し、コードが実際の抽出時刻に対応付けます。
 未提供のID、不正JSON、推論失敗はエラーにします。根拠を推測して補修したり、成功結果へ置き換えたりしません。
@@ -34,6 +37,32 @@ OpenAI APIキーや有料の推論APIは使いません。GPUの割り当てはC
 ノートブック本体には実行出力を保存せず配布しています。
 
 ## Colabで実行して確認したこと
+
+READMEの主GIFは、3B/FP16で24枚を個別認識した今回の実出力です。
+モデルの動作名・時刻は未修正で、黄色のカードだけが推論後のCodexレビューです。
+[以前の動画レビューによる7動作の基準](assets/video-demo/source-flow-baseline.json)と比較すると、
+紙の取得と手拭きの混同、すすぎの時刻違い、最後のゴミ箱を「水槽」とする誤認が残りました。
+**フロー全体とその順序は未確認です。** 基準の動作をモデルに教えて成功例を作ってはいません。
+
+![Actual 3B framewise output and independent flow comparison](assets/qwen-3b-framewise.gif)
+
+- [実際のレポート](assets/video-demo/qwen-3b-framewise-flow.json)
+- [24枚の観測文とフロー整理の生出力](assets/video-demo/qwen-3b-framewise-raw.txt)
+- [独立した根拠・基準フローとの比較](assets/video-demo/qwen-3b-framewise-review.json)
+- [実行条件](assets/video-demo/qwen-3b-framewise-execution.json): T4、FP16、24枚、画像最大200,704画素、154.152秒（モデル読み込みを含む）。
+- [実際の確認画面](assets/local-vlm-framewise-result.jpg): 元動画・抽出画像がゴミ箱を示す一方、モデルは「水槽」と報告しています。
+
+保存済みの基準に対応する7動作について、別レビューに一致状況と隣接順序の確認状況を記録しています。
+画像と時刻が実在すること、観測された動作が正しいこと、期待フロー全体に一致することをそれぞれ確認できます。
+この比較は単一動画の検証で、モデル全体の精度評価ではありません。
+
+次のコマンドで同じ認識方式を実行できます。
+
+```bash
+python scripts/run_local_video_flow.py docs/assets/video-demo/source.webm --framewise
+```
+
+### 初回3Bと7Bの比較記録
 
 2026-10-08、T4（14.6 GiB）で同梱動画を24フレームに抽出し、3Bモデルの実推論とHTML確認画面まで実行しました。
 初回は重み取得込みで150.1秒でした。ただし、初回のモデルは複数の動作に0秒を根拠として付け、
@@ -56,8 +85,20 @@ Colabから取得した初回結果を、元動画入りの単独HTMLで開い�
 ただし3Bは手拭きやゴミ箱付近を「消毒」と誤認し、6枚ごとの時間窓でも誤認が残りました。
 現在の実装は画像IDを検証し、モデルの判定理由として表示します。IDが実在しても動作の意味が正しいとは限りません。
 
-7Bの4bit実行も開始しましたが、重み取得中にブラウザーの操作接続が不安定になり、
-最終結果はまだ取得・確認できていません。7Bの実行成功や認識精度は未検証です。
+7B/NF4の一括認識も実行しました。24枚・画像最大200,704画素と100,352画素ではT4のメモリー不足で失敗しました。
+50,176画素へ下げると推論は完了しましたが、手拭きの場面まで洗浄と判定し、7動作すべての根拠が重複しました。
+この出力を成功例として扱っていません。
+[未修正の一括認識レポート](assets/video-demo/qwen-7b-joint-flow.json)、
+[生出力](assets/video-demo/qwen-7b-joint-raw.txt)、
+[実行条件](assets/video-demo/qwen-7b-joint-execution.json)を保存しています。
+
+7B/NF4で24枚を1枚ずつ認識し、観測文から整理する方式も実行しました（画像最大200,704画素）。
+この実行では紙タオル装置を石鹸装置と誤認し、最終フローは「Soap Dispensing」「Hand Washing」の2動作にまとめられました。
+1枚ずつ渡しても意味の誤認は解決しませんでした。
+[個別認識のレポート](assets/video-demo/qwen-7b-framewise-flow.json)、
+[24枚の観測文と整理応答](assets/video-demo/qwen-7b-framewise-raw.txt)、
+[実行条件](assets/video-demo/qwen-7b-framewise-execution.json)を保存しています。
+誤認の原因が量子化かモデル自体かは、この比較では切り分けていません。
 
 ## 同じモデルをローカルやWeb APIで使う
 
@@ -79,11 +120,13 @@ STEPCHECK_MAX_VIDEO_FRAMES=24
 ```
 
 より大きいモデルは4bit量子化でも読み込めます。`providers[local,quantized]` をインストールし、
-CLIでは `--model Qwen/Qwen2.5-VL-7B-Instruct --load-in-4bit`、Web APIでは
+CLIでは `--model Qwen/Qwen2.5-VL-7B-Instruct --load-in-4bit --framewise`、Web APIでは
 `STEPCHECK_LOCAL_MODEL=Qwen/Qwen2.5-VL-7B-Instruct` と `STEPCHECK_LOCAL_LOAD_IN_4BIT=true` を指定します。
 NF4で重みを圧縮し、計算はFP16で行います。モデルの重みは初回に取得するため、量子化してもダウンロードは必要です。
 認識精度は別に評価してください。
-ColabではGPU確認セルで7Bを選び、`LOAD_IN_4BIT` を有効にします。
+ColabではGPU確認セルで7Bを選び、`LOAD_IN_4BIT` と `FRAMEWISE` を有効にします。
+一括認識を比較する場合は `--image-patches 64`（Colabでは `MAX_IMAGE_PATCHES=64`）へ下げられます。
+Web APIは一括認識です。個別認識の比較はColabまたはCLIを使ってください。
 
 GPUのモデル重みは最初のリクエストで読み込み、その後のリクエストで再利用します。
 画面にはローカルVLMで処理することを表示し、OpenAIへの送信案内と切り替えます。

@@ -1,0 +1,126 @@
+{
+  "method": "framewise observations then text grouping",
+  "observations": [
+    {
+      "frame_id": 0,
+      "timestamp_seconds": 0.0,
+      "observation": "A left hand is positioned under a soap dispenser, palm facing up. The hand appears to be in the process of receiving soap. The dispenser is metallic and partially visible. The background shows blue tiled walls. There is no visible water stream or paper in the frame. The hand's position suggests it is about to catch the soap dispensed."
+    },
+    {
+      "frame_id": 1,
+      "timestamp_seconds": 0.995783,
+      "observation": "In the frame, a hand is positioned under a running faucet, with water visibly streaming over it. The hand appears to be in the process of washing, as soap suds are visible on the palm and fingers. The background shows a tiled wall, suggesting a bathroom setting. The faucet handle is partially visible, indicating the water flow. The hand is slightly cupped, allowing the water to flow through. There are no other objects or hands interacting with the scene."
+    },
+    {
+      "frame_id": 2,
+      "timestamp_seconds": 1.991565,
+      "observation": "In the frame, hands are actively rubbing together under running water from a faucet. The hands are covered with soap suds, indicating they are being washed. A bar of soap rests on the edge of the sink. The water stream is visible, flowing into the sink. The faucet handle is partially visible, suggesting it is turned on. The sink appears clean and white."
+    },
+    {
+      "frame_id": 3,
+      "timestamp_seconds": 2.987348,
+      "observation": "In the frame, a person's hands are shown under running water from a faucet. The left hand is positioned with fingers slightly spread apart, while the right hand is actively rubbing soap between the fingers. The soap appears to be white and foamy, covering the fingers of both hands. The sink is white, and the faucet is metallic with a shiny finish. There is no visible lather or water stream on the hands other than what is being washed away by the running water. The background includes part of the sink and a soap dish with a bar of soap resting on it."
+    },
+    {
+      "frame_id": 4,
+      "timestamp_seconds": 3.98313,
+      "observation": "In the frame, hands are actively rubbing together under running water from a faucet. The hands are covered with soap suds, indicating they are being washed. A bar of soap rests on the edge of the sink, partially visible. The water stream is clear and continuous, flowing directly onto the hands. The faucet handle is turned on, and the sink appears clean and white. There are no other objects or hands interacting with the scene."
+    },
+    {
+      "frame_id": 5,
+      "timestamp_seconds": 4.978913,
+      "observation": "A pair of hands is shown under running water from a faucet. The hands are actively rubbing together, creating visible soap suds. The water stream is clear and continuous, flowing directly over the hands. The sink is white, and the faucet is metallic with a shiny finish. The hands appear to be in motion, suggesting the act of washing. There is no visible soap bar or additional objects in the frame."
+    },
+    {
+      "frame_id": 6,
+      "timestamp_seconds": 5.974696,
+      "observation": "A pair of hands is actively washing under running water from a faucet. The hands are covered in soap suds, indicating they are being scrubbed. A white soap dish with a bar of soap is visible on the edge of the sink. The water stream is clear and steady, flowing directly onto the hands. The faucet handle is partially visible, suggesting it might be turned on. The sink appears clean and white."
+    },
+    {
+      "frame_id": 7,
+      "timestamp_seconds": 6.970478,
+      "observation": "In the frame, hands are actively rubbing together under running water from a faucet. The hands are covered with soap suds, indicating they are being washed. A bar of soap rests on the edge of the sink behind the hands. The water stream is clearly visible, flowing steadily into the sink. The faucet handle is partially visible, suggesting it may be turned on. The sink appears clean and white."
+    },
+    {
+      "frame_id": 8,
+      "timestamp_seconds": 7.966261,
+      "observation": "A pair of hands is actively rubbing together under running water from a faucet. The hands are positioned palm-to-palm, fingers interlocked, suggesting a thorough handwashing motion. The water flows steadily into a white sink, creating a clear stream. A bar of soap rests on the edge of the sink, partially visible. The faucet handle is metallic and shiny, reflecting light. The hands appear to be soapy, indicating the use of soap during the washing process."
+    },
+    {
+      "frame_id": 9,
+      "timestamp_seconds": 8.962043,
+      "observation": "In the frame, hands are actively rubbing together under running water from a faucet. The hands are covered in soap suds, indicating they are being washed. The faucet is metallic and shiny, with a visible handle. A white soap dish containing a bar of soap is placed on the edge of the sink. The sink itself is white, and there is a drain visible beneath the hands. The water stream is clear and directed towards the hands, creating ripples. The hands are positioned palm-to-palm, suggesting thorough scrubbing."
+    },
+    {
+      "frame_id": 10,
+      "timestamp_seconds": 9.957826,
+      "observation": "In the frame, hands are actively rubbing together under running water from a faucet. The hands are covered in soap suds, indicating they are being washed. A bar of soap rests on the edge of the sink. The water stream is visible, flowing into the sink drain. The faucet handle is partially visible, suggesting it is turned on. The hands are positioned close to each other, with fingers interlocked as they rub."
+    },
+    {
+      "frame_id": 11,
+      "timestamp_seconds": 10.953609,
+      "observation": "In the frame, a person is washing their hands under running water from a faucet. The hands are covered with soap suds, indicating they are actively scrubbing. A bar of soap rests on the edge of the sink. The water stream is visible, flowing into the sink. The faucet handle is partially obscured by the person's hand. The sink appears clean and white."
+    },
+    {
+      "frame_id": 12,
+      "timestamp_seconds": 11.949391,
+      "observation": "A person's hands are under running water from a faucet. The left hand is partially submerged, with soap suds covering it. The right hand is positioned above the left, also covered in suds. The faucet is metallic and shiny, with a white sink visible beneath. A bar of soap rests on the edge of the sink. The person's arm, wearing a pink and white striped sleeve, is partially visible. The water stream is clear and steady."
+    },
+    {
+      "frame_id": 13,
+      "timestamp_seconds": 12.945174,
+      "observation": "A person is washing their hands under running water from a faucet. The left hand is positioned under the stream of water, with fingers slightly spread apart. The right hand is partially submerged, with the thumb and index finger touching near the wrist area. The water flows steadily into the sink. There is no visible soap or lather on the hands. The background includes part of a striped shirt and a white sink."
+    },
+    {
+      "frame_id": 14,
+      "timestamp_seconds": 13.940957,
+      "observation": "A left hand is shown reaching towards a wall-mounted soap dispenser. The hand is positioned with the palm facing upwards, fingers slightly curled as it approaches the dispenser. A white, foamy substance is visible on the fingers, indicating recent application of soap. The background includes a glimpse of a blue tiled wall and part of a sink area. The soap dispenser appears to be metallic and mounted on a light-colored wall."
+    },
+    {
+      "frame_id": 15,
+      "timestamp_seconds": 14.936739,
+      "observation": "In this frame, a person's hands are positioned near a wall-mounted soap dispenser. The left hand holds a white bar of soap, while the right hand is extended towards the dispenser. There is no visible lather, water stream, or paper. The background includes a mirror reflecting part of the scene, but no additional objects or actions are discernible."
+    },
+    {
+      "frame_id": 16,
+      "timestamp_seconds": 15.932522,
+      "observation": "In the frame, a person's hands are positioned near a wall-mounted soap dispenser. The left hand is partially obscured by the right hand, which appears to be holding a small white object, possibly a soap bar or a piece of paper. The background shows a tiled wall with blue and white patterns, suggesting a bathroom setting. There is no visible lather, water stream, or paper in the frame. The interaction seems to be focused on the soap dispenser, but the exact action (e.g., dispensing soap) cannot be determined from this single frame."
+    },
+    {
+      "frame_id": 17,
+      "timestamp_seconds": 16.928304,
+      "observation": "A left hand is positioned near a soap dispenser, with fingers slightly curled as if about to press it. The hand appears clean, with no visible lather or soap residue. A white paper towel is partially visible on the right side of the frame, hanging from a dispenser. The background shows a tiled wall with blue and white patterns, likely part of a bathroom setting. The water stream is not visible in this frame."
+    },
+    {
+      "frame_id": 18,
+      "timestamp_seconds": 17.924087,
+      "observation": "A left hand reaches towards a metallic soap dispenser mounted on a wall. The hand is positioned with fingers slightly curled, ready to press the dispenser. A small amount of soap lather is visible on the fingers. The background shows a tiled bathroom wall with blue and white tiles. The soap dispenser appears to be partially used, as some soap residue is visible on its surface. The water stream or paper is not visible in this frame."
+    },
+    {
+      "frame_id": 19,
+      "timestamp_seconds": 18.91987,
+      "observation": "A person's right hand is extended towards a wall-mounted soap dispenser. The hand is positioned to grasp the soap. The dispenser appears to be partially obscured by the hand. There is no visible lather, water stream, or paper towel in the frame. The background shows a tiled wall with blue and white tiles."
+    },
+    {
+      "frame_id": 20,
+      "timestamp_seconds": 19.915652,
+      "observation": "A left hand is partially visible, holding a small white object near a metallic surface. The hand appears to be positioned as if about to interact with the object. There is no visible lather, water stream, or paper interaction occurring in this frame. The background shows a tiled wall and part of a mirror reflecting a blue-tiled area. Some details are obscured due to the angle and framing of the shot."
+    },
+    {
+      "frame_id": 21,
+      "timestamp_seconds": 20.911435,
+      "observation": "The image shows a plain, light brown background with no visible hands, objects, or water streams. There are no discernible lathers or papers present. The frame appears to be empty, with no clear interaction or action taking place."
+    },
+    {
+      "frame_id": 22,
+      "timestamp_seconds": 21.907217,
+      "observation": "A hand is positioned near a faucet, with soap being dispensed onto it. The hand appears to be in the process of washing. The background shows a trash can partially filled with white bags. The image is slightly blurry, making some details unclear."
+    },
+    {
+      "frame_id": 23,
+      "timestamp_seconds": 22.903,
+      "observation": "A person's left hand, wearing a pink and white striped sleeve, is holding a white plastic bag. The hand is positioned over a trash can, with the fingers slightly curled around the bag's edge. The background shows a beige wall and part of a white surface, likely a countertop or table. There is no visible lather, water stream, or paper interaction in the frame. The image is slightly blurry, making some details less clear."
+    }
+  ],
+  "grouping_response": "```json\n{\n  \"title\": \"Hand Washing Sequence\",\n  \"actions\": [\n    {\n      \"label\": \"Soap Dispensing\",\n      \"reason\": \"The hand is positioned under a soap dispenser with the palm facing up, indicating readiness to receive soap.\",\n      \"evidence_frame_ids\": [0],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"Hand Washing\",\n      \"reason\": \"The hand is positioned under a running faucet with water visibly streaming over it, and soap suds are visible on the palm and fingers, indicating the start of a handwashing routine.\",\n      \"evidence_frame_ids\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22],\n      \"uncertainty\": \"\"\n    }\n  ],\n  \"limitations\": []\n}\n```"
+}

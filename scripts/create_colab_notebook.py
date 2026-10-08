@@ -54,8 +54,9 @@ print("GPU:", torch.cuda.get_device_name(0))
 print("VRAM:", round(torch.cuda.get_device_properties(0).total_memory / 2**30, 1), "GiB")
 MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct" #@param ["Qwen/Qwen2.5-VL-3B-Instruct", "Qwen/Qwen2.5-VL-7B-Instruct"]
 LOAD_IN_4BIT = False #@param {type:"boolean"}
+FRAMEWISE = True #@param {type:"boolean"}
 MAX_FRAMES = 24  # GPUメモリーが足りない場合は16または8へ減らす
-MAX_IMAGE_PATCHES = 64 if "7B" in MODEL_ID else 256  # 7B/T4は低解像度から試す
+MAX_IMAGE_PATCHES = 256 if FRAMEWISE else (64 if "7B" in MODEL_ID else 256)
 print("Local model:", MODEL_ID)'''),
         nbf.v4.new_code_cell('''# 3. 動画を選択（標準は同梱の公開動画）
 UPLOAD_VIDEO = False #@param {type:"boolean"}
@@ -84,6 +85,7 @@ if "provider" not in globals() or provider.model_id != MODEL_ID or provider.load
         gc.collect()
         torch.cuda.empty_cache()
     provider = create_provider("qwen-local", model=MODEL_ID, load_in_4bit=LOAD_IN_4BIT)
+provider.framewise = FRAMEWISE
 if provider.max_pixels != MAX_IMAGE_PATCHES * 28 * 28:
     provider.max_pixels = MAX_IMAGE_PATCHES * 28 * 28
     if provider._processor is not None:
@@ -112,13 +114,14 @@ if DOWNLOAD_RESULTS:
 `/content/stepcheck-output/` に次のファイルを保存します。
 
 - `flow.json`: 今回の認識結果、根拠時刻、抽出フレーム、動画SHA-256。
-- `model-response.txt`: ローカルモデルの生出力。
+- `model-response.txt`: ローカルモデルの生出力。個別認識では各フレームの観測文とフロー整理の応答。
 - `viewer.html`: 元動画と根拠画像を含む、単独で開ける確認画面。
 - `execution.json`: モデルのリビジョン、GPU、依存パッケージ、実行時間。
 
 ダウンロードセルの `DOWNLOAD_RESULTS` を有効にすると、これらをZIPで取得できます。
 
-別の動画は動画選択セルから選択します。7B/T4は `LOAD_IN_4BIT=True` と小さい画像設定で試してください。
+別の動画は動画選択セルから選択します。7B/T4は `LOAD_IN_4BIT=True` と `FRAMEWISE=True` で試してください。
+個別認識はフレーム1枚ずつのVLM観測後、観測文をモデルでフローに整理します。両段階の生出力を保存します。
 GPUメモリー不足は `MAX_IMAGE_PATCHES`（64 / 128 / 256）や `MAX_FRAMES` を減らして再実行します。
 画像を小さくすると細かい動作が見えにくくなるため、結果の根拠確認が必要です。
 JSONや根拠IDが不正なモデル出力はエラーにします。見えない動作を補完したり、成功結果に置き換えたりしません。

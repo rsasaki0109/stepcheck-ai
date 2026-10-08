@@ -10,28 +10,31 @@ One video → vision-language model → observed actions, order, and evidence fr
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
 
-![One handwashing video in four chronological panels with the action flow detected from visual evidence](docs/assets/detected-flow.gif)
+![Actual local VLM predictions from one video, with source-flow comparison in four chronological panels](docs/assets/qwen-3b-framewise.gif)
 
-<sub>One video → observed actions → flow. Labels appear with their supporting frames. Recorded Codex recognition through MCP; no attention heatmap.</sub>
+<sub>One real video → Qwen2.5-VL-3B on Colab T4 → frame observations → flow. Recorded inference replay; amber cards are an independent evidence review, not attention.</sub>
 
 </div>
 
-StepCheck AI uses a **vision-language model (VLM)** to check whether work was carried out
+StepCheck AI uses a **vision-language model (VLM)** to discover actions from a single video,
+and to check whether work was carried out
 **according to a written procedure**. The included `OpenAIProvider` sends the Markdown
 steps and work images to a multimodal model (configured as `gpt-4o` by default), which
 judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
 score and a human-readable reason grounded in the images.
 
-The GIF above demonstrates **flow discovery from one real video**. The MCP
-`detect_flow()` tool sends timestamped source images to the connected vision host
-without supplying an expected procedure. Codex recognized seven actions, including
-pulling a paper towel and holding the door handle through that towel. The
-[detected flow](docs/assets/video-demo/detected-flow.json) contains the visual reasons,
-supporting timestamps, uncertainties, and computed order between observations.
-Four panels play the video's time quarters in source order; action labels appear
-only after supporting evidence is reached. This is a replay of recorded recognition,
-with no heatmap. See [the video demo guide](docs/video-demo.md) for running detection
-and, separately, comparing observations against an expected flow.
+The GIF above replays **actual local VLM inference on one real video**. Qwen observes
+24 source frames individually, then groups its descriptions into actions and evidence
+times. It receives no expected procedure. Four panels play equal time quarters in
+source order. Model predictions remain unchanged, including mistakes.
+
+An independent review compares the output with the earlier
+[seven-action source baseline](docs/assets/video-demo/source-flow-baseline.json):
+soap → lather → rinse → pull towel → dry → hold door handle → lower towel into bin.
+Amber cards identify unsupported or mistimed evidence; the final comparison states
+whether the whole flow was verified. This single-video demo is not an accuracy benchmark.
+See [the raw predictions and review](docs/colab-local-vlm.md), or the separate
+[recorded Codex/MCP flow demo](docs/video-demo.md).
 
 The web app now accepts **a single video** and lets you inspect each recognized
 action's supporting frames, source timestamps, reasons, and uncertainties. Video
@@ -59,7 +62,7 @@ structured output (the existing default is `gpt-4o`). For a recorded preview, ch
 Live recognition of a new upload is separate from that recorded demo.
 
 For **keyless live recognition**, open the [local-VLM Colab notebook](notebooks/stepcheck_local_vlm.ipynb).
-It runs Qwen2.5-VL-3B-Instruct on the runtime GPU and generates a flow/evidence viewer
+It runs Qwen2.5-VL-3B-Instruct on the runtime GPU, observes each sampled frame, and generates a flow/evidence viewer
 from the chosen video. See [Colab/local GPU setup](docs/colab-local-vlm.md). The same
 provider can be selected in the backend with `STEPCHECK_PROVIDER=qwen-local`.
 
@@ -73,7 +76,8 @@ incorrect actions and evidence times. Model output is unchanged; amber cards sho
 an independent Codex review after inference, not attention or model confidence.
 The current input binds each image directly to its ID and time. See the
 [raw output, review, and execution notes](docs/colab-local-vlm.md#colabで実行して確認したこと).
-The 7B comparison was started; its result has not yet been retrieved or verified.
+The 7B comparison also completed. It misidentified the towel dispenser and failed to
+recover the full flow; its raw output and execution conditions are saved in the same guide.
 
 </details>
 

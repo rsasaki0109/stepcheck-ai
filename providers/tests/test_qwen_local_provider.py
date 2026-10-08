@@ -63,3 +63,30 @@ async def test_frame_budget_prevents_unbounded_gpu_requests():
     with pytest.raises(FlowInferenceError):
         await provider.discover_flow(frames() * 17, 2)
     provider._generate.assert_not_called()
+
+
+async def test_framewise_grouping_records_real_images_and_each_exact_observation():
+    provider = create_provider("qwen-local", framewise=True)
+    provider._generate = Mock(side_effect=["first observed interaction", "second observed interaction", response([1])])
+    result = await provider.discover_flow(frames(), 2)
+    calls = provider._generate.call_args_list
+    assert calls[0].args[0][0].data == b"first"
+    assert calls[1].args[0][0].data == b"second"
+    assert calls[2].args[0] == []
+    assert "first observed interaction" in calls[2].args[1]
+    assert "No expected procedure" in calls[2].args[1]
+    raw = json.loads(provider.last_raw_response)
+    assert raw["observations"][1]["timestamp_seconds"] == 1.234567
+    assert raw["grouping_response"] == response([1])
+    assert result.actions[0].evidence_seconds == [1.234567]
+
+
+async def test_failed_framewise_call_preserves_completed_observations_without_success():
+    provider = create_provider("qwen-local", framewise=True)
+    provider._generate = Mock(side_effect=["actual first observation", RuntimeError("GPU failed")])
+    with pytest.raises(FlowInferenceError):
+        await provider.discover_flow(frames(), 2)
+    raw = json.loads(provider.last_raw_response)
+    assert len(raw["observations"]) == 1
+    assert raw["observations"][0]["observation"] == "actual first observation"
+    assert raw["grouping_response"] == ""

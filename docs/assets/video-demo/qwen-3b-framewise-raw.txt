@@ -1,0 +1,126 @@
+{
+  "method": "framewise observations then text grouping",
+  "observations": [
+    {
+      "frame_id": 0,
+      "timestamp_seconds": 0.0,
+      "observation": "A hand reaches towards a blue and white tiled surface, likely a sink or faucet. The hand is positioned near the edge of the sink, with fingers slightly spread apart. There is no visible water stream or soap on the hand. The background consists of the same blue and white tiles."
+    },
+    {
+      "frame_id": 1,
+      "timestamp_seconds": 0.995783,
+      "observation": "A hand reaches towards a faucet above a sink. The hand is positioned near the faucet handle, which is partially visible. The sink has a soap dispenser attached to it. There is a small amount of water droplets on the surface of the sink. The hand appears to be about to turn on the faucet."
+    },
+    {
+      "frame_id": 2,
+      "timestamp_seconds": 1.991565,
+      "observation": "A hand with soap suds on it is rubbing against the edge of a sink. The faucet is turned off, and there is a bar of soap on the sink's surface. The hand appears to be in the process of washing or rinsing something."
+    },
+    {
+      "frame_id": 3,
+      "timestamp_seconds": 2.987348,
+      "observation": "A hand with soap suds on it is being rinsed under running water from a faucet. The hand is positioned over a sink, and the water is flowing from the faucet onto the hand. There is no visible object other than the hand and the soap."
+    },
+    {
+      "frame_id": 4,
+      "timestamp_seconds": 3.98313,
+      "observation": "A hand with soap suds on it is being rinsed under running water from a faucet. The hand is positioned over a sink drain, and the water flows directly onto the soap suds. A bar of soap is visible on the edge of the sink."
+    },
+    {
+      "frame_id": 5,
+      "timestamp_seconds": 4.978913,
+      "observation": "A hand with soap suds on it is being rinsed under running water from a faucet. The hand is positioned over a sink drain, and the water flows directly onto the soap suds. The hand appears to be moving slightly, possibly to ensure all soap is washed off."
+    },
+    {
+      "frame_id": 6,
+      "timestamp_seconds": 5.974696,
+      "observation": "A hand with soap suds on it is being rinsed under running water from a faucet. The hand is positioned over a sink, with the faucet directly above it. The water is flowing down the hand, and the soap suds are being washed away. There is no visible paper or other objects in the frame."
+    },
+    {
+      "frame_id": 7,
+      "timestamp_seconds": 6.970478,
+      "observation": "A hand is under running water from a faucet, with soap on the sink. The hand is wet and appears to be rubbing soap between the fingers. There is no visible water stream or paper in the frame."
+    },
+    {
+      "frame_id": 8,
+      "timestamp_seconds": 7.966261,
+      "observation": "A hand is holding an orange sponge under running water from a faucet. The hand is positioned above a sink with a soap dispenser on the left side. The water is flowing from the faucet into the sink. The hand appears to be moving slightly, but no specific action is being performed with the sponge."
+    },
+    {
+      "frame_id": 9,
+      "timestamp_seconds": 8.962043,
+      "observation": "A hand is holding a bar of soap under running water from a faucet. The soap is partially covered in suds. The hand is positioned over a sink with a drain visible below. A small amount of soap suds can be seen on the fingers."
+    },
+    {
+      "frame_id": 10,
+      "timestamp_seconds": 9.957826,
+      "observation": "A person's hands are under running water from a faucet. The left hand is holding a bar of soap, which is partially submerged in the water. Soap suds are forming on both hands. The right hand is moving slightly, possibly to spread the soap or to rinse off some of the soap. There is no visible paper towel or other objects in the frame."
+    },
+    {
+      "frame_id": 11,
+      "timestamp_seconds": 10.953609,
+      "observation": "A person's hands are under running water from a faucet. The left hand is rubbing soap against the right hand, creating a lather. A bar of soap is placed on the edge of the sink. The water flows smoothly into the sink drain."
+    },
+    {
+      "frame_id": 12,
+      "timestamp_seconds": 11.949391,
+      "observation": "A hand is under running water from a faucet, with soap bubbles visible on the fingers. The hand is positioned near the edge of a sink, and the water flows down the back of the hand. The hand appears to be wet, and there is no visible soap bar or paper towel in the frame."
+    },
+    {
+      "frame_id": 13,
+      "timestamp_seconds": 12.945174,
+      "observation": "A child's hand is under running water from a faucet. The hand is positioned to catch the water, with fingers slightly spread apart. There is no soap or paper towel visible in the frame. The background shows part of a sink and a pink and white striped garment."
+    },
+    {
+      "frame_id": 14,
+      "timestamp_seconds": 13.940957,
+      "observation": "A hand reaches out to grab a piece of white paper towel from a dispenser mounted on a wall. The hand is positioned near the dispenser, with fingers extended towards the paper. The paper towel appears crisp and clean. There is no visible water stream or other objects interacting with the hand or paper towel in this frame."
+    },
+    {
+      "frame_id": 15,
+      "timestamp_seconds": 14.936739,
+      "observation": "A hand reaches for a white paper towel dispenser mounted on a wall. The hand pulls out a sheet of paper towel, which is partially visible as it emerges from the dispenser. The hand then moves away, leaving the paper towel hanging down."
+    },
+    {
+      "frame_id": 16,
+      "timestamp_seconds": 15.932522,
+      "observation": "A hand reaches out to grab a white paper towel from a dispenser mounted on a wall. The hand is positioned near the dispenser, with fingers slightly curled around the edge of the paper towel. The paper towel appears to be partially used, with some creases and folds visible. There is no visible water stream or soap in the frame."
+    },
+    {
+      "frame_id": 17,
+      "timestamp_seconds": 16.928304,
+      "observation": "A hand reaches out to grab a white paper towel from a dispenser mounted on a wall. The hand is positioned near the dispenser, with fingers slightly curled around the edge of the paper towel. The paper towel appears to be partially unrolled, revealing its texture and color. There is no visible water stream or other objects interacting with the hand or paper towel in this frame."
+    },
+    {
+      "frame_id": 18,
+      "timestamp_seconds": 17.924087,
+      "observation": "A hand reaches out to grab a roll of toilet paper from a dispenser mounted on a wall. The hand is positioned near the dispenser, with fingers extended towards it. The paper is partially unrolled, revealing a few sheets. There is no visible water stream or other objects interacting with the hand or paper."
+    },
+    {
+      "frame_id": 19,
+      "timestamp_seconds": 18.91987,
+      "observation": "A hand reaches out to grab a piece of toilet paper from a dispenser mounted on a wall. The hand is positioned near the dispenser, with fingers extended towards it. The paper is white and appears to be fresh. There is no visible water stream or other objects in the frame."
+    },
+    {
+      "frame_id": 20,
+      "timestamp_seconds": 19.915652,
+      "observation": "A hand reaches out to grab a roll of toilet paper from a dispenser mounted on a wall. The hand is positioned near the dispenser, with fingers slightly curled around the edge of the paper. The paper appears to be partially unrolled, revealing a few sheets. There is no visible water stream or other objects interacting with the hand or paper."
+    },
+    {
+      "frame_id": 21,
+      "timestamp_seconds": 20.911435,
+      "observation": "A hand reaches into a sink filled with water. The hand is positioned near the edge of the sink, with fingers slightly curled as if to grasp something. There is a small amount of soap suds on the hand, indicating recent use. A water stream is visible, likely from a faucet, flowing over the hand and into the sink. The background is blurred, focusing attention on the hand and the immediate surroundings."
+    },
+    {
+      "frame_id": 22,
+      "timestamp_seconds": 21.907217,
+      "observation": "A hand is holding a white cloth, which appears to be wet, possibly from a water stream. The cloth is being moved towards a sink or a similar surface. There is no visible water stream or paper in the frame. The background shows a blurred view of what seems to be a bathroom setting with a towel rack and some items hanging on it."
+    },
+    {
+      "frame_id": 23,
+      "timestamp_seconds": 22.903,
+      "observation": "A hand reaches out to grab a white paper towel from a dispenser. The hand is positioned near the top of the dispenser, with fingers slightly curled around the edge. The paper towel is partially pulled out, revealing its texture and color. There is no visible water stream or other objects in the frame."
+    }
+  ],
+  "grouping_response": "```json\n{\n  \"title\": \"Hand Washing Process\",\n  \"actions\": [\n    {\n      \"label\": \"手が水を引く\",\n      \"reason\": \"手が水栓のハンドルに近づいています。\",\n      \"evidence_frame_ids\": [1, 2],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"手が洗う\",\n      \"reason\": \"手がソープで洗われています。\",\n      \"evidence_frame_ids\": [2, 3, 4, 5, 6, 7],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"手が水で流す\",\n      \"reason\": \"手が水で流されています。\",\n      \"evidence_frame_ids\": [3, 4, 5, 6, 7],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"手が石鹸を洗う\",\n      \"reason\": \"手が石鹸で洗われています。\",\n      \"evidence_frame_ids\": [7, 8, 9, 10, 11, 12],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"手が紙を取る\",\n      \"reason\": \"手が紙のディスペンサーから紙を取ります。\",\n      \"evidence_frame_ids\": [14, 15, 16, 17, 18, 19, 20],\n      \"uncertainty\": \"\"\n    },\n    {\n      \"label\": \"手が水槽に手を入れる\",\n      \"reason\": \"手が水槽に手を入れています。\",\n      \"evidence_frame_ids\": [21, 22, 23],\n      \"uncertainty\": \"\"\n    }\n  ],\n  \"limitations\": [\n    \"手の動きや状態はフレームごとに異なるため、完全な手順を示すことは難しい。\",\n    \"一部のフレームでは、背景や他の物体が見えないため、特定の動作の詳細を把握するのが難しい。\",\n    \"手の動作や状態はフレームごとに異なるため、完全な手順を示すことは難しい。\"\n  ]\n}\n```"
+}

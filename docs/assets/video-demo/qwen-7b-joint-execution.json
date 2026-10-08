@@ -1,0 +1,18 @@
+{
+  "executed_at_utc": "2026-10-08T05:31:11.832267+00:00",
+  "inference_seconds": 60.485,
+  "repo_commit": "ded3d61247129792a61287fbe8e683057de432b3",
+  "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+  "load_in_4bit": true,
+  "max_pixels": 50176,
+  "sample_count": 24,
+  "gpu": "Tesla T4",
+  "packages": {
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.1",
+    "accelerate": "1.15.0",
+    "bitsandbytes": "0.48.2"
+  },
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3"
+}
