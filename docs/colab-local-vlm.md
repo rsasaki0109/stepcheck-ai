@@ -25,6 +25,10 @@ OpenAI APIキーや有料の推論APIは使いません。GPUの割り当てはC
 - `flow.json`: 今回のモデル出力に基づく動作、根拠時刻、抽出画像、順番、動画SHA-256。
 - `model-response.txt`: モデルの生出力。不正JSONでも保存します。
 - `viewer.html`: 元動画と根拠画像を埋め込んだ、単独で開ける確認画面。
+- `execution.json`: GPU、モデルのリビジョン、依存パッケージと実行時間。
+
+`DOWNLOAD_RESULTS` を有効にすると、出力をZIPでダウンロードできます。
+推論が失敗した再実行では前回の成功画面を残さず、生出力を保存してエラーにします。
 
 動画と結果はColabランタイム内で処理します。ユーザー自身の動画を使った場合、出力ファイルにもその動画が含まれます。
 ノートブック本体には実行出力を保存せず配布しています。
@@ -47,6 +51,12 @@ STEPCHECK_PROVIDER=qwen-local
 STEPCHECK_LOCAL_MODEL=Qwen/Qwen2.5-VL-3B-Instruct
 STEPCHECK_MAX_VIDEO_FRAMES=24
 ```
+
+より大きいモデルは4bit量子化でも読み込めます。`providers[local,quantized]` をインストールし、
+CLIでは `--model Qwen/Qwen2.5-VL-7B-Instruct --load-in-4bit`、Web APIでは
+`STEPCHECK_LOCAL_MODEL=Qwen/Qwen2.5-VL-7B-Instruct` と `STEPCHECK_LOCAL_LOAD_IN_4BIT=true` を指定します。
+NF4で重みを圧縮し、計算はFP16で行います。モデルの重みは初回に取得するため、量子化してもダウンロードは必要です。
+認識精度は別に評価してください。
 
 GPUのモデル重みは最初のリクエストで読み込み、その後のリクエストで再利用します。
 画面にはローカルVLMで処理することを表示し、OpenAIへの送信案内と切り替えます。

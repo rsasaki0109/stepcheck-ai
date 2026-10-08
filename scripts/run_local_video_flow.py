@@ -5,12 +5,16 @@ from __future__ import annotations
 import argparse
 import asyncio
 import base64
+from datetime import datetime, timezone
 import hashlib
+from importlib.metadata import version, PackageNotFoundError
 import json
 import mimetypes
 from pathlib import Path
 import re
 import sys
+import subprocess
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "providers"), str(ROOT / "backend")]
@@ -41,11 +45,11 @@ button.selected{border-color:#5eead4;background:#143e3e}.flow{display:flex;flex-
 <div class="grid"><section class="card"><h2>元動画</h2><video id="source" controls playsinline preload="metadata" src="__SOURCE__"></video><p id="playback" class="muted tiny"></p></section>
 <section class="card"><h2>検出したフロー</h2><div id="flow" class="flow"></div><p class="muted tiny">動作を選ぶと根拠時刻へ移動します。時刻は観測フレームを示し、動作の開始・終了を保証しません。</p></section></div>
 <section class="card"><h2 id="selected-title">動作の根拠</h2><div class="grid"><div><img id="evidence" alt="選択した動作の根拠フレーム"><div id="times" class="times"></div></div>
-<div><h2>見えたこと</h2><p id="reason"></p><h2 class="note">不明なこと</h2><p id="uncertainty" class="note"></p></div></div></section>
+<div><h2>モデルの判定理由</h2><p id="reason"></p><h2 class="note">モデルが報告した不明点</h2><p id="uncertainty" class="note"></p></div></div></section>
 <details class="card" style="margin-top:20px"><summary>解析範囲と不明点</summary><ul id="limits"></ul></details></main>
 <script>(()=>{const report=__REPORT__;const root=document.getElementById('stepcheck-viewer');const get=id=>root.querySelector('#'+id);
 const seconds=t=>Number(t.toFixed(3))+'s';const video=get('source');let selected=null;
-get('mode').textContent=report.analysis_mode==='live'?'この動画への実推論結果':'記録済み結果の再生';
+get('mode').textContent=report.analysis_mode==='live'?'この動画への実推論結果・根拠の確認が必要':'記録済み結果の再生';
 get('title').textContent=report.title;get('meta').textContent=report.provider+' / '+report.model+' · '+report.frames.length+'フレーム · '+seconds(report.duration_seconds);
 video.addEventListener('timeupdate',()=>get('playback').textContent='元動画 '+seconds(video.currentTime));
 video.addEventListener('error',()=>get('playback').textContent='ブラウザーで元動画を再生できません。抽出した根拠画像で確認してください。');
@@ -66,12 +70,17 @@ if(report.actions.length)select(report.actions[0]);else{get('flow').textContent=
 
 
 async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.5-VL-3B-Instruct",
-                         max_frames: int = 24, interval: float = 0.75, provider=None) -> dict:
+                         max_frames: int = 24, interval: float = 0.75, provider=None,
+                         load_in_4bit: bool = False) -> dict:
     output.mkdir(parents=True, exist_ok=True)
+    for name in ("flow.json", "viewer.html", "execution.json", "model-response.txt"):
+        (output / name).unlink(missing_ok=True)
     if video.stat().st_size > 50 * 1024 * 1024:
         raise ValueError("Video exceeds the 50 MiB limit.")
     sampled = await asyncio.to_thread(sample_video, video, interval, 120, max_frames)
-    provider = provider or create_provider("qwen-local", model=model)
+    provider = provider or create_provider("qwen-local", model=model, load_in_4bit=load_in_4bit)
+    executed_at = datetime.now(timezone.utc).isoformat()
+    started = time.monotonic()
     print(f"Recognizing {len(sampled.frames)} source frames with {model}; first run downloads model weights.", flush=True)
     try:
         detection = await provider.discover_flow(sampled.frames, sampled.duration_seconds)
@@ -81,6 +90,25 @@ async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.
         source_sha256=hashlib.sha256(video.read_bytes()).hexdigest(), analysis_mode="live", model=model)
     (output / "flow.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     render_viewer(report, video, output / "viewer.html")
+    packages = {}
+    for name in ("torch", "transformers", "accelerate", "bitsandbytes"):
+        try:
+            packages[name] = version(name)
+        except PackageNotFoundError:
+            pass
+    torch = sys.modules.get("torch")
+    try:
+        commit = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True, timeout=5).strip()
+    except (OSError, subprocess.SubprocessError):
+        commit = None
+    execution = {"executed_at_utc": executed_at, "inference_seconds": round(time.monotonic() - started, 3),
+        "repo_commit": commit, "model": model,
+        "model_revision": getattr(getattr(getattr(provider, "_model", None), "config", None), "_commit_hash", None),
+        "load_in_4bit": getattr(provider, "load_in_4bit", False),
+        "max_pixels": getattr(provider, "max_pixels", None), "sample_count": len(sampled.frames),
+        "gpu": torch.cuda.get_device_name(0) if torch is not None and torch.cuda.is_available() else None,
+        "packages": packages, "source_sha256": report["source_sha256"]}
+    (output / "execution.json").write_text(json.dumps(execution, indent=2), encoding="utf-8")
     return report
 
 
@@ -89,8 +117,11 @@ async def main():
     parser.add_argument("video", type=Path)
     parser.add_argument("--output", type=Path, default=ROOT / ".tmp-flow-local")
     parser.add_argument("--max-frames", type=int, default=24, choices=range(2, 33))
+    parser.add_argument("--model", default="Qwen/Qwen2.5-VL-3B-Instruct")
+    parser.add_argument("--load-in-4bit", action="store_true")
     args = parser.parse_args()
-    result = await run_local_flow(args.video, args.output, max_frames=args.max_frames)
+    result = await run_local_flow(args.video, args.output, max_frames=args.max_frames,
+                                  model=args.model, load_in_4bit=args.load_in_4bit)
     print(f"Recognized {len(result['actions'])} actions. Open {args.output / 'viewer.html'}")
 
 

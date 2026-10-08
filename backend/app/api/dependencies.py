@@ -12,9 +12,9 @@ from ..config import Settings, get_settings
 
 
 @lru_cache(maxsize=1)
-def get_local_provider(model: str) -> VisionProvider:
+def get_local_provider(model: str, load_in_4bit: bool = False) -> VisionProvider:
     """Reuse the loaded GPU weights across status checks and uploads."""
-    return create_provider("qwen-local", model=model)
+    return create_provider("qwen-local", model=model, load_in_4bit=load_in_4bit)
 
 
 def get_provider(settings: Settings = Depends(get_settings)) -> VisionProvider:
@@ -23,7 +23,7 @@ def get_provider(settings: Settings = Depends(get_settings)) -> VisionProvider:
     if settings.provider == "openai":
         kwargs = {"api_key": settings.openai_api_key, "model": settings.model}
     elif settings.provider == "qwen-local":
-        return get_local_provider(settings.local_model)
+        return get_local_provider(settings.local_model, settings.local_load_in_4bit)
     return create_provider(settings.provider, **kwargs)
 
 

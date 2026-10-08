@@ -82,7 +82,7 @@ select `openai` for image analysis.
 - 🎬 **Single-video flow detection** — upload, recognize actions, and inspect supporting
   frames in the web UI. Timestamp overlap stays ambiguous; missing actions are not invented.
 - ✅❌⚠️ **Per-step verdicts** with confidence and an explanation of the reason.
-- 🔌 **Pluggable providers** — `mock` (no API key) and `openai` (GPT-4o) included; add your
+- 🔌 **Pluggable providers** — `mock`, `openai` (GPT-4o), and `qwen-local` (CUDA, no API key); add your
   own in one file.
 - 🧱 **Clean architecture** backend (domain / application / interface) with a shared
   contract package.

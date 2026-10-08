@@ -39,7 +39,7 @@ subprocess.run(["apt-get", "-qq", "update"], check=True)
 subprocess.run(["apt-get", "-qq", "install", "-y", "ffmpeg"], check=True)
 subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                 "transformers==4.57.1", "accelerate>=1.0,<2",
-                "-e", str(REPO / "providers") + "[local]",
+                "-e", str(REPO / "providers") + "[local,quantized]",
                 "-e", str(REPO / "backend")], check=True)
 sys.path[:0] = [str(REPO / "scripts"), str(REPO / "providers"), str(REPO / "backend")]
 print("Repository commit:")
@@ -50,7 +50,8 @@ import torch
 assert torch.cuda.is_available(), "ランタイムのタイプをT4 GPUに変更して、上から実行してください。"
 print("GPU:", torch.cuda.get_device_name(0))
 print("VRAM:", round(torch.cuda.get_device_properties(0).total_memory / 2**30, 1), "GiB")
-MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct"
+MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct" #@param ["Qwen/Qwen2.5-VL-3B-Instruct", "Qwen/Qwen2.5-VL-7B-Instruct"]
+LOAD_IN_4BIT = False #@param {type:"boolean"}
 MAX_FRAMES = 24  # GPUメモリーが足りない場合は16または8へ減らす
 print("Local model:", MODEL_ID)'''),
         nbf.v4.new_code_cell('''# 3. 動画を選択（標準は同梱の公開動画）
@@ -72,8 +73,8 @@ from stepcheck_providers import create_provider
 from run_local_video_flow import run_local_flow
 
 OUTPUT_DIR = Path("/content/stepcheck-output")
-if "provider" not in globals() or provider.model_id != MODEL_ID:
-    provider = create_provider("qwen-local", model=MODEL_ID)
+if "provider" not in globals() or provider.model_id != MODEL_ID or provider.load_in_4bit != LOAD_IN_4BIT:
+    provider = create_provider("qwen-local", model=MODEL_ID, load_in_4bit=LOAD_IN_4BIT)
 started = time.monotonic()
 report = await run_local_flow(VIDEO_PATH, OUTPUT_DIR, model=MODEL_ID,
                                max_frames=MAX_FRAMES, provider=provider)
@@ -84,6 +85,13 @@ print("Raw model output:", OUTPUT_DIR / "model-response.txt")'''),
         nbf.v4.new_code_cell('''# 5. 動作をクリックして根拠を確認
 from IPython.display import HTML, display
 display(HTML((OUTPUT_DIR / "viewer.html").read_text(encoding="utf-8")))'''),
+        nbf.v4.new_code_cell('''# 6. 必要なら結果をダウンロード（元動画も含まれます）
+DOWNLOAD_RESULTS = False #@param {type:"boolean"}
+if DOWNLOAD_RESULTS:
+    import shutil
+    from google.colab import files
+    archive = shutil.make_archive("/content/stepcheck-results", "zip", OUTPUT_DIR)
+    files.download(archive)'''),
         nbf.v4.new_markdown_cell("""## 出力と再実行
 
 `/content/stepcheck-output/` に次のファイルを保存します。
@@ -91,6 +99,9 @@ display(HTML((OUTPUT_DIR / "viewer.html").read_text(encoding="utf-8")))'''),
 - `flow.json`: 今回の認識結果、根拠時刻、抽出フレーム、動画SHA-256。
 - `model-response.txt`: ローカルモデルの生出力。
 - `viewer.html`: 元動画と根拠画像を含む、単独で開ける確認画面。
+- `execution.json`: モデルのリビジョン、GPU、依存パッケージ、実行時間。
+
+ダウンロードセルの `DOWNLOAD_RESULTS` を有効にすると、これらをZIPで取得できます。
 
 別の動画は動画選択セルから、GPUメモリー不足は `MAX_FRAMES` を減らして再実行します。
 JSONや根拠IDが不正なモデル出力はエラーにします。見えない動作を補完したり、成功結果に置き換えたりしません。
