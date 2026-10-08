@@ -13,3 +13,4 @@ docs/assets/video-demo/codex-reference-verification/* -text -whitespace
 docs/assets/video-demo/codex-reference-sampling/* -text -whitespace
 docs/assets/video-demo/codex-reference-refinement/* -text -whitespace
 docs/assets/video-demo/new-video-transfer/** -text -whitespace
+docs/assets/video-demo/automatic-reference-workflow/** -text -whitespace

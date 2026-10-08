@@ -1,0 +1,276 @@
+{
+  "title": "Visible handwashing flow for a new-video check",
+  "reference": {
+    "title": "Visible handwashing flow for a new-video check",
+    "scope": "Predeclared visible-action reference for transfer checking, not a hygiene-quality assessment. Unseen actions remain unknown. No expected timestamps are supplied.",
+    "steps": [
+      {
+        "id": "wet",
+        "label": "Wet hands with water",
+        "criterion": "Running or poured water visibly contacts hands before a visible soap-lather episode. A faucet or sink alone is insufficient."
+      },
+      {
+        "id": "soap",
+        "label": "Apply soap to hands",
+        "criterion": "Hands visibly receive soap from a dispenser, bottle, or bar. Lather alone does not prove application."
+      },
+      {
+        "id": "lather",
+        "label": "Rub hands with soap lather",
+        "criterion": "Hands rub together with visible soap foam; rubbing without visible foam is uncertain."
+      },
+      {
+        "id": "rinse",
+        "label": "Rinse hands with water",
+        "criterion": "After visible lather rubbing, water visibly contacts the hands; rubbing beside a faucet is insufficient."
+      },
+      {
+        "id": "dry",
+        "label": "Dry hands",
+        "criterion": "A towel or paper visibly contacts and wipes the hands, or hands are held in a visibly operating air dryer. Holding a towel nearby is insufficient."
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "wet",
+      "status": "observed",
+      "reason": "At 2 and 4 s the hands cup and turn beneath the visible faucet stream, before the soap-bar contact shown later. Water visibly reaches the hands.",
+      "evidence_seconds": [
+        2.0,
+        4.0
+      ],
+      "uncertainty": "Only sampled images were supplied; exact onset of water contact is not measured.",
+      "index": 1,
+      "label": "Wet hands with water"
+    },
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "The 6 s image shows a greenish soap bar in contact with the hands as the fingers rub or turn it. This is visible application rather than an inferred missing step.",
+      "evidence_seconds": [
+        6.0
+      ],
+      "uncertainty": "The fingers partially cover the bar; soap amount is not measurable.",
+      "index": 2,
+      "label": "Apply soap to hands"
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "At 12 s the hands rub together to the right of the flowing stream, with a light whitish soapy patch on the finger/hand surfaces.",
+      "evidence_seconds": [
+        12.0
+      ],
+      "uncertainty": "Lather is thin at this input resolution; wet highlights and lather are difficult to separate across some other views. No coverage or hygiene-quality claim is made.",
+      "index": 3,
+      "label": "Rub hands with soap lather"
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "After the cited lather view, the 16, 18 and 24 s images place and rotate the hands through the visibly flowing water from the faucet.",
+      "evidence_seconds": [
+        16.0,
+        18.0,
+        24.0
+      ],
+      "uncertainty": "Water also runs earlier; these are post-lather contact samples, not exact action boundaries.",
+      "index": 4,
+      "label": "Rinse hands with water"
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "The follow-up images at 24.5, 25 and 25.5 s still show hands in the water-stream area; at 26 s the hands withdraw. The 26.5, 27 and 31.936 s views show the running faucet and empty basin, with no hands wiping on paper/towel or contacting a visible operating dryer. These supplied views do not support drying.",
+      "evidence_seconds": [
+        25.5,
+        26.0,
+        26.5,
+        27.0,
+        31.936
+      ],
+      "uncertainty": "The hands leave the field of view. Drying outside that view remains possible and is not classified as not done.",
+      "index": 5,
+      "label": "Dry hands"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "wet",
+      "to": "soap",
+      "status": "sampled_before"
+    },
+    {
+      "from": "soap",
+      "to": "lather",
+      "status": "sampled_before"
+    },
+    {
+      "from": "lather",
+      "to": "rinse",
+      "status": "sampled_before"
+    },
+    {
+      "from": "rinse",
+      "to": "dry",
+      "status": "unknown"
+    }
+  ],
+  "order_status": "unknown",
+  "time_note": "Cited sample order, not continuous execution or exact action boundaries.",
+  "reviewer": "Codex vision session: actual sampling within one automatic MCP workflow call",
+  "method": "MCP sampling refinement: prior observed judgments retained; host visually reviewed unknown targets using follow-up source images",
+  "expected_procedure_supplied": true,
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "duration_seconds": 32.036,
+  "sampled_seconds": [
+    0.0,
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0,
+    12.0,
+    14.0,
+    16.0,
+    18.0,
+    20.0,
+    22.0,
+    24.0,
+    24.5,
+    25.0,
+    25.5,
+    26.0,
+    26.5,
+    27.0,
+    27.5,
+    28.0,
+    28.5,
+    29.0,
+    29.5,
+    30.0,
+    30.5,
+    31.0,
+    31.5,
+    31.936,
+    32.0
+  ],
+  "scope_note": "Visible sample evidence only. Not proof of uninterrupted execution, hidden actions, or completeness outside reviewed images.",
+  "refinement": {
+    "target_step_ids": [
+      "dry"
+    ],
+    "windows": [
+      {
+        "step_id": "dry",
+        "start_seconds": 24.0,
+        "end_seconds": 31.936
+      }
+    ],
+    "sampled_seconds": [
+      24.0,
+      24.5,
+      25.0,
+      25.5,
+      26.0,
+      26.5,
+      27.0,
+      27.5,
+      28.5,
+      29.0,
+      29.5,
+      30.5,
+      31.0,
+      31.5,
+      31.936
+    ],
+    "added_seconds": [
+      24.5,
+      25.0,
+      25.5,
+      26.5,
+      27.0,
+      27.5,
+      28.5,
+      29.0,
+      29.5,
+      30.5,
+      31.0,
+      31.5
+    ],
+    "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows.",
+    "reviewer": "Codex vision session: actual sampling within one automatic MCP workflow call",
+    "prior_order_status": "unknown",
+    "prior_report_sha256": "c5c6eddc76d82856b45d0095e277459f1906f82ebadcb3fb39e2c23e1445b7ea"
+  },
+  "workflow": {
+    "sampling_requests": 2,
+    "stop_reason": "unknown_after_followup",
+    "unknown_step_ids": [
+      "dry"
+    ],
+    "requested_refinement_interval_seconds": 0.25,
+    "max_frames": 24,
+    "interval_selection": {
+      "plan": {
+        "target_step_ids": [
+          "dry"
+        ],
+        "windows": [
+          {
+            "step_id": "dry",
+            "start_seconds": 24.0,
+            "end_seconds": 31.936
+          }
+        ],
+        "sampled_seconds": [
+          24.0,
+          24.5,
+          25.0,
+          25.5,
+          26.0,
+          26.5,
+          27.0,
+          27.5,
+          28.5,
+          29.0,
+          29.5,
+          30.5,
+          31.0,
+          31.5,
+          31.936
+        ],
+        "added_seconds": [
+          24.5,
+          25.0,
+          25.5,
+          26.5,
+          27.0,
+          27.5,
+          28.5,
+          29.0,
+          29.5,
+          30.5,
+          31.0,
+          31.5
+        ],
+        "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows."
+      },
+      "chosen_interval_seconds": 0.5,
+      "attempts": [
+        {
+          "interval_seconds": 0.25,
+          "status": "over_budget"
+        },
+        {
+          "interval_seconds": 0.5,
+          "status": "fits",
+          "frames": 15
+        }
+      ],
+      "stop_reason": null
+    },
+    "policy": "At most one follow-up. Double interval to fit the complete requested image set; preserve unknowns and prior observed judgments."
+  }
+}

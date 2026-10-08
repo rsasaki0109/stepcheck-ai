@@ -1,0 +1,54 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "observations": [
+    {
+      "step_id": "wet",
+      "status": "observed",
+      "reason": "At 2 and 4 s the hands cup and turn beneath the visible faucet stream, before the soap-bar contact shown later. Water visibly reaches the hands.",
+      "evidence_seconds": [
+        2,
+        4
+      ],
+      "uncertainty": "Only sampled images were supplied; exact onset of water contact is not measured."
+    },
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "The 6 s image shows a greenish soap bar in contact with the hands as the fingers rub or turn it. This is visible application rather than an inferred missing step.",
+      "evidence_seconds": [
+        6
+      ],
+      "uncertainty": "The fingers partially cover the bar; soap amount is not measurable."
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "At 12 s the hands rub together to the right of the flowing stream, with a light whitish soapy patch on the finger/hand surfaces.",
+      "evidence_seconds": [
+        12
+      ],
+      "uncertainty": "Lather is thin at this input resolution; wet highlights and lather are difficult to separate across some other views. No coverage or hygiene-quality claim is made."
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "After the cited lather view, the 16, 18 and 24 s images place and rotate the hands through the visibly flowing water from the faucet.",
+      "evidence_seconds": [
+        16,
+        18,
+        24
+      ],
+      "uncertainty": "Water also runs earlier; these are post-lather contact samples, not exact action boundaries."
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "At 26 s the hands move away from the faucet, and the 32 s view contains an empty basin and running stream. No wiping with paper or towel or contact with an operating dryer is visible.",
+      "evidence_seconds": [
+        26,
+        32
+      ],
+      "uncertainty": "The camera does not follow the hands. Drying may occur off camera or between supplied samples."
+    }
+  ]
+}

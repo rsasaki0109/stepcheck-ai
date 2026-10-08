@@ -1,0 +1,18 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "observations": [
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "The follow-up images at 24.5, 25 and 25.5 s still show hands in the water-stream area; at 26 s the hands withdraw. The 26.5, 27 and 31.936 s views show the running faucet and empty basin, with no hands wiping on paper/towel or contacting a visible operating dryer. These supplied views do not support drying.",
+      "evidence_seconds": [
+        25.5,
+        26,
+        26.5,
+        27,
+        31.936
+      ],
+      "uncertainty": "The hands leave the field of view. Drying outside that view remains possible and is not classified as not done."
+    }
+  ]
+}

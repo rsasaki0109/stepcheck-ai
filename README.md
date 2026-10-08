@@ -53,6 +53,12 @@ the first source inspection. Codex judged four steps observed, but drying stayed
 after 12 additional samples, so the full flow stayed **unknown**. The video, raw MCP
 requests/responses, failed budget attempt, and an evidence GIF are saved for inspection.
 
+`verify_reference_flow_auto(reference)` now runs initial review and one follow-up in a
+single MCP tool call, widening the follow-up interval to fit its image budget. It stops
+with unknowns preserved when evidence is still missing. See the [actual automatic workflow
+and one-command adapter](docs/automatic-reference-workflow.md); recognition still requires
+a vision-capable sampling host.
+
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong
 evidence and invalid pair IDs. These raw outputs are preserved separately in the

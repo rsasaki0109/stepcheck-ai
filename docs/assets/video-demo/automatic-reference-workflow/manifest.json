@@ -1,0 +1,116 @@
+{
+  "tool": "verify_reference_flow_auto",
+  "logical_client_call_tool_count": 1,
+  "sampling_requests": 2,
+  "source": {
+    "file": "docs/assets/video-demo/new-video-transfer/source.webm",
+    "sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+    "media_license": "CC BY-SA 2.0; see ATTRIBUTION.md"
+  },
+  "initial_samples": 18,
+  "followup_new_samples": 12,
+  "followup_context_samples": 3,
+  "total_unique_samples": 30,
+  "workflow": {
+    "sampling_requests": 2,
+    "stop_reason": "unknown_after_followup",
+    "unknown_step_ids": [
+      "dry"
+    ],
+    "requested_refinement_interval_seconds": 0.25,
+    "max_frames": 24,
+    "interval_selection": {
+      "plan": {
+        "target_step_ids": [
+          "dry"
+        ],
+        "windows": [
+          {
+            "step_id": "dry",
+            "start_seconds": 24.0,
+            "end_seconds": 31.936
+          }
+        ],
+        "sampled_seconds": [
+          24.0,
+          24.5,
+          25.0,
+          25.5,
+          26.0,
+          26.5,
+          27.0,
+          27.5,
+          28.5,
+          29.0,
+          29.5,
+          30.5,
+          31.0,
+          31.5,
+          31.936
+        ],
+        "added_seconds": [
+          24.5,
+          25.0,
+          25.5,
+          26.5,
+          27.0,
+          27.5,
+          28.5,
+          29.0,
+          29.5,
+          30.5,
+          31.0,
+          31.5
+        ],
+        "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows."
+      },
+      "chosen_interval_seconds": 0.5,
+      "attempts": [
+        {
+          "interval_seconds": 0.25,
+          "status": "over_budget"
+        },
+        {
+          "interval_seconds": 0.5,
+          "status": "fits",
+          "frames": 15
+        }
+      ],
+      "stop_reason": null
+    },
+    "policy": "At most one follow-up. Double interval to fit the complete requested image set; preserve unknowns and prior observed judgments."
+  },
+  "order_status": "unknown",
+  "observed_steps": 4,
+  "unknown_step_ids": [
+    "dry"
+  ],
+  "tests_passed": 50,
+  "test_scope": "Synthetic callbacks over real MCP dependency round trips verify orchestration and validation, not recognition accuracy.",
+  "execution_scope": "Actual source-image sheets exported by the sampling adapter were displayed to Codex; fresh JSON replies were returned for both passes within one logical call_tool. The file adapter itself invokes no model API.",
+  "limitations": [
+    "Known-video rerun testing automatic control, not another unseen-video accuracy evaluation.",
+    "Thin-lather interpretation is subjective at small resolution; uncertainty is retained.",
+    "Unknown drying is not proof it did not occur outside the view.",
+    "At most one follow-up; gap windows are hints from adjacent observed evidence."
+  ],
+  "files": {
+    "ATTRIBUTION.md": "9734705ddca80a2e9ccdf7d1d186f7d239e2be9e18952406037e5cbc285e992c",
+    "before-verification.json": "e0bcce5aaa265f0a9e530fb68d699e45c6d86cb3b6a96d4ef16621377609bad9",
+    "initial-verification.json": "e0bcce5aaa265f0a9e530fb68d699e45c6d86cb3b6a96d4ef16621377609bad9",
+    "pass-01/response.json": "f4fd4b878aec31b8bcaa7adca6607197fff9e7996a3a10f1c5fe9aa9c751c404",
+    "pass-01/sampling-0.png": "d42b2594e239ff72d34b94411948fc9e7549256be1dbe2be17216cd7cabf8861",
+    "pass-01/sampling-1.png": "417c292ff9c749f0bb3f855512f7de82e36e92a86dfcb7c409c14b431865fd0c",
+    "pass-01/sampling-request.json": "90afd9fcbf30baa8114a4035af7b295965056ff46e2b6208d6dacd5770da5c2b",
+    "pass-02/response.json": "0bef0797508c6609305505b31e2fedf0cce22a0b9e791ddbb6707134b0c15b36",
+    "pass-02/sampling-0.png": "2a1b88e726efa77b5302edfbc64db051396289e3915dd62dda279e9b3fcdd8ab",
+    "pass-02/sampling-1.png": "58cf9fc6d4abc3b899a68426dcfbb6afccd109a12e989328588d6f4c9d907473",
+    "pass-02/sampling-request.json": "46f2c9dc4ac15e81c13e82008a1a27e830722fc3a02e74d15559fa83e84845b3",
+    "reverse-verification.json": "86c2ce9dabbb01e51d9bde790291604d8c4a3a51845cda72bc2240a40cd72ec7",
+    "source-run_flow_detection.py": "c5bddf8729f155e84c7ad66a6304a34838d8b890b612c71b88ced8c67d5f6dd6",
+    "source-video_mcp.py": "da5dcc055b1dcecba636973190d5964f8ee4d918c937fb695b68e958d39ad1bc",
+    "tool-request.json": "e54dcfb4996182a37133e70df6fa61824820c5e06d839c39a77ddf9400b513d5",
+    "tool-result.json": "65e7c7300d9403d7c6b0a6dd51a65b3370c0746528933fd5d4a97db5f6e742b8",
+    "verification.json": "194708a4c598266af49a746390d0413d814aeca35f81ed9d84cbf6300a2fef7e"
+  }
+}

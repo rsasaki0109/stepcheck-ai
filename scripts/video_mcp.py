@@ -324,6 +324,14 @@ def prior_observations(previous: dict) -> list[ReferenceObservation]:
     return observations
 
 
+class RefinementBudgetError(ToolError):
+    """The requested interval cannot fit all required images within the budget."""
+
+
+class NoNewSamplesError(ToolError):
+    """The proposed follow-up contains no source timestamps beyond the prior review."""
+
+
 def refinement_plan(previous: dict, sample_interval_seconds: float, max_frames: int) -> dict:
     observations = prior_observations(previous)
     if not math.isfinite(sample_interval_seconds) or sample_interval_seconds <= 0:
@@ -345,7 +353,7 @@ def refinement_plan(previous: dict, sample_interval_seconds: float, max_frames: 
         count = math.ceil((end - start) / sample_interval_seconds)
         # Bound construction as well as the eventual image request.
         if count > 10000:
-            raise ToolError("Refinement would exceed the frame budget; increase the interval.")
+            raise RefinementBudgetError("Refinement would exceed the frame budget; increase the interval.")
         candidates = {round(start + i * sample_interval_seconds, 6) for i in range(count + 1)
                       if start + i * sample_interval_seconds <= end}
         candidates -= old_times
@@ -355,12 +363,35 @@ def refinement_plan(previous: dict, sample_interval_seconds: float, max_frames: 
     if not windows:
         raise ToolError("No unknown steps to refine.")
     if len(times) > max_frames:
-        raise ToolError("Refinement exceeds max_frames; increase the interval or frame budget.")
+        raise RefinementBudgetError("Refinement exceeds max_frames; increase the interval or frame budget.")
     if not times - old_times:
-        raise ToolError("No new samples at this interval; choose a finer interval.")
+        raise NoNewSamplesError("No new samples at this interval; choose a finer interval.")
     return {"target_step_ids": [w["step_id"] for w in windows], "windows": windows,
             "sampled_seconds": sorted(times), "added_seconds": sorted(times - old_times),
             "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows."}
+
+
+def fit_refinement_budget(previous: dict, sample_interval_seconds: float, max_frames: int) -> dict:
+    """Double spacing before requesting vision; never silently drop context images."""
+    attempts = []
+    interval = sample_interval_seconds
+    for _ in range(16):
+        try:
+            plan = refinement_plan(previous, interval, max_frames)
+        except RefinementBudgetError:
+            attempts.append({"interval_seconds": interval, "status": "over_budget"})
+            interval *= 2
+        except NoNewSamplesError:
+            attempts.append({"interval_seconds": interval, "status": "no_new_samples"})
+            return {"plan": None, "chosen_interval_seconds": None, "attempts": attempts,
+                    "stop_reason": "no_new_samples"}
+        else:
+            attempts.append({"interval_seconds": interval, "status": "fits",
+                             "frames": len(plan["sampled_seconds"])})
+            return {"plan": plan, "chosen_interval_seconds": interval, "attempts": attempts,
+                    "stop_reason": None}
+    return {"plan": None, "chosen_interval_seconds": None, "attempts": attempts,
+            "stop_reason": "refinement_budget_exhausted"}
 
 
 def refinement_request(previous: dict, sample_interval_seconds: float, max_frames: int) -> Sample:
@@ -385,14 +416,8 @@ def refinement_request(previous: dict, sample_interval_seconds: float, max_frame
     return request
 
 
-@mcp.tool()
-def refine_reference_flow(previous: dict, sample_interval_seconds: float = 0.25, max_frames: int = 24,
-                          completion: Annotated[CreateMessageResult, Resolve(refinement_request)] = None) -> dict:
-    """Resample unknown steps, preserve prior confirmed judgments, and recompute order.
-
-    Search gaps are hints from adjacent observed steps, not absence or order proof.
-    Saves the before report separately. Requires a vision-capable sampling host.
-    """
+def build_refinement_result(previous: dict, sample_interval_seconds: float, max_frames: int,
+                            completion: CreateMessageResult) -> dict:
     plan = refinement_plan(previous, sample_interval_seconds, max_frames)
     if completion is None or completion.content.type != "text":
         raise ToolError("The vision host must return a JSON text response.")
@@ -416,17 +441,22 @@ def refine_reference_flow(previous: dict, sample_interval_seconds: float = 0.25,
         "prior_order_status": previous["order_status"],
         "prior_report_sha256": hashlib.sha256(json.dumps(previous, sort_keys=True,
             ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()}
-    return write_reference_verification(report, previous)
+    return report
 
 
 @mcp.tool()
-def verify_reference_flow(reference: dict, sample_interval_seconds: float = 0.75,
-                          completion: Annotated[CreateMessageResult, Resolve(reference_request)] = None) -> dict:
-    """Verify a given flow through host MCP vision sampling, then derive sampled order.
+def refine_reference_flow(previous: dict, sample_interval_seconds: float = 0.25, max_frames: int = 24,
+                          completion: Annotated[CreateMessageResult, Resolve(refinement_request)] = None) -> dict:
+    """Resample unknown steps and preserve prior confirmed judgments; save before/after.
 
-    Requires a vision-capable sampling host. Unknown steps remain unknown. Saves
-    validated observations and a reversed-reference control using the same evidence.
+    Search gaps are hints, not absence or order proof. Requires host vision sampling.
     """
+    return write_reference_verification(build_refinement_result(
+        previous, sample_interval_seconds, max_frames, completion), previous)
+
+
+def build_verification_result(reference: dict, sample_interval_seconds: float,
+                               completion: CreateMessageResult) -> dict:
     if completion is None or completion.content.type != "text":
         raise ToolError("The vision host must return a JSON text response.")
     try:
@@ -435,9 +465,81 @@ def verify_reference_flow(reference: dict, sample_interval_seconds: float = 0.75
         raise ToolError(f"Invalid verification JSON: {error}") from error
     if answer.source_sha256 != hashlib.sha256(VIDEO.read_bytes()).hexdigest():
         raise ToolError("Vision response source hash does not match the current video.")
-    return save_reference_verification(completion.model, reference, answer.observations,
+    return build_reference_verification(completion.model, reference, answer.observations,
         sample_times(sample_interval_seconds),
         "MCP sampling: host vision review of supplied reference and timestamped source-frame contact sheets")
+
+
+@mcp.tool()
+def verify_reference_flow(reference: dict, sample_interval_seconds: float = 0.75,
+                          completion: Annotated[CreateMessageResult, Resolve(reference_request)] = None) -> dict:
+    """Verify a given flow through host vision sampling and derive sampled order.
+
+    Saves validated observations and a reversed-reference control. Unknown remains unknown.
+    """
+    return write_reference_verification(build_verification_result(
+        reference, sample_interval_seconds, completion))
+
+
+def auto_initial_request(reference: dict, sample_interval_seconds: float,
+                         refinement_interval_seconds: float, max_frames: int) -> Sample:
+    if not math.isfinite(refinement_interval_seconds) or refinement_interval_seconds <= 0:
+        raise ToolError("Refinement interval must be finite and positive.")
+    if not 2 <= max_frames <= 96:
+        raise ToolError("Refinement frame budget must be between 2 and 96.")
+    return reference_request(reference, sample_interval_seconds)
+
+
+def auto_initial_result(reference: dict, sample_interval_seconds: float,
+                        completion: Annotated[CreateMessageResult, Resolve(auto_initial_request)]) -> dict:
+    return build_verification_result(reference, sample_interval_seconds, completion)
+
+
+def auto_interval_selection(refinement_interval_seconds: float, max_frames: int,
+                            initial: Annotated[dict, Resolve(auto_initial_result)]) -> dict:
+    if not any(s["status"] == "unknown" for s in initial["steps"]):
+        return {"plan": None, "chosen_interval_seconds": None, "attempts": [],
+                "stop_reason": "no_unknown_steps"}
+    return fit_refinement_budget(initial, refinement_interval_seconds, max_frames)
+
+
+def auto_followup_request(max_frames: int,
+                          initial: Annotated[dict, Resolve(auto_initial_result)],
+                          selection: Annotated[dict, Resolve(auto_interval_selection)]) -> Sample | None:
+    if selection["plan"] is None:
+        return None
+    return refinement_request(initial, selection["chosen_interval_seconds"], max_frames)
+
+
+@mcp.tool()
+def verify_reference_flow_auto(reference: dict, sample_interval_seconds: float = 0.75,
+                                refinement_interval_seconds: float = 0.25, max_frames: int = 24,
+                                initial: Annotated[dict, Resolve(auto_initial_result)] = None,
+                                selection: Annotated[dict, Resolve(auto_interval_selection)] = None,
+                                completion: Annotated[CreateMessageResult | None, Resolve(auto_followup_request)] = None) -> dict:
+    """One call: initial host vision, budget-fitted follow-up for unknowns, then stop.
+
+    At most two sampling requests through MCP dependency resolution. Invalid
+    responses raise errors without replacing saved results. Unknowns stay unknown;
+    sampled order is derived from evidence, never forced to match the reference.
+    """
+    report, count = initial, 1
+    if selection["plan"] is not None:
+        report = build_refinement_result(initial, selection["chosen_interval_seconds"], max_frames, completion)
+        count = 2
+        stop_reason = "unknown_after_followup" if any(s["status"] == "unknown" for s in report["steps"]) else "no_unknown_steps"
+    else:
+        stop_reason = selection["stop_reason"]
+    # Avoid changing the initial snapshot when the follow-up was skipped.
+    report = {**report, "workflow": {"sampling_requests": count, "stop_reason": stop_reason,
+        "unknown_step_ids": [s["step_id"] for s in report["steps"] if s["status"] == "unknown"],
+        "requested_refinement_interval_seconds": refinement_interval_seconds,
+        "max_frames": max_frames, "interval_selection": selection,
+        "policy": "At most one follow-up. Double interval to fit the complete requested image set; preserve unknowns and prior observed judgments."}}
+    write_reference_verification(report, initial if count == 2 else None)
+    REFERENCE_REVIEW.with_name("initial-verification.json").write_text(
+        json.dumps(initial, ensure_ascii=False, indent=2), encoding="utf-8")
+    return report
 
 
 @mcp.tool()
