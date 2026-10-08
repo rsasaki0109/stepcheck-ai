@@ -133,10 +133,13 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None,
     from importlib.metadata import version
     metadata["repo_commit"] = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
     metadata["packages"] = {name: version(name) for name in ("torch", "transformers", "accelerate")}
+    metadata["status"] = "running"
+    (output / "diagnostics.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     old_processor = provider._processor
     old_pixels, old_limit = provider.max_pixels, provider.max_new_tokens
     try:
         provider.max_new_tokens = 220
+        print(f"Loading {provider.model_id} for the controlled image comparison...", flush=True)
         provider._load()
         old_processor = old_processor or provider._processor
         metadata["model_class"] = type(provider._model).__name__
@@ -162,8 +165,36 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None,
                 (output / "diagnostics.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
                 print(f"{label} / {index+1}/4 / {frame['timestamp_seconds']:g}s: {raw}", flush=True)
         metadata["model_revision"] = provider._model.config._commit_hash
+        metadata["status"] = "completed"
         (output / "diagnostics.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    except Exception as exc:
+        metadata["status"] = "failed"
+        metadata["error_type"] = type(exc).__name__
+        (output / "diagnostics.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+        raise
     finally:
         provider._processor = old_processor
         provider.max_pixels, provider.max_new_tokens = old_pixels, old_limit
     return metadata
+
+
+async def main():
+    import argparse
+    from stepcheck_providers import create_provider
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model", default="Qwen/Qwen3-VL-4B-Instruct")
+    parser.add_argument("--video", type=Path, default=ROOT/"docs/assets/video-demo/source.webm")
+    parser.add_argument("--frames-report", type=Path, default=ROOT/"docs/assets/video-demo/qwen-3b-framewise-flow.json")
+    parser.add_argument("--output", type=Path, default=ROOT/".tmp-flow-local/qwen3-diagnostics")
+    parser.add_argument("--load-in-4bit", action="store_true")
+    parser.add_argument("--keep-vision-fp16", action="store_true")
+    args = parser.parse_args()
+    provider = create_provider("qwen-local", model=args.model, load_in_4bit=args.load_in_4bit,
+                               keep_vision_fp16=args.keep_vision_fp16)
+    await run_diagnostics(provider, args.video, args.output,
+        variants=[(True,256),(True,1024)], frames_report=args.frames_report)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

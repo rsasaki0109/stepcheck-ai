@@ -72,7 +72,7 @@ if(report.actions.length)select(report.actions[0]);else{get('flow').textContent=
 async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.5-VL-3B-Instruct",
                          max_frames: int = 24, interval: float = 0.75, provider=None,
                          load_in_4bit: bool = False, image_patches: int = 256,
-                         framewise: bool = False) -> dict:
+                         framewise: bool = False, keep_vision_fp16: bool = False) -> dict:
     output.mkdir(parents=True, exist_ok=True)
     for name in ("flow.json", "viewer.html", "execution.json", "model-response.txt"):
         (output / name).unlink(missing_ok=True)
@@ -80,7 +80,8 @@ async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.
         raise ValueError("Video exceeds the 50 MiB limit.")
     sampled = await asyncio.to_thread(sample_video, video, interval, 120, max_frames)
     provider = provider or create_provider("qwen-local", model=model, load_in_4bit=load_in_4bit,
-                                           max_pixels=image_patches * 28 * 28, framewise=framewise)
+                                           max_pixels=image_patches * 28 * 28, framewise=framewise,
+                                           keep_vision_fp16=keep_vision_fp16)
     executed_at = datetime.now(timezone.utc).isoformat()
     started = time.monotonic()
     print(f"Recognizing {len(sampled.frames)} source frames with {model}; first run downloads model weights.", flush=True)
@@ -123,6 +124,8 @@ async def main():
     parser.add_argument("--max-frames", type=int, default=24, choices=range(2, 33))
     parser.add_argument("--model", default="Qwen/Qwen2.5-VL-3B-Instruct")
     parser.add_argument("--load-in-4bit", action="store_true")
+    parser.add_argument("--keep-vision-fp16", action="store_true",
+                        help="Keep vision linear layers in FP16 when quantizing the language model.")
     parser.add_argument("--framewise", action="store_true",
                         help="Recognize each sampled image separately, then group its observations.")
     parser.add_argument("--image-patches", type=int, choices=(64, 128, 256), default=256,
@@ -130,7 +133,8 @@ async def main():
     args = parser.parse_args()
     result = await run_local_flow(args.video, args.output, max_frames=args.max_frames,
                                   model=args.model, load_in_4bit=args.load_in_4bit,
-                                  image_patches=args.image_patches, framewise=args.framewise)
+                                  image_patches=args.image_patches, framewise=args.framewise,
+                                  keep_vision_fp16=args.keep_vision_fp16)
     print(f"Recognized {len(result['actions'])} actions. Open {args.output / 'viewer.html'}")
 
 
