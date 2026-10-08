@@ -61,10 +61,11 @@ class QwenLocalProvider(VisionProvider):
     max_flow_frames = 24
 
     def __init__(self, model: str = DEFAULT_MODEL, max_new_tokens: int = 2400,
-                 max_pixels: int = 256 * 28 * 28):
+                 max_pixels: int = 256 * 28 * 28, load_in_4bit: bool = False):
         self.model_id = model
         self.max_new_tokens = max_new_tokens
         self.max_pixels = max_pixels
+        self.load_in_4bit = load_in_4bit
         self._model = None
         self._processor = None
         self._lock = threading.Lock()
@@ -72,7 +73,8 @@ class QwenLocalProvider(VisionProvider):
 
     async def health(self) -> bool:
         def ready():
-            if any(importlib.util.find_spec(module) is None for module in ("torch", "transformers", "accelerate", "PIL")):
+            required = ("torch", "transformers", "accelerate", "PIL") + (("bitsandbytes",) if self.load_in_4bit else ())
+            if any(importlib.util.find_spec(module) is None for module in required):
                 return False
             import torch
             return torch.cuda.is_available()
@@ -91,8 +93,14 @@ class QwenLocalProvider(VisionProvider):
         # FP16 + SDPA works on T4; no FlashAttention build or hosted API is needed.
         self._processor = AutoProcessor.from_pretrained(self.model_id, min_pixels=64 * 28 * 28,
                                                         max_pixels=self.max_pixels)
+        options = {}
+        if self.load_in_4bit:
+            from transformers import BitsAndBytesConfig
+            options["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.float16, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True)
         self._model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             self.model_id, torch_dtype=torch.float16, device_map="cuda:0", attn_implementation="sdpa",
+            **options,
         ).eval()
 
     def _generate(self, images, prompt: str, frame_labels: list[str] | None = None) -> str:
