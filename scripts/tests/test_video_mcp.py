@@ -41,6 +41,11 @@ class VideoMCPTest(unittest.TestCase):
                         saved = json.loads(destination.read_text(encoding="utf-8"))
                         self.assertEqual(saved["source_sha256"], hashlib.sha256(video_mcp.VIDEO.read_bytes()).hexdigest())
                         self.assertEqual(saved["steps"], source["steps"])
+                        order = await client.call_tool("check_flow")
+                        self.assertFalse(order.is_error)
+                        order_report = json.loads(destination.with_name("order-review.json").read_text(encoding="utf-8"))
+                        self.assertEqual(order_report["observed_order_status"], "consistent")
+                        self.assertEqual(order_report["overall_status"], "unknown")
                         original = destination.read_bytes()
                         duplicate = [observations[0]] * len(observations)
                         invalid = await client.call_tool("record_review", {
@@ -103,6 +108,11 @@ class VideoMCPTest(unittest.TestCase):
         source = Image.new("RGB", (480, 360), "#476385")
         overlay = generate_readme_gif.evidence_overlay(source, bounds, label)
         self.assertEqual(source.tobytes(), overlay.tobytes())
+
+    def test_unreviewed_frames_have_no_invented_region(self):
+        regions = json.loads((video_mcp.ASSETS / "regions.json").read_text(encoding="utf-8"))
+        bounds, _ = generate_readme_gif.region_at(regions["panels"][0], 2.0)
+        self.assertIsNone(bounds)
 
 
 if __name__ == "__main__":

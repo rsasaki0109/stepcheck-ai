@@ -8,9 +8,9 @@ Markdown procedure + work images → vision-language model → per-step verdicts
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
-![Four handwashing video excerpts in a 2-by-2 grid with heatmap-style overlays on visually reviewed evidence regions](docs/assets/demo.gif)
+![Chronological handwashing video in four panels with an expected procedure flow and timestamp-based order checks](docs/assets/demo.gif)
 
-<sub>Four real video excerpts with Codex-annotated evidence regions. Warm overlays highlight reviewed areas; they are not internal model attention maps.</sub>
+<sub>Video plays in source order. The expected flow and observed timestamps are compared; unseen steps remain unknown. Boxes mark Codex annotations on reviewed frames.</sub>
 
 </div>
 
@@ -20,12 +20,15 @@ steps and work images to a multimodal model (configured as `gpt-4o` by default),
 judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
 score and a human-readable reason grounded in the images.
 
-The GIF above shows **four real video excerpts with actual Codex visual observations**.
-The local MCP tools extract frames for a vision-capable host to review. The GIF replays
-four stages in parallel with heatmap-style overlays of visually annotated evidence
-regions and source timestamps. The overlays are illustrative evidence cues, not model
-attention weights or computed saliency. It is a recorded analysis, not
-live inference or a recording of the web UI. See [the video demo guide](docs/video-demo.md).
+The GIF above plays **real video in source order**, with four stage panels and an
+independently defined [expected flow](examples/handwashing-flow.json). The local MCP
+tools expose frames for Codex visual review; a sequence checker compares the saved
+confirmation timestamps with that flow. Future stages stay hidden until their turn.
+Observed actions are in order, but the full flow is **unknown** because pre-soap
+wetting is not visible. The [computed order report](docs/assets/video-demo/order-review.json)
+contains the transition checks. Boxes are visual annotations on reviewed frames;
+no heatmap or internal attention values are displayed. This is a replay of recorded
+analysis. See [the video demo guide](docs/video-demo.md).
 
 The web app currently accepts images. Its `mock` provider is for offline development
 and tests; `openai` performs image analysis.

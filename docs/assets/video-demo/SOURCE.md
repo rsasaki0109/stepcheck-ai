@@ -8,9 +8,9 @@
 - Downloaded: 2026-10-08.
 
 `source.webm` is the original download. `../demo.gif` is a silent, resized replay of
-four excerpts in a 2×2 layout with evidence timestamps and recorded Codex observations.
-Heatmap-style highlights visualize the evidence boxes in `regions.json`; these are
-annotated regions, not internal model attention weights.
+four stages in a 2×2 layout, played in source chronology, with an expected procedure
+flow and timestamp-based order checks. Boxes on reviewed frames are Codex annotations
+from `regions.json`. No heatmap or internal model attention values are displayed.
 The video has not been synthesized. The source creator does not endorse this project.
 
 The observations cover visible actions in sampled frames; unobserved actions remain

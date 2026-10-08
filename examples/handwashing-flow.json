@@ -1,0 +1,11 @@
+{
+  "title": "Handwashing procedure flow",
+  "steps": [
+    {"index": 1, "label": "Wet hands"},
+    {"index": 2, "label": "Soap"},
+    {"index": 3, "label": "Rub / lather"},
+    {"index": 4, "label": "Rinse"},
+    {"index": 5, "label": "Dry"},
+    {"index": 6, "label": "Discard"}
+  ]
+}

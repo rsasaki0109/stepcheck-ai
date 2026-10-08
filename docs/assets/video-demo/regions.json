@@ -1,59 +1,214 @@
 {
   "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
   "reviewer": "Codex visual localization of source frames",
-  "method": "Normalized evidence boxes annotated after visual inspection; interpolated between keyframes for display. Not internal attention weights or computed saliency.",
+  "method": "Evidence boxes visually annotated by Codex on explicitly reviewed source frames. Boxes are shown only on those frames; no heatmap, interpolation, saliency, or internal attention values.",
   "coordinate_system": "[left, top, right, bottom], normalized to the uncropped source frame",
   "panels": [
     {
       "title": "Soap + lather",
-      "steps": [2, 3],
-      "start_seconds": 0.3,
-      "end_seconds": 5.3,
+      "steps": [
+        2,
+        3
+      ],
+      "start_seconds": 0.0,
+      "end_seconds": 11.4,
       "caption": "Soap in the palm; lather on both hands.",
       "keyframes": [
-        {"timestamp_seconds": 0.3, "bbox": [0.39, 0.57, 0.61, 0.83], "label": "SOAP IN PALM"},
-        {"timestamp_seconds": 0.8, "bbox": [0.53, 0.65, 0.99, 1.0], "label": "NO REGION MARKED", "visible": false},
-        {"timestamp_seconds": 0.9, "bbox": [0.76, 0.68, 1.0, 1.0], "label": "NO REGION MARKED", "visible": false},
-        {"timestamp_seconds": 1.5, "bbox": [0.23, 0.40, 0.89, 0.96], "label": "LATHERED HANDS"},
-        {"timestamp_seconds": 3.5, "bbox": [0.41, 0.24, 0.94, 0.91], "label": "LATHERED HANDS"},
-        {"timestamp_seconds": 5.3, "bbox": [0.38, 0.12, 0.92, 0.87], "label": "LATHERED HANDS"}
+        {
+          "timestamp_seconds": 0.3,
+          "bbox": [
+            0.39,
+            0.57,
+            0.61,
+            0.83
+          ],
+          "label": "SOAP IN PALM"
+        },
+        {
+          "timestamp_seconds": 0.8,
+          "bbox": [
+            0.53,
+            0.65,
+            0.99,
+            1.0
+          ],
+          "label": "NO REGION MARKED",
+          "visible": false
+        },
+        {
+          "timestamp_seconds": 0.9,
+          "bbox": [
+            0.76,
+            0.68,
+            1.0,
+            1.0
+          ],
+          "label": "NO REGION MARKED",
+          "visible": false
+        },
+        {
+          "timestamp_seconds": 1.5,
+          "bbox": [
+            0.23,
+            0.4,
+            0.89,
+            0.96
+          ],
+          "label": "LATHERED HANDS"
+        },
+        {
+          "timestamp_seconds": 3.5,
+          "bbox": [
+            0.41,
+            0.24,
+            0.94,
+            0.91
+          ],
+          "label": "LATHERED HANDS"
+        },
+        {
+          "timestamp_seconds": 5.3,
+          "bbox": [
+            0.38,
+            0.12,
+            0.92,
+            0.87
+          ],
+          "label": "LATHERED HANDS"
+        }
       ]
     },
     {
       "title": "Rinse",
-      "steps": [4],
-      "start_seconds": 11.7,
-      "end_seconds": 13.0,
+      "steps": [
+        4
+      ],
+      "start_seconds": 11.6,
+      "end_seconds": 13.4,
       "caption": "Running water reaches the hands.",
       "keyframes": [
-        {"timestamp_seconds": 11.7, "bbox": [0.20, 0.29, 0.72, 0.97], "label": "WATER + HANDS"},
-        {"timestamp_seconds": 12.5, "bbox": [0.23, 0.30, 0.65, 0.98], "label": "WATER + HANDS"},
-        {"timestamp_seconds": 13.0, "bbox": [0.26, 0.32, 0.69, 0.93], "label": "WATER + HANDS"}
+        {
+          "timestamp_seconds": 11.7,
+          "bbox": [
+            0.2,
+            0.29,
+            0.72,
+            0.97
+          ],
+          "label": "WATER + HANDS"
+        },
+        {
+          "timestamp_seconds": 12.5,
+          "bbox": [
+            0.23,
+            0.3,
+            0.65,
+            0.98
+          ],
+          "label": "WATER + HANDS"
+        },
+        {
+          "timestamp_seconds": 13.0,
+          "bbox": [
+            0.26,
+            0.32,
+            0.69,
+            0.93
+          ],
+          "label": "WATER + HANDS"
+        }
       ]
     },
     {
       "title": "Dry",
-      "steps": [5],
-      "start_seconds": 14.5,
-      "end_seconds": 19.2,
+      "steps": [
+        5
+      ],
+      "start_seconds": 13.6,
+      "end_seconds": 20.4,
       "caption": "Paper towel held between both hands.",
       "keyframes": [
-        {"timestamp_seconds": 14.5, "bbox": [0.20, 0.50, 0.99, 0.98], "label": "PAPER TOWEL"},
-        {"timestamp_seconds": 16.5, "bbox": [0.14, 0.34, 0.63, 0.82], "label": "TOWEL + HANDS"},
-        {"timestamp_seconds": 18.5, "bbox": [0.18, 0.45, 0.65, 0.90], "label": "TOWEL + HANDS"},
-        {"timestamp_seconds": 19.2, "bbox": [0.30, 0.46, 0.72, 0.99], "label": "TOWEL + HANDS"}
+        {
+          "timestamp_seconds": 14.5,
+          "bbox": [
+            0.2,
+            0.5,
+            0.99,
+            0.98
+          ],
+          "label": "PAPER TOWEL"
+        },
+        {
+          "timestamp_seconds": 16.5,
+          "bbox": [
+            0.14,
+            0.34,
+            0.63,
+            0.82
+          ],
+          "label": "TOWEL + HANDS"
+        },
+        {
+          "timestamp_seconds": 18.5,
+          "bbox": [
+            0.18,
+            0.45,
+            0.65,
+            0.9
+          ],
+          "label": "TOWEL + HANDS"
+        },
+        {
+          "timestamp_seconds": 19.2,
+          "bbox": [
+            0.3,
+            0.46,
+            0.72,
+            0.99
+          ],
+          "label": "TOWEL + HANDS"
+        }
       ]
     },
     {
       "title": "Discard",
-      "steps": [6],
-      "start_seconds": 21.5,
+      "steps": [
+        6
+      ],
+      "start_seconds": 20.6,
       "end_seconds": 22.8,
       "caption": "Used towel lowered into the bin.",
       "keyframes": [
-        {"timestamp_seconds": 21.5, "bbox": [0.25, 0.36, 0.79, 0.96], "label": "USED TOWEL"},
-        {"timestamp_seconds": 22.4, "bbox": [0.04, 0.18, 0.48, 0.70], "label": "TOWEL OVER BIN"},
-        {"timestamp_seconds": 22.8, "bbox": [0.13, 0.38, 0.56, 0.88], "label": "TOWEL + BIN"}
+        {
+          "timestamp_seconds": 21.5,
+          "bbox": [
+            0.25,
+            0.36,
+            0.79,
+            0.96
+          ],
+          "label": "USED TOWEL"
+        },
+        {
+          "timestamp_seconds": 22.4,
+          "bbox": [
+            0.04,
+            0.18,
+            0.48,
+            0.7
+          ],
+          "label": "TOWEL OVER BIN"
+        },
+        {
+          "timestamp_seconds": 22.8,
+          "bbox": [
+            0.13,
+            0.38,
+            0.56,
+            0.88
+          ],
+          "label": "TOWEL + BIN"
+        }
       ]
     }
   ]

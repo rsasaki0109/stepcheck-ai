@@ -1,46 +1,67 @@
-# Video recognition demo
+# Video flow verification demo
 
-The README GIF shows four excerpts from a real video in a **2×2 grid**, with
-observations made by Codex after inspecting video frames. Each excerpt has a warm
-heatmap-style overlay on the visually identified evidence region.
-It replays recorded analysis; GIF playback does not call a model.
+The README GIF plays a real video **in source chronology** through four stage panels.
+An expected procedure flow sits above the video. Observations become visible at their
+recorded confirmation times, and a sequence checker compares those times with the
+expected order. Future stage images stay hidden until their source time is reached.
 
-## What was reviewed
+The GIF replays a recorded Codex review. It does not run inference during playback,
+and it is not a recording of the web UI.
+
+## Expected flow and observations
 
 - Procedure: [handwashing.md](../examples/handwashing.md).
-- Footage: [source.webm](assets/video-demo/source.webm), 23 seconds.
-- Results: [review.json](assets/video-demo/review.json), including a source SHA-256,
-  the reviewer, reasons, confidence estimates, and evidence timestamps.
-- Attribution: [SOURCE.md](assets/video-demo/SOURCE.md).
-- Regions: [regions.json](assets/video-demo/regions.json), with excerpt boundaries,
-  normalized evidence boxes, labels, and localization keyframes.
+- Expected flow: [handwashing-flow.json](../examples/handwashing-flow.json), defined
+  separately from the observed results.
+- Video: [source.webm](assets/video-demo/source.webm), [attribution](assets/video-demo/SOURCE.md).
+- Recorded visual observations: [review.json](assets/video-demo/review.json).
+- Computed sequence checks: [order-review.json](assets/video-demo/order-review.json).
+- Reviewed-frame box annotations: [regions.json](assets/video-demo/regions.json).
 
-The local MCP server was called with a Python MCP client. Its image-content responses
-were saved locally and visually inspected by Codex using the session's image-view tool.
-Codex's observations were then written with the MCP `record_review` tool.
-This session used a tool adapter; it did not install the server into the user's host settings.
+Expected: **Wet hands → Soap → Rub / lather → Rinse → Dry → Discard**.
 
-Reviewed source times: **0.3, 1.5, 3.5, 5.5, 9.5, 12.5, 14.5, 18.5, 21.5, 22.0, 22.4, 22.8 seconds**.
-The frames show soap, lathering, rinsing, paper-towel drying, and disposal.
-Pre-soap wetting is not shown, so that step remains **unknown**.
-Confidence values are subjective model estimates, not calibrated probabilities.
+| Recorded action | Confirmation time |
+| --- | --- |
+| Soap visible in a palm | 0.3 s |
+| Lather rubbing over palms and backs | 3.5 s |
+| Rinsing under running water | 12.5 s |
+| Drying with a paper towel | 18.5 s |
+| Used towel lowered into the bin | 22.8 s |
 
-## Evidence overlays
+The recorded confirmations are consistent with the expected order for **steps 2–6**.
+Step 1, wetting before soap, is not visible. The **full flow remains unknown**;
+the checker does not treat missing evidence as a successful transition.
 
-The four panels show **soap / lather, rinse, dry, and discard**. They start together
-at their own source timestamps and play at the source speed; shorter excerpts hold
-on an exact end frame. Each panel displays its source-video timestamp.
+Confirmation time is the last supporting frame time listed for a step. It is not an
+estimated action start or end time. The comparison establishes order among these
+sampled observations; it does not prove that no extra, repeated, or out-of-order
+actions happened between sampled frames.
 
-Codex visually localized evidence in additional source frames at 0.3, 0.8, 0.9, 1.5,
-3.5, 5.3, 11.7, 12.5, 13.0, 14.5, 16.5, 18.5, 19.2, 21.5, 22.4, and 22.8 seconds.
-The stored boxes use `[left, top, right, bottom]` coordinates in `[0, 1]` relative
-to the uncropped video. Between these keyframes, the renderer interpolates boxes
-for display. The transition after soap dispensing has no highlighted region.
+## How the order check works
 
-Corner marks show the annotated region; blurred violet, orange, and yellow layers
-make it easy to see. Glow color and intensity are a visual treatment, **not internal
-model attention weights, an object-tracker output, or computed pixel saliency**.
-No internal attention tensors are available from the recorded host review.
+[`check_video_flow.py`](../scripts/check_video_flow.py) compares the independent expected
+sequence with the recorded times. It detects inversions, preserves unknown steps,
+and treats equal confirmation times as ambiguous. A full `verified` result requires
+every expected step to be observed with strictly increasing confirmation times.
+During replay, evidence from later source times stays pending.
+
+```bash
+python scripts/check_video_flow.py
+```
+
+The demo's output is `observed_order_status: consistent` and `overall_status: unknown`.
+These values are computed from the saved evidence, not assigned by the GIF renderer.
+
+## Evidence boxes, not heatmaps
+
+Boxes are regions that Codex visually annotated on specific inspected source frames.
+They appear **only on those exact decoded frames**. Unreviewed intermediate frames
+have no box; the renderer does not interpolate regions or simulate object tracking.
+
+There is no attention map in this demo. No internal model attention tensors or
+pixel saliency scores were captured. The renderer draws only rectangle corner marks
+and a label identifying the annotation and source timestamp. It does not color the
+image interior to suggest a model response.
 
 ## Review through MCP
 
@@ -51,54 +72,47 @@ python -m pip install -r scripts/requirements-demo.txt
 python scripts/video_mcp.py
 ```
 
-The script is a **stdio MCP server**. Configure an image-capable MCP host to launch
-your Python executable with the absolute path to `scripts/video_mcp.py` as its argument.
-The server is built with the [official MCP Python SDK v2](https://py.sdk.modelcontextprotocol.io/servers/tools/).
-
-The host performs recognition using these tools:
+The script is a stdio MCP server. Configure an image-capable host to launch your Python
+executable with the absolute path to `scripts/video_mcp.py`. It uses the
+[official MCP Python SDK v2](https://py.sdk.modelcontextprotocol.io/servers/tools/).
 
 | Tool | Purpose |
 | --- | --- |
-| `inspect_video()` | Return duration, dimensions, procedure steps, and review instructions. |
-| `read_frame(timestamp_seconds)` | Return the actual decoded frame as MCP image content. |
-| `record_review(reviewer, observations)` | Validate and save one observation per step with evidence timestamps. |
+| `inspect_video()` | Return duration, dimensions, procedure, and review instructions. |
+| `read_frame(timestamp_seconds)` | Return an actual decoded frame as MCP image content. |
+| `record_review(reviewer, observations)` | Save the host's observations and supporting timestamps. |
+| `check_flow()` | Compare the saved timestamps with the expected flow and save the order report. |
 
-Ask the host to inspect frames across the clip, compare them with the procedure, and
-record `index`, `status`, `confidence`, `reason`, and `evidence_seconds` for every step.
-An action absent from the evidence is `unknown`; use `not_done` only when visible
-evidence supports that verdict. For sequential actions, inspect more than one frame.
+This session used a Python MCP client to retrieve image responses, the session's image
+viewer for Codex visual inspection, and `record_review` to save the resulting observations.
+It did not install the server into the user's host settings. The host supplies the vision
+reasoning; the MCP server does not call a model or generate verdicts.
 
-The MCP server provides images and stores observations. It does not call a model,
-infer verdicts, or replace the web app's `VisionProvider`. The connected host must
-support image tool responses and perform the visual reasoning.
+The original action review inspected 0.3, 1.5, 3.5, 5.5, 9.5, 12.5, 14.5, 18.5,
+21.5, 22.0, 22.4, and 22.8 seconds. Additional frames used for box annotations are
+listed in `regions.json`. Confidence estimates in `review.json` are subjective.
 
-Defaults point to the included video and `review.json`. To review a different local video,
-set `STEPCHECK_DEMO_VIDEO` and `STEPCHECK_DEMO_REVIEW` in the host's process environment.
-The procedure is the included handwashing checklist; adapt `PROCEDURE` in the script
-for another task. `record_review` writes the configured review file, replacing a prior review.
+Defaults point to the included video and review. Set `STEPCHECK_DEMO_VIDEO` and
+`STEPCHECK_DEMO_REVIEW` for other local files. Adapt the procedure and expected flow
+for another task. `record_review` replaces the configured review file; `check_flow`
+writes `order-review.json` beside it.
 
-## Render the GIF
+## Render and verify
 
 ```bash
 python scripts/generate_readme_gif.py
-```
-
-The renderer checks the video hash against the review and region annotations,
-validates the boxes and excerpt boundaries, and replays the four excerpts at five
-frames per second. The animation includes a short hold after all four excerpts finish.
-The generator renders the bundled example. For another video, adapt its asset paths
-alongside the MCP configuration.
-
-The web app and HTTP API continue to accept images. Video upload and automatic
-video-provider inference remain on the roadmap.
-
-## Checks
-
-```bash
 python -m unittest discover -s scripts/tests -v
 ```
 
-The integration checks exercise the actual MCP image response, reject invalid evidence
-timestamps and duplicate steps, and verify source hashing and saved observations.
-Overlay checks reject invalid region coordinates and video mismatches, and confirm
-that a transition without a visible region receives no highlight.
+The renderer validates source hashes and annotation coordinates, plays source frames
+at approximately five frames per second, and includes exact reviewed frames. Completed
+stage panels retain their supporting reviewed frame while the next panel advances. The final
+result holds for three seconds. The four panels cover source time 0.0–22.8 seconds;
+the flow updates at the recorded confirmation times.
+
+Tests include reversed rinse/dry timestamps, missing intermediate evidence, tied times,
+future evidence hiding, MCP result persistence, source mismatch, and unreviewed frames
+remaining free of invented boxes.
+
+The web app and HTTP API still accept images. Native video upload and automatic
+video-provider inference remain on the roadmap.

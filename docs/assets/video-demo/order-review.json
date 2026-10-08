@@ -1,0 +1,89 @@
+{
+  "title": "Handwashing procedure flow",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "basis": "Order of recorded confirmation timestamps in sampled frames, not continuous action intervals",
+  "overall_status": "unknown",
+  "observed_order_status": "consistent",
+  "observed_step_order": [
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "unverified_steps": [
+    1
+  ],
+  "inversions": [],
+  "steps": [
+    {
+      "index": 1,
+      "label": "Wet hands",
+      "status": "unknown",
+      "confirmed_seconds": null,
+      "reason": "The clip starts with soap in a palm. No sampled frame shows hands being wetted before soap is applied."
+    },
+    {
+      "index": 2,
+      "label": "Soap",
+      "status": "observed",
+      "confirmed_seconds": 0.3,
+      "reason": "A palm is held under a wall-mounted dispenser with a white dollop of soap visible on it."
+    },
+    {
+      "index": 3,
+      "label": "Rub / lather",
+      "status": "observed",
+      "confirmed_seconds": 3.5,
+      "reason": "The hands rub together with visible lather; another view shows one palm rubbing the back of the other hand."
+    },
+    {
+      "index": 4,
+      "label": "Rinse",
+      "status": "observed",
+      "confirmed_seconds": 12.5,
+      "reason": "A visible stream from the faucet falls onto the hands as they are held beneath it."
+    },
+    {
+      "index": 5,
+      "label": "Dry",
+      "status": "observed",
+      "confirmed_seconds": 18.5,
+      "reason": "Paper is pulled from a dispenser, then held between both hands as they are rubbed with it."
+    },
+    {
+      "index": 6,
+      "label": "Discard",
+      "status": "observed",
+      "confirmed_seconds": 22.8,
+      "reason": "The used paper towel is moved over the lined bin and lowered into its opening."
+    }
+  ],
+  "transitions": [
+    {
+      "from": 1,
+      "to": 2,
+      "status": "unknown"
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "status": "consistent"
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "status": "consistent"
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "status": "consistent"
+    },
+    {
+      "from": 5,
+      "to": 6,
+      "status": "consistent"
+    }
+  ]
+}

@@ -18,6 +18,7 @@ from typing import Literal
 from mcp.server.mcpserver import Image, MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import BaseModel, Field
+from check_video_flow import check_flow as compare_flow
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs" / "assets" / "video-demo"
@@ -84,6 +85,22 @@ def inspect_video() -> dict:
 def read_frame(timestamp_seconds: float) -> Image:
     """Return a real video frame as MCP image content for the host model to inspect."""
     return Image(data=frame_bytes(timestamp_seconds), format="png")
+
+
+@mcp.tool()
+def check_flow() -> dict:
+    """Compare the saved visual review's timestamps with the independently defined flow.
+
+    Missing evidence stays unknown; reversed confirmations are violations. Saves an
+    order-review.json beside the configured review file.
+    """
+    flow = json.loads((ROOT / "examples" / "handwashing-flow.json").read_text(encoding="utf-8"))
+    review = json.loads(REVIEW.read_text(encoding="utf-8"))
+    if review["source_sha256"] != hashlib.sha256(VIDEO.read_bytes()).hexdigest():
+        raise ToolError("The saved review refers to a different video.")
+    result = compare_flow(flow, review)
+    REVIEW.with_name("order-review.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    return result
 
 
 @mcp.tool()
