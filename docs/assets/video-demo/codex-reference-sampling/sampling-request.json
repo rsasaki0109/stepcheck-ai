@@ -1,0 +1,23 @@
+{
+  "text": [
+    "Visually verify this GIVEN reference against samples from ONE video. The reference supplies expected labels and visible criteria, not proof that actions occurred. Inspect each timestamped source image. Return exactly one observation for each step ID. Use status observed only with visible supporting evidence; otherwise unknown and explain why. Evidence seconds must be exact labels present in these images. Do not infer absent actions, repair the requested sequence, claim hidden events, or assign confidence scores. Do not calculate order: the server derives it from your cited timestamps. Return ONLY JSON with keys source_sha256 and observations. Each observation has step_id, status (observed or unknown), reason, evidence_seconds (a list; empty allowed for unknown), and uncertainty (a string). Echo this source_sha256: b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3. Samples are discrete, not uninterrupted motion. Given reference:\n{\"title\": \"Visible handwashing and exit flow\", \"scope\": \"Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.\", \"steps\": [{\"id\": \"soap\", \"label\": \"Dispense soap\", \"criterion\": \"White soap appears on a palm beneath a dispenser; mechanism actuation may be occluded.\"}, {\"id\": \"lather\", \"label\": \"Rub hands with lather\", \"criterion\": \"Hands rub with visible foam. Running water is not required.\"}, {\"id\": \"rinse\", \"label\": \"Rinse under running water\", \"criterion\": \"A visible flowing water stream contacts the hands. Foam alone is not rinsing.\"}, {\"id\": \"paper\", \"label\": \"Pull a paper towel\", \"criterion\": \"A sheet is visibly pulled out of a wall dispenser slot. Holding paper nearby is not enough.\"}, {\"id\": \"dry\", \"label\": \"Dry hands with the towel\", \"criterion\": \"Paper contacts the hands as they rub or fold it between them; continued pulling from the slot is different.\"}, {\"id\": \"door\", \"label\": \"Hold door handle through a towel\", \"criterion\": \"The hand grips a visible door lever through paper. Actual door opening is not required.\"}, {\"id\": \"bin\", \"label\": \"Lower towel into bin\", \"criterion\": \"The hand moves paper below the rim of a lined bin. Visible release is not required.\"}]}"
+  ],
+  "images": [
+    {
+      "file": "sampling-0.png",
+      "sha256": "7db0de4fa1a2c4716f5eb51387ae346603e69b07724ab72fa1b37c6410aa1378"
+    },
+    {
+      "file": "sampling-1.png",
+      "sha256": "a01a947cfb5298f10196c10e740841136ac7f417154b2661d15f8b91f64a9f85"
+    },
+    {
+      "file": "sampling-2.png",
+      "sha256": "f5151ed9a995e383c899e9e025ebf4ec4ff56abd3c6f820bd4cc637e53942325"
+    }
+  ],
+  "include_context": "none",
+  "temperature": 0.0,
+  "max_tokens": 5000,
+  "adapter_note": "Exports actual MCP sampling content to the connected vision session; invokes no model API itself."
+}

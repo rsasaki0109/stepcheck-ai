@@ -1,6 +1,7 @@
 # Detect a flow from one video
 
-The README GIF shows **open-ended flow discovery**, using one real video without
+The current README GIF shows [given-reference verification](reference-flow-verification.md).
+This page documents the earlier **open-ended flow discovery**, using one real video without
 passing a predefined procedure to the detection tool. `detect_flow()` decodes
 timestamped frames and requests visual recognition from the connected MCP host.
 The returned action list is ordered by its supporting sample times; overlapping

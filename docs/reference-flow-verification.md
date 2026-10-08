@@ -53,6 +53,45 @@ MCPサーバー自体は画像認識を行いません。判断者は画像を�
 これは既知の1本の動画を再度確認した事例です。以前の観察から基準を定義しており、
 未知の動画での精度評価や、ブラインドの工程発見の成功率を示しません。
 
+## MCP samplingで一度に確認する
+
+`verify_reference_flow(reference, sample_interval_seconds=0.75)`を追加しました。
+基準と時刻付きの実画像をMCPのsamplingで視覚対応ホストへ送り、返された観察から順序を計算します。
+基準に可視条件を書けますが、正解の時刻や過去の判断は送信しません。
+応答には全工程のID、`observed`または`unknown`、理由、引用時刻、不確実性を要求します。
+工程IDの過不足、未提供の時刻、JSON不正、元動画のハッシュ不一致は拒否し、以前の結果を置き換えません。
+未確認や時間の重なる根拠は、順序一致にはなりません。
+
+今回、別プロセスのstdio MCPサーバーへ接続して実行しました。
+ファイルアダプターが実際のsamplingリクエストの3枚の一覧画像を出力し、
+このセッションのCodexが表示された32フレームを見て新しく判断したJSONを返しました。
+アダプター自身はモデルAPIを呼びません。通常のsampling対応ホストならアダプターは不要です。
+
+**6工程を確認、取っ手は未確認、全体の順序は`unknown`**でした。
+21.75秒の手と紙はぶれており、レバーを握る接触をこの画像だけでは確認できません。
+21.5秒の追加画像は今回のsamplingに含まれていません。
+上のGIFの33枚レビューとは別の記録です。以前の成功した判断を流用していません。
+逆順比較では確認できた4つの隣接関係が違反、取っ手に関わる2つは未確認です。
+同じ既知の動画・基準であり、独立した認識精度の評価ではありません。
+
+- [実際のツール入力](assets/video-demo/codex-reference-sampling/tool-request.json)
+- [samplingのプロンプトと画像ハッシュ](assets/video-demo/codex-reference-sampling/sampling-request.json)
+- [前半の入力](assets/video-demo/codex-reference-sampling/sampling-0.png)、[中盤](assets/video-demo/codex-reference-sampling/sampling-1.png)、[終盤](assets/video-demo/codex-reference-sampling/sampling-2.png)
+- [Codexが今回返した応答](assets/video-demo/codex-reference-sampling/response.json)
+- [検証済みの観察と順序](assets/video-demo/codex-reference-sampling/verification.json)、[逆順比較](assets/video-demo/codex-reference-sampling/reverse-verification.json)
+- [MCPの実応答](assets/video-demo/codex-reference-sampling/tool-result.json)、[実行元コードと成果物のハッシュ](assets/video-demo/codex-reference-sampling/manifest.json)
+
+ファイルを確認できる視覚対応セッション用のアダプターは次で起動します。
+表示された実画像を見て、要求されたJSONを`response.json`へ書き込むとMCPへ返されます。
+新しい動画には`STEPCHECK_DEMO_VIDEO`で元ファイルを指定します。
+`--bridge-dir`には新しい空のディレクトリ、`--output`には保存先を指定してください。
+
+```powershell
+python scripts/run_flow_detection.py --bridge-dir .tmp-flow-local/new-reference-run --reference examples/observed-handwashing-flow.json --output .tmp-flow-local/new-reference-run/verification.json --reviewer "connected vision session"
+```
+
+このツールはMCPサーバー用です。Webアプリの動画APIにはまだ接続していません。
+
 ## Qwenの実際の試行結果
 
 同じ動画をローカルGTX 1660 Ti / 6GBのQwen3-VL-4Bへ渡す実験も行いました。

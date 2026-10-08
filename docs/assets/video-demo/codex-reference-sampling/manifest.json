@@ -1,0 +1,29 @@
+{
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "tool": "verify_reference_flow",
+  "transport": "stdio MCP Client with a sampling callback; actual requested PNGs were displayed to Codex, then freshly judged JSON was returned through the file adapter",
+  "expected_procedure_supplied": true,
+  "sample_count": 32,
+  "observed_step_count": 6,
+  "order_status": "unknown",
+  "reverse_violations": 4,
+  "limitations": [
+    "Known-video given-reference review, not a blinded accuracy benchmark.",
+    "No model API invoked by the file adapter. Recognition performed by the connected Codex session.",
+    "No additional 21.5 s image was supplied in this run; handle contact remains unknown.",
+    "Reversed reference reuses the same observations, not a second inference."
+  ],
+  "files": {
+    "response.json": "d2de4ad50e2fa1f89817b4bddd6ab6839744e5ebeb973938a56774e5a0fde4ce",
+    "reverse-verification.json": "296f974a9460fb862886da506cb33604a873fe48c2c9cd526233f2d0f8491230",
+    "sampling-0.png": "7db0de4fa1a2c4716f5eb51387ae346603e69b07724ab72fa1b37c6410aa1378",
+    "sampling-1.png": "a01a947cfb5298f10196c10e740841136ac7f417154b2661d15f8b91f64a9f85",
+    "sampling-2.png": "f5151ed9a995e383c899e9e025ebf4ec4ff56abd3c6f820bd4cc637e53942325",
+    "sampling-request.json": "7855c99f5ecd3eb82398579de9894f5fe14e71edb62b22146409937c0206303e",
+    "source-run_flow_detection.py": "23021450b6611e4af8c5b81a51f8df7fe6f27de41a25c2efb61e7330aa2b528d",
+    "source-video_mcp.py": "0b8e4930d55cc2b11467f133fe4b7e4169782a9eb7e4f022b950750fa2288087",
+    "tool-request.json": "256e0d6b5eda2430a768f4b474278f042ea6f8d17e39176e434d2b102012b496",
+    "tool-result.json": "652f0e7f8f05edbf08a6fc2f40d1e485636112ffbd079601e5eae29b62187684",
+    "verification.json": "a41ecde4e84a10ad3c9e7c91f6e876f8481f8cd0ed8cafe6582ffd98ddbd78d0"
+  }
+}

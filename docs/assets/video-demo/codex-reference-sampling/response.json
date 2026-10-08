@@ -1,0 +1,80 @@
+{
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "observations": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "At 0 s a palm is held under the dispenser; at 0.75 s the palm has white soap as it moves away.",
+      "evidence_seconds": [
+        0,
+        0.75
+      ],
+      "uncertainty": "The dispenser actuation is hidden by the other hand."
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Foamy hands rub palm surfaces, fingers, and the back of the hand across the sink views. No running stream is visible in these cited frames.",
+      "evidence_seconds": [
+        2.25,
+        3.75,
+        6,
+        9.75
+      ],
+      "uncertainty": "Discrete frames do not show every intervening movement."
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "At 12 and 12.75 s the visible white water stream from the faucet contacts the hands beneath it.",
+      "evidence_seconds": [
+        12,
+        12.75
+      ],
+      "uncertainty": "The preceding crossfade obscures the exact transition into rinsing."
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "At 14.25 s the hand pulls a white sheet down from the wall dispenser slot; at 15 s the separated sheet is held beside the slot.",
+      "evidence_seconds": [
+        14.25,
+        15
+      ],
+      "uncertainty": "The exact sheet separation occurs between samples."
+    },
+    {
+      "step_id": "dry",
+      "status": "observed",
+      "reason": "The white paper is between both hands, then folded or rubbed against the palms and fingers beside the dispenser.",
+      "evidence_seconds": [
+        15.75,
+        16.5,
+        18.75,
+        19.5
+      ],
+      "uncertainty": "Dryness is not measurable from these images; the visible towel-contact action matches the reference."
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "The 21 s image mainly shows the wall and bin; at 21.75 s a blurred hand holds white paper near the door, but a gripped lever is not clearly visible. The lever is visible without a hand at 22.903 s. These sheets do not establish paper-mediated handle contact.",
+      "evidence_seconds": [
+        21,
+        21.75,
+        22.903
+      ],
+      "uncertainty": "A clearer sample between the scene cut and the bin action is needed. Do not infer grip from the reference label or earlier reviews."
+    },
+    {
+      "step_id": "bin",
+      "status": "observed",
+      "reason": "The hand and white paper enter the lined bin opening at 22.5 s; at 22.903 s paper extends below the bag-lined rim with the hand above it.",
+      "evidence_seconds": [
+        22.5,
+        22.903
+      ],
+      "uncertainty": "The exact release of the paper is not visible and is not required by this reference."
+    }
+  ]
+}

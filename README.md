@@ -36,6 +36,12 @@ opening, towel release, and uninterrupted execution remain unconfirmed.
 See [the MCP images, judgments and order checks](docs/reference-flow-verification.md).
 This known-video review is not an accuracy benchmark or an automatic Qwen success.
 
+For a sampling-capable vision host, `verify_reference_flow(reference, sample_interval_seconds=0.75)`
+now combines source-image sampling, host review, and order checking in one MCP tool call.
+An [actual stdio sampling run](docs/reference-flow-verification.md#mcp-samplingで一度に確認する)
+identified six actions but left handle contact unknown with only the 32 uniform/end samples.
+The GIF above includes the additional 21.5-second image; it is a separate recorded review.
+
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong
 evidence and invalid pair IDs. These raw outputs are preserved separately in the
