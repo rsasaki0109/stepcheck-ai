@@ -2,9 +2,9 @@
 
 # StepCheck AI
 
-**VLM-powered verification of work procedures from images.**
+**Discover work flows from video. Verify procedures from images.**
 
-Markdown procedure + work images → vision-language model → per-step verdicts and reasons.
+One video → vision-language model → observed actions, order, and evidence frames.
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
@@ -31,13 +31,32 @@ only after supporting evidence is reached. This is a replay of recorded recognit
 with no heatmap. See [the video demo guide](docs/video-demo.md) for running detection
 and, separately, comparing observations against an expected flow.
 
-The web app currently accepts images. Its `mock` provider is for offline development
-and tests; `openai` performs image analysis.
+The web app now accepts **a single video** and lets you inspect each recognized
+action's supporting frames, source timestamps, reasons, and uncertainties. Video
+recognition uses the `openai` provider; the `mock` provider does not generate video
+verdicts. The **recorded demo** works without a key and is explicitly labeled as a
+replay. Image-based procedure verification remains available in its own tab.
 
 The image model sits behind a model-agnostic `VisionProvider` interface. Add and register
 a provider to change the model without rewriting the use case or UI.
 
 ## How it works
+
+### Discover a flow from video
+
+1. **Choose a video.** Open the video tab and upload one local file.
+2. **Detect the flow.** The backend samples the entire video and asks the VLM to
+   identify actions without providing an expected procedure.
+3. **Inspect evidence.** Select an action to seek the source video and view its
+   exact extracted frames, reasons, and uncertainties. Overlapping evidence is
+   shown as ambiguous order.
+
+Requires `STEPCHECK_PROVIDER=openai`, `OPENAI_API_KEY`, and a vision model supporting
+structured output (the existing default is `gpt-4o`). For a keyless preview, choose
+**記録済みデモを見る** to replay the saved Codex review of the bundled video.
+Live recognition of a new upload is separate from that recorded demo.
+
+### Verify a written procedure from images
 
 1. **Write the procedure.** Paste a Markdown ordered list, bullet list, or checklist.
 2. **Attach work images.** Add one or more photos of the work.
@@ -53,6 +72,8 @@ select `openai` for image analysis.
 
 - 📋 **Markdown procedures** — ordered lists, bullets, or checkboxes.
 - 🖼️ **One or many images** per check, plus a [video frame-review demo through MCP](docs/video-demo.md).
+- 🎬 **Single-video flow detection** — upload, recognize actions, and inspect supporting
+  frames in the web UI. Timestamp overlap stays ambiguous; missing actions are not invented.
 - ✅❌⚠️ **Per-step verdicts** with confidence and an explanation of the reason.
 - 🔌 **Pluggable providers** — `mock` (no API key) and `openai` (GPT-4o) included; add your
   own in one file.
@@ -111,6 +132,8 @@ Then run `docker compose up --build` again. The `.env` file is ignored by Git.
 ### Option B — Run locally
 
 Run the backend and frontend in separate terminals, starting at the repository root.
+Install FFmpeg first and ensure `ffmpeg` and `ffprobe` are on `PATH` for video input.
+The Docker image includes them.
 
 **Backend** (Python 3.10+, macOS / Linux):
 
@@ -170,6 +193,9 @@ For local development, place them in `backend/.env`; Compose reads the `.env` at
 | `OPENAI_API_KEY` | — | Required when provider is `openai` |
 | `STEPCHECK_MAX_IMAGES` | `8` | Max images per request |
 | `STEPCHECK_MAX_IMAGE_BYTES` | `10485760` | Max bytes per image (10 MiB) |
+| `STEPCHECK_MAX_VIDEO_BYTES` | `52428800` | Max uploaded video bytes (50 MiB) |
+| `STEPCHECK_MAX_VIDEO_SECONDS` | `120` | Max video duration |
+| `STEPCHECK_MAX_VIDEO_FRAMES` | `48` | Max sampled frames; spacing increases to cover the entire video |
 | `STEPCHECK_CORS_ORIGINS` | `["http://localhost:3000"]` | Allowed frontend origins, as a JSON array |
 
 The supplied Compose file forwards the provider, model, and API key settings. Add other
@@ -224,7 +250,8 @@ npm run build
 ## Roadmap
 
 - [ ] JEPA / representation-model provider
-- [ ] Native video upload in the web app / API and video-native models (MCP frame-review demo available)
+- [x] Single-video upload, frame-based flow discovery, and evidence review in the web app / API
+- [ ] Video-native temporal models
 - [ ] PDF procedure ingestion
 - [ ] Audio narration as an additional signal
 - [ ] Batch processing API

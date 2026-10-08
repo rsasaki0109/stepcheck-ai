@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pydantic import BaseModel, Field
+from typing import Literal
 
 from ..domain import VerificationReport
 
@@ -57,3 +58,42 @@ class VerificationReportOut(BaseModel):
 class ProvidersOut(BaseModel):
     active: str
     available: list[str]
+
+
+class VideoActionOut(BaseModel):
+    id: int
+    label: str
+    reason: str
+    uncertainty: str
+    evidence_seconds: list[float]
+    first_seen_seconds: float
+    last_seen_seconds: float
+
+
+class FlowTransitionOut(BaseModel):
+    from_: int = Field(alias="from")
+    to: int
+    status: Literal["sampled_before", "ambiguous"]
+    reason: str
+
+
+class VideoFrameOut(BaseModel):
+    timestamp_seconds: float
+    image_url: str
+
+
+class VideoFlowOut(BaseModel):
+    title: str
+    provider: str
+    model: str
+    analysis_mode: Literal["live", "recorded_demo"]
+    source_sha256: str
+    duration_seconds: float
+    sample_interval_seconds: float
+    expected_procedure_supplied: bool
+    actions: list[VideoActionOut]
+    transitions: list[FlowTransitionOut]
+    sampled_seconds: list[float]
+    frames: list[VideoFrameOut]
+    limitations: list[str]
+    time_note: str

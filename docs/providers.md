@@ -54,12 +54,21 @@ Rules a provider must follow:
 
 ## How this maps to the future roadmap
 
+Video-flow discovery is an optional capability. Set `supports_flow = True` and
+implement `discover_flow(frames: list[VideoFrame], duration_seconds: float) -> Detection`
+using the contracts in `stepcheck_providers.flow`. No expected steps are provided.
+Return actions with supporting timestamps, visible reasons, uncertainties, and
+limitations. The shared validator rejects evidence from frames that were not supplied
+and preserves ambiguous order when sightings overlap. OpenAI implements this through
+image input and structured output; mock and existing image-only providers remain
+unsupported instead of inventing video observations.
+
 The contract was chosen so the roadmap items need **no application changes**:
 
 | Future capability | How the contract already supports it |
 | --- | --- |
 | **JEPA / representation models** | A provider is free to embed images and steps and score similarity instead of prompting a VLM. The interface only asks for verdicts. |
-| **Video input** | Extract frames upstream and pass them as multiple `ImagePayload`s, or add a `VideoPayload` to `VerificationInput` and have video-aware providers consume it. |
+| **Video input** | Already supported upstream through timestamped `VideoFrame`s and the optional `discover_flow` capability; video-native temporal inputs can extend this contract. |
 | **Multiple images** | Already supported — `VerificationInput.images` is a list. |
 | **PDF procedures** | Parse the PDF to Markdown before the use case; the provider is unaffected. |
 | **Audio narration** | Add an optional `audio` field to `VerificationInput`; providers that ignore it keep working. |

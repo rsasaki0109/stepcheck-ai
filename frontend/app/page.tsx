@@ -4,6 +4,7 @@ import { useState } from "react";
 import ImageUploader from "@/components/ImageUploader";
 import ProcedureEditor from "@/components/ProcedureEditor";
 import ResultPanel from "@/components/ResultPanel";
+import VideoFlowPanel from "@/components/VideoFlowPanel";
 import { verifyProcedure } from "@/lib/api";
 import type { VerificationReport } from "@/lib/types";
 
@@ -15,6 +16,7 @@ const SAMPLE = `# PC Assembly
 5. Connect the power cables`;
 
 export default function Home() {
+  const [mode, setMode] = useState<"video" | "images">("video");
   const [procedure, setProcedure] = useState(SAMPLE);
   const [images, setImages] = useState<File[]>([]);
   const [report, setReport] = useState<VerificationReport | null>(null);
@@ -44,9 +46,19 @@ export default function Home() {
           StepCheck AI
         </h1>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          AI-powered procedural verification from images.
+          動画から作業フローを見つけ、根拠を確認する。
         </p>
       </header>
+
+      <nav aria-label="解析モード" className="mb-6 flex gap-2">
+        <button type="button" aria-pressed={mode === "video"} onClick={() => setMode("video")}
+          className={`rounded-lg px-4 py-2 text-sm font-medium ${mode === "video" ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900" : "text-slate-500 dark:text-slate-400"}`}>動画からフローを検出</button>
+        <button type="button" aria-pressed={mode === "images"} onClick={() => setMode("images")}
+          className={`rounded-lg px-4 py-2 text-sm font-medium ${mode === "images" ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900" : "text-slate-500 dark:text-slate-400"}`}>画像で手順を確認</button>
+      </nav>
+
+      <div hidden={mode !== "video"}><VideoFlowPanel /></div>
+      <div hidden={mode !== "images"}>
 
       <div className="grid gap-6 md:grid-cols-2">
         <ProcedureEditor value={procedure} onChange={setProcedure} />
@@ -71,6 +83,7 @@ export default function Home() {
 
       <div className="mt-8">
         <ResultPanel report={report} loading={loading} error={error} />
+      </div>
       </div>
     </main>
   );

@@ -55,6 +55,24 @@ implementations — no web framework, no application logic. This does three thin
 The provider never sees HTTP, and the API never sees a model SDK. The only thing crossing
 the boundary is data.
 
+## Single-video flow discovery
+
+`POST /api/video-flow` writes the bounded upload to a temporary file. The FFmpeg
+adapter in `infrastructure/video.py` extracts timestamped JPEG frames across the
+whole video. `DiscoverFlowUseCase` calls `provider.discover_flow(frames, duration)`
+without a procedure, then validates the observed evidence times and computes order.
+It returns actions, reasons, uncertainties, transitions, and actual supporting images.
+The temporary upload is removed after the request.
+
+`stepcheck_providers.flow` owns the `VideoFrame` and `Detection` contracts and shared
+`build_flow` validator, also reused by the MCP scripts. `VisionProvider.supports_flow`
+defaults to false so existing image providers remain compatible; OpenAI implements
+the optional capability. The mock provider never claims to recognize video.
+
+The web UI seeks a local video when an action is selected and displays its decoded
+evidence images. `/api/video-flow/demo` is a separately labeled replay of the saved
+Codex review, source-hash checked against the bundled video. It performs no inference.
+
 ## Extension points
 
 See [`providers.md`](./providers.md) for how the design accommodates JEPA, video models,

@@ -36,7 +36,47 @@ over MCP. No canned model response was used. This session had also performed the
 earlier procedure comparison below; this is **not a blinded accuracy evaluation**.
 No expected procedure or earlier observations are included in the sampling request.
 
-## Run detection
+## Upload a video in the web app
+
+Start the backend and frontend using the [README quick start](../README.md#quick-start).
+For local video decoding, install `ffmpeg` and `ffprobe` on the backend `PATH`;
+the Docker image includes them. Set `STEPCHECK_PROVIDER=openai` and `OPENAI_API_KEY`
+to recognize new uploads. The existing configured `gpt-4o` model is used by default.
+
+The video tab accepts one file and calls `POST /api/video-flow` without a procedure.
+It samples the whole clip (by default at 0.75 seconds, up to 48 frames), sends
+timestamped images to the provider, and validates that every evidence timestamp
+references a supplied frame. The OpenAI provider uses the
+[Responses image-input API](https://developers.openai.com/api/docs/guides/images-vision)
+with [structured output](https://developers.openai.com/api/docs/guides/structured-outputs).
+The model identifies actions; order among supporting samples is calculated separately.
+
+Selecting an action seeks the video and displays the exact server-decoded evidence
+image, its timestamp, reason, and uncertainty. Select another timestamp to inspect
+more evidence. This is observation-based discovery, not verification against a correct
+procedure. It cannot prove actions did not occur between sampled frames.
+
+Default limits are 50 MiB, 120 seconds, and 48 frames. For longer clips within the
+duration limit, spacing increases to include the end of the video. Decode and model
+failures are returned as errors; they never become a fabricated action list.
+Uploads are decoded in a temporary directory and removed after the request.
+Frames are sent to OpenAI for recognition; the response contains evidence images,
+and the browser plays the local uploaded file.
+
+`GET /api/video-flow/status` reports live recognition availability and limits. With
+the default `mock` provider, live video detection is unavailable. **記録済みデモを見る**
+loads `GET /api/video-flow/demo` and the bundled source from `/api/video-flow/demo/video`.
+It is labeled **記録済みデモ・再解析なし** and replays the earlier Codex review. It never
+uses that recorded review for a new upload.
+
+Live OpenAI inference was not exercised during this implementation because no API key
+was configured. Integration tests decode the real video with synthetic provider
+responses; provider tests verify image input and schema handling, not VLM accuracy.
+The recorded demo and frame-seeking UI were checked in Chrome.
+
+![Recorded demo in the web UI with the door-handle action selected and its source-frame evidence](assets/video-flow-ui.jpg)
+
+## Run detection through MCP
 
 Install `scripts/requirements-demo.txt` and make `ffmpeg` and `ffprobe` available.
 Launch `scripts/video_mcp.py` as a stdio MCP server in a vision-capable host with
@@ -76,8 +116,8 @@ python -m unittest discover -s scripts/tests -v
 ```
 
 The renderer reads the recognized actions from JSON; it does not define a correct
-action list, invent attention, or run a model. The web app still accepts images;
-this single-video workflow is currently exposed through MCP.
+action list, invent attention, or run a model. The web app also provides the single-video
+upload and evidence-review workflow described above.
 
 ## Separate demo: verify an expected flow
 
@@ -193,5 +233,5 @@ Tests include reversed rinse/dry timestamps, missing intermediate evidence, tied
 future evidence hiding, MCP result persistence, source mismatch, and unreviewed frames
 remaining free of invented boxes.
 
-The web app and HTTP API still accept images. Native video upload and automatic
-video-provider inference remain on the roadmap.
+The web app and HTTP API support video upload with frame-based provider inference;
+video-native temporal models remain a future extension.

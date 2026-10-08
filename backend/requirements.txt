@@ -7,4 +7,4 @@ python-multipart>=0.0.9
 pydantic>=2.6
 pydantic-settings>=2.2
 # Optional, for the OpenAI provider:
-# openai>=1.30
+# openai>=2.0,<3

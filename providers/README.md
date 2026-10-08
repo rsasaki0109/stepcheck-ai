@@ -20,3 +20,8 @@ verdicts = await provider.verify(
 ```
 
 See [`../docs/providers.md`](../docs/providers.md) for how to implement your own.
+
+Open-ended video flow detection uses the optional `supports_flow` / `discover_flow`
+capability. `stepcheck_providers.flow` contains timestamped `VideoFrame`s, the structured
+`Detection` output, and the evidence/order validator shared by the web API and MCP.
+OpenAI supports detection; mock supports only image-procedure verification.
