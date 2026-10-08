@@ -3,6 +3,7 @@
 [Colabで開く](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
 
 `Qwen/Qwen2.5-VL-3B-Instruct` の公開重みをダウンロードし、ColabランタイムのGPUで推論します。
+GPU確認セルでは `Qwen/Qwen3-VL-4B-Instruct` も選択できます。モデルを選べることと、この動画のフローを正しく認識できることは別です。
 OpenAI APIキーや有料の推論APIは使いません。GPUの割り当てはColab側の利用状況によります。
 
 1. ランタイムのタイプを **T4 GPU** に変更します。
@@ -16,7 +17,27 @@ OpenAI APIキーや有料の推論APIは使いません。GPUの割り当てはC
 既定の `FRAMEWISE=True` は1枚ずつ画像を認識し、観測文を同じモデルでフローに整理します。
 モデルの観測文と整理結果は両方保存します。各段階に誤認・要約の誤りがありえるため、元画像との照合が必要です。
 `FRAMEWISE=False` で全画像を一度に渡す方法も比較できます。
+量子化する場合、既定の `KEEP_VISION_FP16=True` は視覚部分と出力層をFP16に保ちます。
 メモリー不足の場合は `MAX_IMAGE_PATCHES` または `MAX_FRAMES` を減らしてください。
+
+同じ保存JPEGの4場面だけを比較する場合は、GPU確認後に次を実行します。
+保存レポートから読むのは画像と時刻で、過去の動作名・期待フローはモデルに渡しません。
+
+```python
+from diagnose_local_vlm import run_diagnostics
+from stepcheck_providers import create_provider
+
+diagnostic_provider = create_provider("qwen-local", model="Qwen/Qwen3-VL-4B-Instruct")
+diagnostics = await run_diagnostics(
+    diagnostic_provider, REPO / "docs/assets/video-demo/source.webm",
+    Path("/content/stepcheck-qwen3-diagnostics"),
+    variants=[(True, 256), (True, 1024)],
+    frames_report=REPO / "docs/assets/video-demo/qwen-3b-framewise-flow.json",
+)
+```
+
+`diagnostics.json` に実応答・GPU・モデル設定を、PNGに実テンソルから復元した入力を保存します。
+これはモデルのアテンションではありません。画像上の注目領域は推測して描画しません。
 
 モデルはフレームIDを根拠として返し、コードが実際の抽出時刻に対応付けます。
 未提供のID、不正JSON、推論失敗はエラーにします。根拠を推測して補修したり、成功結果へ置き換えたりしません。

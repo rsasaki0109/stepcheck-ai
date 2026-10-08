@@ -14,7 +14,8 @@ def main():
     notebook.cells = [
         nbf.v4.new_markdown_cell("""# StepCheck AI: 1本の動画からフローを検出（ローカルVLM）
 
-**OpenAI APIキー不要。Qwen2.5-VL-3B-InstructをColabのGPUで実行します。**
+**OpenAI APIキー不要。Qwenの公開VLMをColabのGPUで実行します。**
+既定はQwen2.5-VL-3Bです。GPU確認セルでQwen3-VL-4Bも選択できます。
 
 1. **ランタイム → ランタイムのタイプを変更 → T4 GPU** を選びます。
 2. 上から順にセルを実行します。標準では公開の手洗い動画を解析します。
@@ -52,8 +53,9 @@ import torch
 assert torch.cuda.is_available(), "ランタイムのタイプをT4 GPUに変更して、上から実行してください。"
 print("GPU:", torch.cuda.get_device_name(0))
 print("VRAM:", round(torch.cuda.get_device_properties(0).total_memory / 2**30, 1), "GiB")
-MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct" #@param ["Qwen/Qwen2.5-VL-3B-Instruct", "Qwen/Qwen2.5-VL-7B-Instruct"]
+MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct" #@param ["Qwen/Qwen2.5-VL-3B-Instruct", "Qwen/Qwen2.5-VL-7B-Instruct", "Qwen/Qwen3-VL-4B-Instruct"]
 LOAD_IN_4BIT = False #@param {type:"boolean"}
+KEEP_VISION_FP16 = True #@param {type:"boolean"}
 FRAMEWISE = True #@param {type:"boolean"}
 MAX_FRAMES = 24  # GPUメモリーが足りない場合は16または8へ減らす
 MAX_IMAGE_PATCHES = 256 if FRAMEWISE else (64 if "7B" in MODEL_ID else 256)
@@ -77,14 +79,17 @@ from stepcheck_providers import create_provider
 from run_local_video_flow import run_local_flow
 
 OUTPUT_DIR = Path("/content/stepcheck-output")
-if "provider" not in globals() or provider.model_id != MODEL_ID or provider.load_in_4bit != LOAD_IN_4BIT:
+if ("provider" not in globals() or provider.model_id != MODEL_ID
+        or provider.load_in_4bit != LOAD_IN_4BIT
+        or provider.keep_vision_fp16 != KEEP_VISION_FP16):
     if "provider" in globals():
         import gc
         provider._model = None
         provider._processor = None
         gc.collect()
         torch.cuda.empty_cache()
-    provider = create_provider("qwen-local", model=MODEL_ID, load_in_4bit=LOAD_IN_4BIT)
+    provider = create_provider("qwen-local", model=MODEL_ID, load_in_4bit=LOAD_IN_4BIT,
+                               keep_vision_fp16=KEEP_VISION_FP16)
 provider.framewise = FRAMEWISE
 if provider.max_pixels != MAX_IMAGE_PATCHES * 28 * 28:
     provider.max_pixels = MAX_IMAGE_PATCHES * 28 * 28
@@ -121,6 +126,7 @@ if DOWNLOAD_RESULTS:
 ダウンロードセルの `DOWNLOAD_RESULTS` を有効にすると、これらをZIPで取得できます。
 
 別の動画は動画選択セルから選択します。7B/T4は `LOAD_IN_4BIT=True` と `FRAMEWISE=True` で試してください。
+`KEEP_VISION_FP16=True` は量子化時にも視覚部分と出力層をFP16に保ちます。認識の正しさは別に照合してください。
 個別認識はフレーム1枚ずつのVLM観測後、観測文をモデルでフローに整理します。両段階の生出力を保存します。
 GPUメモリー不足は `MAX_IMAGE_PATCHES`（64 / 128 / 256）や `MAX_FRAMES` を減らして再実行します。
 画像を小さくすると細かい動作が見えにくくなるため、結果の根拠確認が必要です。
