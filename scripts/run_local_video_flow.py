@@ -108,6 +108,7 @@ async def run_local_flow(video: Path, output: Path, *, model: str = "Qwen/Qwen2.
         "model_revision": getattr(getattr(getattr(provider, "_model", None), "config", None), "_commit_hash", None),
         "load_in_4bit": getattr(provider, "load_in_4bit", False),
         "framewise": getattr(provider, "framewise", False),
+        "keep_vision_fp16": getattr(provider, "keep_vision_fp16", False),
         "max_pixels": getattr(provider, "max_pixels", None), "sample_count": len(sampled.frames),
         "gpu": torch.cuda.get_device_name(0) if torch is not None and torch.cuda.is_available() else None,
         "packages": packages, "source_sha256": report["source_sha256"]}

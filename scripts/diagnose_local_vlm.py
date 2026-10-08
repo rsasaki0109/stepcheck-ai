@@ -29,40 +29,51 @@ PROMPT = (
 )
 
 
-def inspect_input(inputs, processor, destination: Path, image_token_id: int) -> dict:
+def inspect_input(inputs, processor, destination: Path, image_token_id: int, *, modality="image") -> dict:
     """Invert the documented Qwen patch layout from the actual model-call tensors."""
     import numpy as np
     from PIL import Image
 
-    ip = processor.image_processor
-    grid = inputs["image_grid_thw"].detach().cpu().numpy()
+    ip = processor.image_processor if modality == "image" else processor.video_processor
+    grid = inputs[f"{modality}_grid_thw"].detach().cpu().numpy()
     if grid.shape != (1, 3):
-        raise ValueError("The diagnostic must pass exactly one image per model call.")
+        raise ValueError("The diagnostic must pass exactly one visual input per model call.")
     t, h, w = map(int, grid[0])
     p, m, temporal = ip.patch_size, ip.merge_size, ip.temporal_patch_size
-    pixels = inputs["pixel_values"].detach().cpu().float().numpy()
+    pixel_key = "pixel_values" if modality == "image" else "pixel_values_videos"
+    pixels = inputs[pixel_key].detach().cpu().float().numpy()
     if pixels.shape != (t * h * w, 3 * temporal * p * p) or not np.isfinite(pixels).all():
         raise ValueError("Unexpected or non-finite vision input.")
     # Official forward layout: (t, h/m, w/m, mh, mw, c, temporal, ph, pw).
     patches = pixels.reshape(t, h // m, w // m, m, m, 3, temporal, p, p)
     expanded = patches.transpose(0, 6, 5, 1, 3, 7, 2, 4, 8)
     expanded = expanded.reshape(t * temporal, 3, h * p, w * p)
-    image = expanded[0].transpose(1, 2, 0)
+    image = expanded.transpose(0, 2, 3, 1)
     if ip.do_normalize:
         image = image * np.asarray(ip.image_std) + np.asarray(ip.image_mean)
     if ip.do_rescale:
         image = image / ip.rescale_factor
     picture = np.rint(image).clip(0, 255).astype(np.uint8)
-    Image.fromarray(picture).save(destination)
+    if modality == "image":
+        Image.fromarray(picture[0]).save(destination)
+    else:
+        columns = 4
+        sheet = Image.new("RGB", (224 * columns, 168 * ((len(picture) + columns - 1) // columns)))
+        for index, raster in enumerate(picture):
+            tile = Image.fromarray(raster)
+            tile.thumbnail((224, 168))
+            sheet.paste(tile, ((index % columns) * 224, (index // columns) * 168))
+        sheet.save(destination)
     token_count = int((inputs["input_ids"] == image_token_id).sum())
     expected = t * h * w // (m * m)
     if token_count != expected:
         raise ValueError(f"Image-token count {token_count} differs from the vision grid {expected}.")
-    return {"image_grid_thw": grid.tolist(), "pixel_values_shape": list(pixels.shape),
+    return {f"{modality}_grid_thw": grid.tolist(), "pixel_values_shape": list(pixels.shape),
             "image_processor_class": type(ip).__name__,
             "pixel_values_sha256": hashlib.sha256(pixels.tobytes()).hexdigest(),
             "image_token_count": token_count, "expected_image_token_count": expected,
-            "reconstructed_size": [w * p, h * p], "reconstructed_image": destination.name}
+            "reconstructed_size": [w * p, h * p], "reconstructed_frame_count": len(picture),
+            "reconstructed_image": destination.name}
 
 
 class CaptureProcessor:
@@ -123,6 +134,7 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None,
     try:
         provider.max_new_tokens = 220
         provider._load()
+        old_processor = old_processor or provider._processor
         metadata["vision_linear_modules"] = [{"name": name, "class": type(module).__name__,
             "weight_dtype": str(module.weight.dtype)} for name,module in provider._model.named_modules()
             if "visual" in name and hasattr(module, "weight") and type(module).__name__ in {"Linear", "Linear4bit"}]
