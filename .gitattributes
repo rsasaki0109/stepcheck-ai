@@ -11,3 +11,4 @@ docs/assets/video-demo/qwen3-reference-verification/* -text -whitespace
 docs/assets/video-demo/qwen3-reference-windows/* -text -whitespace
 docs/assets/video-demo/codex-reference-verification/* -text -whitespace
 docs/assets/video-demo/codex-reference-sampling/* -text -whitespace
+docs/assets/video-demo/codex-reference-refinement/* -text -whitespace

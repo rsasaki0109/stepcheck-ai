@@ -130,7 +130,7 @@ await run_native_diagnostics(provider, VIDEO_PATH,
     Path("/content/native-video-diagnostics"))
 ```
 
-公開するREADME GIFには引き続き未修正のフロー出力と独立レビューを表示しています。
+上記の実験GIFには未修正のフロー出力と独立レビューを表示しています。
 今回の実験で確認できなかった動作を、成功済みの表示へ置き換えていません。
 
 その後の[Qwen3の動画入力実験](qwen3-native-video.md)では、重なる3区間と

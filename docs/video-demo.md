@@ -112,7 +112,8 @@ write `response.json` in the fresh bridge directory. The response must contain
 and `limitations`. This adapter does not call a model by itself. An ordinary
 sampling-capable host can call the tool directly without the adapter.
 
-To reproduce the README GIF from the included source and recorded detection:
+To reproduce the earlier open-ended detection GIF from the included source and recorded detection
+(the current README's follow-up verification GIF has [separate instructions](reference-flow-verification.md#未確認の工程を追加画像で再確認する)):
 
 ```bash
 python scripts/generate_detected_flow_gif.py

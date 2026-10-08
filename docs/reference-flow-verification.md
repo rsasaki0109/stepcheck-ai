@@ -4,7 +4,13 @@ READMEの最新GIFは、**MCPで取得した元画像をCodexが見て判断し�
 Qwenの結果を書き換えたものではなく、Qwenの自動認識が成功したという表示でもありません。
 今回定義した[7工程の基準](../examples/observed-handwashing-flow.json)を与えて確認しています。
 
-## 確認したこと
+現在のGIFは、32枚で取っ手が未確認だったsampling実行から、
+追加8枚で取っ手を確認するまでの2回のMCP視覚レビューを再生します。
+下の33枚の個別`read_frame`レビューは以前の記録として残しています。
+
+![Initial unknown handle, actual follow-up images, then recorded sampled-order verification](assets/codex-reference-refinement.gif)
+
+## 以前の33枚レビューで確認したこと
 
 | 工程 | Codexが確認した元画像の時刻 | 見えている根拠 |
 |---|---|---|
@@ -70,7 +76,8 @@ MCPサーバー自体は画像認識を行いません。判断者は画像を�
 **6工程を確認、取っ手は未確認、全体の順序は`unknown`**でした。
 21.75秒の手と紙はぶれており、レバーを握る接触をこの画像だけでは確認できません。
 21.5秒の追加画像は今回のsamplingに含まれていません。
-上のGIFの33枚レビューとは別の記録です。以前の成功した判断を流用していません。
+以前の33枚レビューとは別の記録です。以前の成功した判断を流用していません。
+現在のREADME GIFの第1段階は、この32枚レビューです。
 逆順比較では確認できた4つの隣接関係が違反、取っ手に関わる2つは未確認です。
 同じ既知の動画・基準であり、独立した認識精度の評価ではありません。
 
@@ -91,6 +98,48 @@ python scripts/run_flow_detection.py --bridge-dir .tmp-flow-local/new-reference-
 ```
 
 このツールはMCPサーバー用です。Webアプリの動画APIにはまだ接続していません。
+
+## 未確認の工程を追加画像で再確認する
+
+`refine_reference_flow(previous, sample_interval_seconds=0.25, max_frames=24)`は、
+保存済みの検証結果を受け取り、`unknown`の工程だけを視覚対応ホストに再確認させます。
+前後で観測された工程の引用時刻から探索範囲を決め、既存画像と重複しない細かい画像を取り、
+境界と不鮮明だった画像も比較用に渡します。既に確認した工程は変更できません。
+未確認が残る応答も受け入れ、画像不足を自動的な成功にはしません。
+
+今回、前の手拭きの最後の根拠19.5秒と、次のゴミ箱の最初の根拠22.5秒から範囲を選びました。
+19.75、20、20.5、20.75、21.25、21.5、22、22.25秒の**8枚を追加**し、
+19.5、21、21.75、22.5秒の4枚を比較用に付けて、実際のMCP samplingで送りました。
+取っ手の正解時刻を指定するコードはありません。
+このセッションのCodexが今回の一覧画像を表示して確認し、21.5秒の紙越しの握りを引用しました。
+
+取っ手が`unknown`から`observed`になり、ほかの6工程の理由・時刻・判断はそのままです。
+重複を除いた確認画像は32＋8＝40枚。6つの隣接関係の順序が一致しました。
+同じ観察結果を逆順に照合すると6箇所が違反になります。
+更新前の結果は`before-verification.json`に残し、更新後には元結果のハッシュと追加時刻を保存します。
+不正な工程ID、今回渡していない時刻、元動画の不一致、不整合な元結果は保存前に拒否します。
+
+探索範囲は**与えた順序からのヒント**です。範囲外での工程や繰り返しを否定するものではなく、
+連続した作業の完遂も証明しません。隣接する根拠時刻が逆転している場合は空の範囲にせず、
+動画全体へ探索を広げます。画像予算を超える場合は間隔や予算の変更を求め、勝手に画像を捨てません。
+
+- [追加確認の実入力](assets/video-demo/codex-reference-refinement/tool-request.json)
+- [実際に表示した12枚](assets/video-demo/codex-reference-refinement/sampling-0.png)、[samplingプロンプト](assets/video-demo/codex-reference-refinement/sampling-request.json)
+- [今回の取っ手の判断](assets/video-demo/codex-reference-refinement/response.json)
+- [更新前](assets/video-demo/codex-reference-refinement/before-verification.json)、[更新後](assets/video-demo/codex-reference-refinement/verification.json)、[逆順比較](assets/video-demo/codex-reference-refinement/reverse-verification.json)
+- [MCPの実応答](assets/video-demo/codex-reference-refinement/tool-result.json)、[実行コード・画像・GIFのハッシュ](assets/video-demo/codex-reference-refinement/manifest.json)
+
+```powershell
+python scripts/run_flow_detection.py --bridge-dir .tmp-flow-local/new-follow-up --refine-from .tmp-flow-local/new-reference-run/verification.json --output .tmp-flow-local/new-follow-up/verification.json --reviewer "connected vision session"
+```
+
+現在のGIFは、第1段階の未確認を表示した後、追加画像を再生します。
+追加画像の再生中も判断は未確認のままで、最後に保存した追加応答と順序を表示します。
+再生速度は推論時間を示しません。GIF内の認識はライブではなく記録の再生です。
+
+```powershell
+python scripts/generate_reference_refinement_gif.py --before docs/assets/video-demo/codex-reference-refinement/before-verification.json --after docs/assets/video-demo/codex-reference-refinement/verification.json --output docs/assets/codex-reference-refinement.gif
+```
 
 ## Qwenの実際の試行結果
 

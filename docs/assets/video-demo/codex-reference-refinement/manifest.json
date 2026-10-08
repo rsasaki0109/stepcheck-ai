@@ -1,0 +1,43 @@
+{
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "tool": "refine_reference_flow",
+  "transport": "Actual stdio MCP sampling; exported source-image sheet was displayed to Codex and freshly judged JSON was returned over the file adapter. The adapter itself invokes no model API.",
+  "prior_report_sha256": "141f6d9f1ca8e97cb1da861251ad1b427ea100efb487eb0236382cc9c0c6d647",
+  "prior_sample_count": 32,
+  "new_unique_samples": 8,
+  "context_samples": 4,
+  "total_unique_samples": 40,
+  "prior_order_status": "unknown",
+  "order_status": "supported_sample_order",
+  "reverse_violations": 6,
+  "unchanged_observed_steps": 6,
+  "limitations": [
+    "Known-video given-reference review, not a blinded accuracy evaluation.",
+    "Search windows use adjacent evidence as hints, do not establish absence elsewhere or uninterrupted execution.",
+    "Door opening and towel release were not verified.",
+    "GIF replays recorded judgments; animation speed is not inference duration; frame borders identify cited source frames, not spatial attention."
+  ],
+  "gif": {
+    "file": "docs/assets/codex-reference-refinement.gif",
+    "sha256": "6ac82e15387a8f2992708fb0a255a87c7117d3f84d2ff04df93467819ab523fc",
+    "width": 960,
+    "height": 1290,
+    "frames": 152
+  },
+  "files": {
+    "before-verification.json": "a41ecde4e84a10ad3c9e7c91f6e876f8481f8cd0ed8cafe6582ffd98ddbd78d0",
+    "response.json": "55ff0af592ed719f2cc2e2b2082ae4b53c740df43bcaeb556174fc145d2a07e5",
+    "reverse-verification.json": "91902c2f508b470b7f13b88bc0a33f3d6c3fa8b539619042a8f21b5b5103857f",
+    "sampling-0.png": "b4605bb91e9fdc964adde46f2ee9f9aa958873dcccac4933d9f554a24972a69f",
+    "sampling-request.json": "63d0b381997af84183adf96d9f81260090077d9a40db8617b19f69eadb67df19",
+    "source-generate_detected_flow_gif.py": "329d70f6470ac4f68002a8418f4f177d466566bc1010c87cdec83583472c674a",
+    "source-generate_readme_gif.py": "667d630c6d9ee0a1b815ae812c8f2f2bf16b71b67da551721be9447fb6f1b0d0",
+    "source-generate_reference_refinement_gif.py": "ce10c614f801a0f82154bdf460ee52147394007e42a6bde2dea57c5c142b1626",
+    "source-run_flow_detection.py": "afb0cf3c96736cfe229dab9eb9770320b438359f6802adb782f0eff5862f4325",
+    "source-verify_qwen3_video_flow.py": "672a55e79feef7f5c31dd44cfb84212ef13934c7b244e1034c34aad03cf26e27",
+    "source-video_mcp.py": "ba3f5cc9a928df26f5200b7074e83f7c5ecef2781d520c859caecb08b91a6f85",
+    "tool-request.json": "07fde137e2ca45accc1e439bba413eef3c416aa5abaf8af6e1eafed5cd9cf38b",
+    "tool-result.json": "9a8317d0e77d05bc6c26eb38e75458c3e83cf0c7e35437f6241d5f2a82340df6",
+    "verification.json": "67846b739422a4757012ffeb87d9c7c9b817bdfbe2bc922f618502b034af9f30"
+  }
+}

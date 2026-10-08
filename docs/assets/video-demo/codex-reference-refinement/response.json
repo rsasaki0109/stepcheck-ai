@@ -1,0 +1,14 @@
+{
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "observations": [
+    {
+      "step_id": "door",
+      "status": "observed",
+      "reason": "In the supplied 21.5 s image, a hand closes around the chrome door lever with white paper between the hand and handle. The adjacent 21.25 s view shows the approach/contact and the 22 s view shows the bare lever after the hand moves away. The cited 21.5 s frame supports the paper-mediated grip itself.",
+      "evidence_seconds": [
+        21.5
+      ],
+      "uncertainty": "The source is blurred and sampled; actual door opening and uninterrupted motion are not established. Only the visible grip is verified."
+    }
+  ]
+}

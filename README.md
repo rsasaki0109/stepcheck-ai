@@ -10,9 +10,9 @@ One video → vision-language model → observed actions, order, and evidence fr
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
 
-![Codex source-frame review through MCP, checking a seven-step reference in four chronological panels](docs/assets/codex-reference-verification.gif)
+![Codex MCP review: unknown handle, follow-up source frames, then seven-step sampled-order verification](docs/assets/codex-reference-refinement.gif)
 
-<sub>One real video → MCP source frames → Codex visual review → given seven-step flow + sample-order check. Recorded review replay; frame borders mark cited evidence, not attention.</sub>
+<sub>One real video → MCP review → unknown handle → follow-up images → sample-order check. Recorded judgments; frame borders mark cited evidence, not attention.</sub>
 
 </div>
 
@@ -24,10 +24,15 @@ judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with
 score and a human-readable reason grounded in the images.
 
 The GIF above replays **Codex visual review of actual source frames obtained through MCP**.
-The host inspects 33 real PNGs from one video and records its visible judgments against a
+The host first inspects 32 real source samples against a
 [given seven-step reference](examples/observed-handwashing-flow.json). Four panels replay
 chronological time quarters. Frame borders identify actual cited samples, not spatial attention.
 The MCP server extracts images, validates cited timestamps, and checks order; the host performs vision review.
+
+The first pass leaves handle contact **unknown**. `refine_reference_flow(previous)` selects
+19.5–22.5 seconds from neighboring observed evidence and requests eight new samples plus four
+context samples. Codex sees the paper-mediated grip at 21.5 seconds, updates that one judgment,
+and preserves the six earlier observations. Both before and after results are saved.
 
 The seven visible actions are supported in sampled order: soap → lather → rinse → pull towel
 → dry → hold door handle → lower towel into bin. Reversing the reference against the same
@@ -40,7 +45,8 @@ For a sampling-capable vision host, `verify_reference_flow(reference, sample_int
 now combines source-image sampling, host review, and order checking in one MCP tool call.
 An [actual stdio sampling run](docs/reference-flow-verification.md#mcp-samplingで一度に確認する)
 identified six actions but left handle contact unknown with only the 32 uniform/end samples.
-The GIF above includes the additional 21.5-second image; it is a separate recorded review.
+The GIF above replays that run and its [actual follow-up sampling](docs/reference-flow-verification.md#未確認の工程を追加画像で再確認する).
+Search windows are hints from the given reference; they do not prove absence elsewhere.
 
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong

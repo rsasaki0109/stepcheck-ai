@@ -1,0 +1,255 @@
+{
+  "title": "Visible handwashing and exit flow",
+  "reference": {
+    "title": "Visible handwashing and exit flow",
+    "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+    "steps": [
+      {
+        "id": "soap",
+        "label": "Dispense soap",
+        "criterion": "White soap appears on a palm beneath a dispenser; mechanism actuation may be occluded."
+      },
+      {
+        "id": "lather",
+        "label": "Rub hands with lather",
+        "criterion": "Hands rub with visible foam. Running water is not required."
+      },
+      {
+        "id": "rinse",
+        "label": "Rinse under running water",
+        "criterion": "A visible flowing water stream contacts the hands. Foam alone is not rinsing."
+      },
+      {
+        "id": "paper",
+        "label": "Pull a paper towel",
+        "criterion": "A sheet is visibly pulled out of a wall dispenser slot. Holding paper nearby is not enough."
+      },
+      {
+        "id": "dry",
+        "label": "Dry hands with the towel",
+        "criterion": "Paper contacts the hands as they rub or fold it between them; continued pulling from the slot is different."
+      },
+      {
+        "id": "door",
+        "label": "Hold door handle through a towel",
+        "criterion": "The hand grips a visible door lever through paper. Actual door opening is not required."
+      },
+      {
+        "id": "bin",
+        "label": "Lower towel into bin",
+        "criterion": "The hand moves paper below the rim of a lined bin. Visible release is not required."
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "At 0 s a palm is held under the dispenser; at 0.75 s the palm has white soap as it moves away.",
+      "evidence_seconds": [
+        0.0,
+        0.75
+      ],
+      "uncertainty": "The dispenser actuation is hidden by the other hand.",
+      "index": 1,
+      "label": "Dispense soap"
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Foamy hands rub palm surfaces, fingers, and the back of the hand across the sink views. No running stream is visible in these cited frames.",
+      "evidence_seconds": [
+        2.25,
+        3.75,
+        6.0,
+        9.75
+      ],
+      "uncertainty": "Discrete frames do not show every intervening movement.",
+      "index": 2,
+      "label": "Rub hands with lather"
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "At 12 and 12.75 s the visible white water stream from the faucet contacts the hands beneath it.",
+      "evidence_seconds": [
+        12.0,
+        12.75
+      ],
+      "uncertainty": "The preceding crossfade obscures the exact transition into rinsing.",
+      "index": 3,
+      "label": "Rinse under running water"
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "At 14.25 s the hand pulls a white sheet down from the wall dispenser slot; at 15 s the separated sheet is held beside the slot.",
+      "evidence_seconds": [
+        14.25,
+        15.0
+      ],
+      "uncertainty": "The exact sheet separation occurs between samples.",
+      "index": 4,
+      "label": "Pull a paper towel"
+    },
+    {
+      "step_id": "dry",
+      "status": "observed",
+      "reason": "The white paper is between both hands, then folded or rubbed against the palms and fingers beside the dispenser.",
+      "evidence_seconds": [
+        15.75,
+        16.5,
+        18.75,
+        19.5
+      ],
+      "uncertainty": "Dryness is not measurable from these images; the visible towel-contact action matches the reference.",
+      "index": 5,
+      "label": "Dry hands with the towel"
+    },
+    {
+      "step_id": "door",
+      "status": "observed",
+      "reason": "In the supplied 21.5 s image, a hand closes around the chrome door lever with white paper between the hand and handle. The adjacent 21.25 s view shows the approach/contact and the 22 s view shows the bare lever after the hand moves away. The cited 21.5 s frame supports the paper-mediated grip itself.",
+      "evidence_seconds": [
+        21.5
+      ],
+      "uncertainty": "The source is blurred and sampled; actual door opening and uninterrupted motion are not established. Only the visible grip is verified.",
+      "index": 6,
+      "label": "Hold door handle through a towel"
+    },
+    {
+      "step_id": "bin",
+      "status": "observed",
+      "reason": "The hand and white paper enter the lined bin opening at 22.5 s; at 22.903 s paper extends below the bag-lined rim with the hand above it.",
+      "evidence_seconds": [
+        22.5,
+        22.903
+      ],
+      "uncertainty": "The exact release of the paper is not visible and is not required by this reference.",
+      "index": 7,
+      "label": "Lower towel into bin"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "soap",
+      "to": "lather",
+      "status": "sampled_before"
+    },
+    {
+      "from": "lather",
+      "to": "rinse",
+      "status": "sampled_before"
+    },
+    {
+      "from": "rinse",
+      "to": "paper",
+      "status": "sampled_before"
+    },
+    {
+      "from": "paper",
+      "to": "dry",
+      "status": "sampled_before"
+    },
+    {
+      "from": "dry",
+      "to": "door",
+      "status": "sampled_before"
+    },
+    {
+      "from": "door",
+      "to": "bin",
+      "status": "sampled_before"
+    }
+  ],
+  "order_status": "supported_sample_order",
+  "time_note": "Cited sample order, not continuous execution or exact action boundaries.",
+  "reviewer": "Codex vision session via file MCP sampling adapter",
+  "method": "MCP sampling refinement: prior observed judgments retained; host visually reviewed unknown targets using follow-up source images",
+  "expected_procedure_supplied": true,
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "duration_seconds": 23.003,
+  "sampled_seconds": [
+    0.0,
+    0.75,
+    1.5,
+    2.25,
+    3.0,
+    3.75,
+    4.5,
+    5.25,
+    6.0,
+    6.75,
+    7.5,
+    8.25,
+    9.0,
+    9.75,
+    10.5,
+    11.25,
+    12.0,
+    12.75,
+    13.5,
+    14.25,
+    15.0,
+    15.75,
+    16.5,
+    17.25,
+    18.0,
+    18.75,
+    19.5,
+    19.75,
+    20.0,
+    20.25,
+    20.5,
+    20.75,
+    21.0,
+    21.25,
+    21.5,
+    21.75,
+    22.0,
+    22.25,
+    22.5,
+    22.903
+  ],
+  "scope_note": "Visible sample evidence only. Not proof of uninterrupted execution, hidden door opening or towel release.",
+  "refinement": {
+    "target_step_ids": [
+      "door"
+    ],
+    "windows": [
+      {
+        "step_id": "door",
+        "start_seconds": 19.5,
+        "end_seconds": 22.5
+      }
+    ],
+    "sampled_seconds": [
+      19.5,
+      19.75,
+      20.0,
+      20.5,
+      20.75,
+      21.0,
+      21.25,
+      21.5,
+      21.75,
+      22.0,
+      22.25,
+      22.5
+    ],
+    "added_seconds": [
+      19.75,
+      20.0,
+      20.5,
+      20.75,
+      21.25,
+      21.5,
+      22.0,
+      22.25
+    ],
+    "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows.",
+    "reviewer": "Codex vision session via file MCP sampling adapter",
+    "prior_order_status": "unknown",
+    "prior_report_sha256": "141f6d9f1ca8e97cb1da861251ad1b427ea100efb487eb0236382cc9c0c6d647"
+  }
+}
