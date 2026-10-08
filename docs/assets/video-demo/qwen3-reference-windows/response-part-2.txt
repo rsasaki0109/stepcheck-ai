@@ -1,0 +1,53 @@
+{
+  "steps": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "White soap visible on palm beneath dispenser; hands actively rubbing soap.",
+      "evidence_pair_ids": [0, 1],
+      "uncertainty": "low"
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands visibly rubbing with abundant foam on palms and fingers.",
+      "evidence_pair_ids": [1, 2],
+      "uncertainty": "low"
+    },
+    {
+      "step_id": "rinse",
+      "status": "unknown",
+      "reason": "No visible flowing water stream contacting hands; only soap and foam present.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    },
+    {
+      "step_id": "paper",
+      "status": "unknown",
+      "reason": "No paper towel or dispenser visible; no pulling motion observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No towel or drying action visible; no paper contact with hands observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No door handle or hand gripping visible; no door interaction observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    },
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No bin or towel lowering visible; no disposal action observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    }
+  ]
+}

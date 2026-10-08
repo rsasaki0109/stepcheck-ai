@@ -24,6 +24,7 @@ from PIL import Image as PILImage, ImageDraw, ImageFont
 from pydantic import BaseModel, Field
 from check_video_flow import check_flow as compare_flow
 from video_discovery import Detection, build_flow
+from verify_qwen3_video_flow import compare_order
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs" / "assets" / "video-demo"
@@ -31,6 +32,8 @@ VIDEO = Path(os.environ.get("STEPCHECK_DEMO_VIDEO", str(ASSETS / "source.webm"))
 REVIEW = Path(os.environ.get("STEPCHECK_DEMO_REVIEW", str(ASSETS / "review.json")))
 DETECTED_FLOW = Path(os.environ.get("STEPCHECK_DETECTED_FLOW", str(ASSETS / "detected-flow.json")))
 PROCEDURE = ROOT / "examples" / "handwashing.md"
+REFERENCE_REVIEW = Path(os.environ.get("STEPCHECK_REFERENCE_REVIEW",
+    str(ASSETS / "codex-reference-verification" / "verification.json")))
 mcp = MCPServer("StepCheck video vision review")
 
 
@@ -187,6 +190,59 @@ def inspect_video() -> dict:
 def read_frame(timestamp_seconds: float) -> Image:
     """Return a real video frame as MCP image content for the host model to inspect."""
     return Image(data=frame_bytes(timestamp_seconds), format="png")
+
+
+class ReferenceObservation(BaseModel):
+    step_id: str
+    status: Literal["observed", "unknown"]
+    reason: str = Field(min_length=1)
+    evidence_seconds: list[float]
+    uncertainty: str = ""
+
+
+@mcp.tool()
+def record_reference_verification(reviewer: str, reference: dict,
+                                  observations: list[ReferenceObservation],
+                                  reviewed_seconds: list[float]) -> dict:
+    """Record the host's actual read_frame review of a GIVEN reference, without confidence scores.
+
+    The host attests that it inspected the returned images. This tool validates
+    cited sample membership and derives order; it does not perform vision itself.
+    The same recorded evidence is also checked against a reversed reference.
+    """
+    duration=video_info()["duration_seconds"]
+    if not reviewer.strip(): raise ToolError("Identify the host that inspected the images.")
+    if not reviewed_seconds or any(not math.isfinite(t) or not 0<=t<duration for t in reviewed_seconds):
+        raise ToolError("Reviewed sample times must be finite and inside this video.")
+    given=reference.get("steps",[])
+    expected=[s.get("id") for s in given]
+    actual=[s.step_id for s in observations]
+    if not expected or any(not isinstance(i,str) or not i for i in expected) or len(set(expected))!=len(expected):
+        raise ToolError("Reference must contain unique nonempty step IDs.")
+    if sorted(expected)!=sorted(actual): raise ToolError("Require exactly one observation per given step.")
+    lookup={s.step_id:s for s in observations}
+    states=[]
+    for index,step in enumerate(given,1):
+        observed=lookup[step["id"]]
+        if observed.status=="observed" and not observed.evidence_seconds:
+            raise ToolError("Observed steps require cited reviewed images.")
+        if any(not math.isfinite(t) or t not in reviewed_seconds for t in observed.evidence_seconds):
+            raise ToolError("Evidence must reference a reviewed source frame.")
+        states.append({**observed.model_dump(),"index":index,"label":step["label"],
+                       "evidence_seconds":sorted(set(observed.evidence_seconds))})
+    report={"title":reference["title"],"reference":reference,"steps":states,**compare_order(states),
+        "reviewer":reviewer,"method":"Host-attested Codex visual review of actual MCP read_frame images; recorded review, not Qwen output or an inference API call.",
+        "expected_procedure_supplied":True,"source_sha256":hashlib.sha256(VIDEO.read_bytes()).hexdigest(),
+        "duration_seconds":duration,"sampled_seconds":sorted(set(reviewed_seconds)),
+        "scope_note":"Visible sample evidence only. Not proof of uninterrupted execution, hidden door opening or towel release."}
+    reversed_states=[{**s,"index":i} for i,s in enumerate(states[::-1],1)]
+    reverse={**report,"reference":{**reference,"steps":given[::-1]},"steps":reversed_states,
+        **compare_order(reversed_states),
+        "control_kind":"Same recorded observations compared to reversed reference; deterministic order control, no new vision inference."}
+    REFERENCE_REVIEW.parent.mkdir(parents=True,exist_ok=True)
+    REFERENCE_REVIEW.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+    REFERENCE_REVIEW.with_name("reverse-verification.json").write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding="utf-8")
+    return report
 
 
 @mcp.tool()

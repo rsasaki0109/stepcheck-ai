@@ -1,0 +1,53 @@
+{
+  "steps": [
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No visible hand action confirms towel lowering into bin; only towel is shown being held.",
+      "evidence_pair_ids": [],
+      "uncertainty": "Uncertain if towel was released or disposed of"
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No visible hand interaction with door handle or door movement observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "No evidence of door handle interaction or door opening"
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible towel used to dry hands; no hand-drying action observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "No evidence of hand drying with towel"
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "Hand pulls paper towel from dispenser at 14.2s, visible towel extraction.",
+      "evidence_pair_ids": [14],
+      "uncertainty": "No uncertainty in paper towel extraction"
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "Hands rinsed under running water from 2.2s to 12.2s, visible water flow.",
+      "evidence_pair_ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "uncertainty": "No uncertainty in rinsing action"
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands rubbed together with soap lather visible from 2.2s to 12.2s.",
+      "evidence_pair_ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "uncertainty": "No uncertainty in lathering action"
+    },
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "Soap dispensed from dispenser at 0.2s, visible soap on hand.",
+      "evidence_pair_ids": [0],
+      "uncertainty": "No uncertainty in soap dispensing"
+    }
+  ]
+}

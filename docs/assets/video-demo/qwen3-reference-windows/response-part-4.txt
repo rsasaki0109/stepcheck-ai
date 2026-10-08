@@ -1,0 +1,32 @@
+{
+  "steps": [
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "A white paper towel is visibly pulled from a wall dispenser slot.",
+      "evidence_pair_ids": [1],
+      "uncertainty": "unknown"
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible hand contact with towel or rubbing motion observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "unknown"
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No visible door handle or hand gripping observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "unknown"
+    },
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No visible hand movement below bin rim or towel release observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "unknown"
+    }
+  ]
+}

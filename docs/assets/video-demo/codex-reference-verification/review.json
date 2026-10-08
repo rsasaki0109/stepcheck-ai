@@ -1,0 +1,120 @@
+{
+  "reviewer": "Codex vision: actual MCP PNGs and chronological sheets viewed in this session after Qwen inference",
+  "method": "These are Codex source-image judgments, not a separate independent second reviewer or corrected Qwen outputs.",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "report_sha256": "32140c250e658e839815e8634e2489c2040b45071284e73f18ab6ddcfe0ca6d6",
+  "report_hash_format": "SHA-256 of UTF-8 JSON, sorted keys, compact separators, ensure_ascii=False",
+  "actions": [
+    {
+      "id": 1,
+      "status": "supported",
+      "note": "A palm is held beneath the dispenser; white soap appears on the palm in the next sampled view."
+    },
+    {
+      "id": 2,
+      "status": "supported",
+      "note": "Foamy hands rub palms, fingers and backs together over the sink; no running stream is visible in these cited views."
+    },
+    {
+      "id": 3,
+      "status": "supported",
+      "note": "A visible faucet stream contacts the hands while they move under it."
+    },
+    {
+      "id": 4,
+      "status": "supported",
+      "note": "A hand pulls a white sheet from the wall slot and then holds the separated towel."
+    },
+    {
+      "id": 5,
+      "status": "supported",
+      "note": "Both hands rub and fold the white paper between palms beside the dispenser."
+    },
+    {
+      "id": 6,
+      "status": "supported",
+      "note": "A hand grips the chrome door lever through a white paper towel."
+    },
+    {
+      "id": 7,
+      "status": "supported",
+      "note": "The hand and used white towel move into the opening below the lined bin rim."
+    }
+  ],
+  "reference_flow": {
+    "sequence": "soap > lather > rinse > pull towel > dry > door handle > bin",
+    "overall_status": "supported_visible_samples",
+    "order_status": "supported_sample_order",
+    "summary": "7 visible actions supported; sample order matches. Door opening / towel release remain unconfirmed.",
+    "steps": [
+      {
+        "index": 1,
+        "label": "Soap",
+        "status": "supported"
+      },
+      {
+        "index": 2,
+        "label": "Lather",
+        "status": "supported"
+      },
+      {
+        "index": 3,
+        "label": "Rinse",
+        "status": "supported"
+      },
+      {
+        "index": 4,
+        "label": "Pull towel",
+        "status": "supported"
+      },
+      {
+        "index": 5,
+        "label": "Dry",
+        "status": "supported"
+      },
+      {
+        "index": 6,
+        "label": "Hold door handle",
+        "status": "supported"
+      },
+      {
+        "index": 7,
+        "label": "Lower towel into bin",
+        "status": "supported"
+      }
+    ],
+    "transitions": [
+      {
+        "from": "soap",
+        "to": "lather",
+        "status": "sampled_before"
+      },
+      {
+        "from": "lather",
+        "to": "rinse",
+        "status": "sampled_before"
+      },
+      {
+        "from": "rinse",
+        "to": "paper",
+        "status": "sampled_before"
+      },
+      {
+        "from": "paper",
+        "to": "dry",
+        "status": "sampled_before"
+      },
+      {
+        "from": "dry",
+        "to": "door",
+        "status": "sampled_before"
+      },
+      {
+        "from": "door",
+        "to": "bin",
+        "status": "sampled_before"
+      }
+    ]
+  },
+  "control_summary": "Same observations + reversed reference: VIOLATED (6/6 adjacent pairs). Not a second inference."
+}

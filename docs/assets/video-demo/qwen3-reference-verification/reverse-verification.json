@@ -1,0 +1,227 @@
+{
+  "title": "Visible handwashing and exit flow",
+  "steps": [
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No visible hand action confirms towel lowering into bin; only towel is shown being held.",
+      "evidence_pair_ids": [],
+      "uncertainty": "Uncertain if towel was released or disposed of",
+      "index": 1,
+      "label": "Lower towel into bin",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No visible hand interaction with door handle or door movement observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "No evidence of door handle interaction or door opening",
+      "index": 2,
+      "label": "Hold door handle through a towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible towel used to dry hands; no hand-drying action observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "No evidence of hand drying with towel",
+      "index": 3,
+      "label": "Dry hands with the towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "Hand pulls paper towel from dispenser at 14.2s, visible towel extraction.",
+      "evidence_pair_ids": [
+        14
+      ],
+      "uncertainty": "No uncertainty in paper towel extraction",
+      "index": 4,
+      "label": "Pull a paper towel",
+      "evidence_seconds": [
+        14.0,
+        14.5
+      ]
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "Hands rinsed under running water from 2.2s to 12.2s, visible water flow.",
+      "evidence_pair_ids": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "uncertainty": "No uncertainty in rinsing action",
+      "index": 5,
+      "label": "Rinse under running water",
+      "evidence_seconds": [
+        2.0,
+        2.5,
+        3.0,
+        3.5,
+        4.0,
+        4.5,
+        5.0,
+        5.5,
+        6.0,
+        6.5,
+        7.0,
+        7.5,
+        8.0,
+        8.5,
+        9.0,
+        9.5,
+        10.0,
+        10.5,
+        11.0,
+        11.5,
+        12.0,
+        12.5
+      ]
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands rubbed together with soap lather visible from 2.2s to 12.2s.",
+      "evidence_pair_ids": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "uncertainty": "No uncertainty in lathering action",
+      "index": 6,
+      "label": "Rub hands with lather",
+      "evidence_seconds": [
+        2.0,
+        2.5,
+        3.0,
+        3.5,
+        4.0,
+        4.5,
+        5.0,
+        5.5,
+        6.0,
+        6.5,
+        7.0,
+        7.5,
+        8.0,
+        8.5,
+        9.0,
+        9.5,
+        10.0,
+        10.5,
+        11.0,
+        11.5,
+        12.0,
+        12.5
+      ]
+    },
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "Soap dispensed from dispenser at 0.2s, visible soap on hand.",
+      "evidence_pair_ids": [
+        0
+      ],
+      "uncertainty": "No uncertainty in soap dispensing",
+      "index": 7,
+      "label": "Dispense soap",
+      "evidence_seconds": [
+        0.0,
+        0.5
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "from": "bin",
+      "to": "door",
+      "status": "unknown"
+    },
+    {
+      "from": "door",
+      "to": "dry",
+      "status": "unknown"
+    },
+    {
+      "from": "dry",
+      "to": "paper",
+      "status": "unknown"
+    },
+    {
+      "from": "paper",
+      "to": "rinse",
+      "status": "violated"
+    },
+    {
+      "from": "rinse",
+      "to": "lather",
+      "status": "unknown"
+    },
+    {
+      "from": "lather",
+      "to": "soap",
+      "status": "violated"
+    }
+  ],
+  "order_status": "violated",
+  "time_note": "Cited sample order, not continuous execution or exact action boundaries.",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "expected_procedure_supplied": true,
+  "reference": {
+    "title": "Visible handwashing and exit flow",
+    "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+    "steps": [
+      {
+        "id": "bin",
+        "label": "Lower towel into bin"
+      },
+      {
+        "id": "door",
+        "label": "Hold door handle through a towel"
+      },
+      {
+        "id": "dry",
+        "label": "Dry hands with the towel"
+      },
+      {
+        "id": "paper",
+        "label": "Pull a paper towel"
+      },
+      {
+        "id": "rinse",
+        "label": "Rinse under running water"
+      },
+      {
+        "id": "lather",
+        "label": "Rub hands with lather"
+      },
+      {
+        "id": "soap",
+        "label": "Dispense soap"
+      }
+    ]
+  },
+  "input_modality": "native_video",
+  "model": "Qwen/Qwen3-VL-4B-Instruct"
+}

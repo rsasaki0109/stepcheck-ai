@@ -7,3 +7,6 @@ docs/assets/video-demo/qwen3-4b-framewise-execution.json -text
 # Preserve captured Windows CRLF and intentional whitespace in raw model output.
 docs/assets/video-demo/qwen3-native-video-windows/* -text -whitespace
 docs/assets/video-demo/qwen3-native-video/* -text -whitespace
+docs/assets/video-demo/qwen3-reference-verification/* -text -whitespace
+docs/assets/video-demo/qwen3-reference-windows/* -text -whitespace
+docs/assets/video-demo/codex-reference-verification/* -text -whitespace

@@ -1,0 +1,176 @@
+{
+  "title": "Visible handwashing and exit flow",
+  "steps": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "Hand reaches into soap dispenser and soap is dispensed onto palm.",
+      "evidence_pair_ids": [
+        0
+      ],
+      "uncertainty": "low",
+      "index": 1,
+      "label": "Dispense soap",
+      "evidence_seconds": [
+        0.0,
+        0.5
+      ]
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands are rubbed together with visible lather.",
+      "evidence_pair_ids": [
+        1,
+        2
+      ],
+      "uncertainty": "low",
+      "index": 2,
+      "label": "Rub hands with lather",
+      "evidence_seconds": [
+        1.0,
+        1.5,
+        2.0,
+        2.5
+      ]
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "Water flows over hands during rinsing.",
+      "evidence_pair_ids": [
+        3,
+        4
+      ],
+      "uncertainty": "low",
+      "index": 3,
+      "label": "Rinse under running water",
+      "evidence_seconds": [
+        3.0,
+        3.5,
+        4.0,
+        4.5
+      ]
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "Paper towel is pulled from dispenser and held.",
+      "evidence_pair_ids": [
+        14,
+        15
+      ],
+      "uncertainty": "low",
+      "index": 4,
+      "label": "Pull a paper towel",
+      "evidence_seconds": [
+        14.0,
+        14.5,
+        15.0,
+        15.5
+      ]
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible drying action or towel contact with hands.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "index": 5,
+      "label": "Dry hands with the towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No door handle interaction or door movement observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "index": 6,
+      "label": "Hold door handle through a towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No visible lowering or release of towel into bin.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "index": 7,
+      "label": "Lower towel into bin",
+      "evidence_seconds": []
+    }
+  ],
+  "transitions": [
+    {
+      "from": "soap",
+      "to": "lather",
+      "status": "sampled_before"
+    },
+    {
+      "from": "lather",
+      "to": "rinse",
+      "status": "sampled_before"
+    },
+    {
+      "from": "rinse",
+      "to": "paper",
+      "status": "sampled_before"
+    },
+    {
+      "from": "paper",
+      "to": "dry",
+      "status": "unknown"
+    },
+    {
+      "from": "dry",
+      "to": "door",
+      "status": "unknown"
+    },
+    {
+      "from": "door",
+      "to": "bin",
+      "status": "unknown"
+    }
+  ],
+  "order_status": "unknown",
+  "time_note": "Cited sample order, not continuous execution or exact action boundaries.",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "expected_procedure_supplied": true,
+  "reference": {
+    "title": "Visible handwashing and exit flow",
+    "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+    "steps": [
+      {
+        "id": "soap",
+        "label": "Dispense soap"
+      },
+      {
+        "id": "lather",
+        "label": "Rub hands with lather"
+      },
+      {
+        "id": "rinse",
+        "label": "Rinse under running water"
+      },
+      {
+        "id": "paper",
+        "label": "Pull a paper towel"
+      },
+      {
+        "id": "dry",
+        "label": "Dry hands with the towel"
+      },
+      {
+        "id": "door",
+        "label": "Hold door handle through a towel"
+      },
+      {
+        "id": "bin",
+        "label": "Lower towel into bin"
+      }
+    ]
+  },
+  "input_modality": "native_video",
+  "model": "Qwen/Qwen3-VL-4B-Instruct"
+}

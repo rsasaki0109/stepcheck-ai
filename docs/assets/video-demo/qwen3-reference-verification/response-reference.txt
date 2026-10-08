@@ -1,0 +1,53 @@
+{
+  "steps": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "Hand reaches into soap dispenser and soap is dispensed onto palm.",
+      "evidence_pair_ids": [0],
+      "uncertainty": "low"
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands are rubbed together with visible lather.",
+      "evidence_pair_ids": [1, 2],
+      "uncertainty": "low"
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "Water flows over hands during rinsing.",
+      "evidence_pair_ids": [3, 4],
+      "uncertainty": "low"
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "Paper towel is pulled from dispenser and held.",
+      "evidence_pair_ids": [14, 15],
+      "uncertainty": "low"
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible drying action or towel contact with hands.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No door handle interaction or door movement observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    },
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No visible lowering or release of towel into bin.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high"
+    }
+  ]
+}

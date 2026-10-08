@@ -1,0 +1,34 @@
+{
+  "title": "Visible handwashing and exit flow",
+  "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+  "steps": [
+    {
+      "id": "soap",
+      "label": "Dispense soap"
+    },
+    {
+      "id": "lather",
+      "label": "Rub hands with lather"
+    },
+    {
+      "id": "rinse",
+      "label": "Rinse under running water"
+    },
+    {
+      "id": "paper",
+      "label": "Pull a paper towel"
+    },
+    {
+      "id": "dry",
+      "label": "Dry hands with the towel"
+    },
+    {
+      "id": "door",
+      "label": "Hold door handle through a towel"
+    },
+    {
+      "id": "bin",
+      "label": "Lower towel into bin"
+    }
+  ]
+}

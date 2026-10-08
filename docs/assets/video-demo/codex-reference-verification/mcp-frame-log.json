@@ -1,0 +1,208 @@
+{
+  "executed_at_utc": "2026-10-08T10:33:26.154790+00:00",
+  "transport": "MCP Python Client / in-process local server",
+  "tool": "read_frame",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "sample_interval_seconds": 0.75,
+  "frames": [
+    {
+      "timestamp_seconds": 0.0,
+      "image_file": "frame-00.png",
+      "image_sha256": "ee2c2ecea5004ede0a3318f5deba61c810c6b21497ece9373d795e21fdbc54c3",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 0.75,
+      "image_file": "frame-01.png",
+      "image_sha256": "29de8c3efc500c602cd02ee92b2e487b11a0516a4c7c7d5341a0987c1b4b101d",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 1.5,
+      "image_file": "frame-02.png",
+      "image_sha256": "390466f6c73e38a74cd2b0f5bf7440c4352fa3b21696b21911891e3118e6f980",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 2.25,
+      "image_file": "frame-03.png",
+      "image_sha256": "34b4d4a3412e93c76a486b6860d21fbf66b44ae5f616364d385df32b9dca28ba",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 3.0,
+      "image_file": "frame-04.png",
+      "image_sha256": "5dcc4d9e559c588501cc3384316a59b80c7c12069557411ca44eac2a56551e8f",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 3.75,
+      "image_file": "frame-05.png",
+      "image_sha256": "2f10854d482289d211e0181472a4543cb167287e24928767522f28e26ba5c975",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 4.5,
+      "image_file": "frame-06.png",
+      "image_sha256": "99502b0ce423b0df75a62aab045d19fde8d5a7d977811630fef626f8c9d10f80",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 5.25,
+      "image_file": "frame-07.png",
+      "image_sha256": "b91ccf30000b52e27667fb2d5d7b287f75384726f34c59e1ef64461d24bc12c2",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 6.0,
+      "image_file": "frame-08.png",
+      "image_sha256": "5a7d04eb7ce027c9c0a9dde0513af11fbda68006abc6c7463aa850a45d8b46e2",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 6.75,
+      "image_file": "frame-09.png",
+      "image_sha256": "04fdaa604ceea6f3a5a81d91a0a5b9513b5ea9e44c0072604e09ca4742c05bb8",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 7.5,
+      "image_file": "frame-10.png",
+      "image_sha256": "072856472918ccb1f9e251c5b2680c2eff3b623cfa4f4c2be5538081f8b47348",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 8.25,
+      "image_file": "frame-11.png",
+      "image_sha256": "de018aeebdda71cc0311e01d3491e76b7c7fa281ed000451074d6f96ae87ab2a",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 9.0,
+      "image_file": "frame-12.png",
+      "image_sha256": "74adf085c34973e46b7577b3e3650a5d25282ff0d9ee71e0b8742fedeb1fef57",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 9.75,
+      "image_file": "frame-13.png",
+      "image_sha256": "3323d94a9f3e5c2c84900b9c8650ac270632f5c9de21b032bac63698f4685fc5",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 10.5,
+      "image_file": "frame-14.png",
+      "image_sha256": "6994befc443e29ea74f132d6aa5f6a48483aa660f9548a8599cc06b1dadcf105",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 11.25,
+      "image_file": "frame-15.png",
+      "image_sha256": "f3b41e79f76962348bb648be6c7f953ea9c0dbe1a4270ada0aa9db55786fdcd5",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 12.0,
+      "image_file": "frame-16.png",
+      "image_sha256": "a3722793e5046d754e4e866c33b4ce21287dd6631ffa2a0c8bdc52644912bb5a",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 12.75,
+      "image_file": "frame-17.png",
+      "image_sha256": "df9bab802c5eefb2b324bce6700bbe4cc2ba5bc21024715b5567e4bb71398a9c",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 13.5,
+      "image_file": "frame-18.png",
+      "image_sha256": "9276db87e10b21a87893a498c43cf386cf13a70cd8bca6f399aae2da62019bff",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 14.25,
+      "image_file": "frame-19.png",
+      "image_sha256": "3f9edff9da43b19653d39a7a7359a5d447b3cb94af90b893a99780a11c6be377",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 15.0,
+      "image_file": "frame-20.png",
+      "image_sha256": "90274445938e4fdab5018cb41fbf496557b9fce4e567247cbeff0d16759dcd9b",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 15.75,
+      "image_file": "frame-21.png",
+      "image_sha256": "8697b656565ea23569d364978c4ab5b5b2525ff750c919a9d69df4485d2c52d9",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 16.5,
+      "image_file": "frame-22.png",
+      "image_sha256": "54c88605734ab08f820a3237001c88c8998fbdb637894b1020337a9186072241",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 17.25,
+      "image_file": "frame-23.png",
+      "image_sha256": "15b8006bb8e81594bcf6ea0686442a0e204ea71ef3c12aacc34e8ed484d291cc",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 18.0,
+      "image_file": "frame-24.png",
+      "image_sha256": "30d082b9eafe6e9cf603d81c403974b95e9f04b44661233921af890f6630cffa",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 18.75,
+      "image_file": "frame-25.png",
+      "image_sha256": "af77131ee593132d501ec4e8edbee2d6d1d85d39c28845308efd712ed1c78cac",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 19.5,
+      "image_file": "frame-26.png",
+      "image_sha256": "db2c5ff9746b4e623234195d2bd41c02a5ae18179dc77f3fe66b809f775b4709",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 20.25,
+      "image_file": "frame-27.png",
+      "image_sha256": "ccf100d17a8872d01f4440e0a133aca72cf6cebaff65d1a48146aa1713069946",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 21.0,
+      "image_file": "frame-28.png",
+      "image_sha256": "d1af43770b023164fce8db49e444f45dcea4de72ce99ead94799647294da57f8",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 21.75,
+      "image_file": "frame-29.png",
+      "image_sha256": "dc0b37b3bd40537e0df84c07524a4a442978da8bc75687793807b05bb1451c45",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 22.5,
+      "image_file": "frame-30.png",
+      "image_sha256": "b4d6863de290e2ac35cf3bffd7e8fc82dca4c9d5caa3d8411463b5b81898b541",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 22.903,
+      "image_file": "frame-31.png",
+      "image_sha256": "9ebde9ec716283cad8b03b4f26395ca7af8ae59f3dcfac04ceead19ac93246d8",
+      "mime_type": "image/png"
+    },
+    {
+      "timestamp_seconds": 21.5,
+      "image_file": "frame-32.png",
+      "image_sha256": "78aa1ee59805b9cf1a5c4077c66587a37b25353a3da87b426d11a87f5aabe62c",
+      "mime_type": "image/png",
+      "sampling_note": "Follow-up MCP read_frame to inspect the blurred handle view."
+    }
+  ]
+}

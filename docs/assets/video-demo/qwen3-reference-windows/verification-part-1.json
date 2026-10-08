@@ -1,0 +1,134 @@
+{
+  "steps": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "White soap visible on palm beneath dispenser in frame 0.",
+      "evidence_pair_ids": [
+        0
+      ],
+      "uncertainty": "low",
+      "label": "Dispense soap",
+      "evidence_seconds": [
+        0.0,
+        0.5
+      ]
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands rub with visible foam in frame 1 and 2.",
+      "evidence_pair_ids": [
+        1,
+        2
+      ],
+      "uncertainty": "low",
+      "label": "Rub hands with lather",
+      "evidence_seconds": [
+        1.0,
+        1.5,
+        2.0,
+        2.5
+      ]
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "Visible flowing water stream contacts hands in frame 2 and 3.",
+      "evidence_pair_ids": [
+        2,
+        3
+      ],
+      "uncertainty": "low",
+      "label": "Rinse under running water",
+      "evidence_seconds": [
+        2.0,
+        2.5,
+        3.0,
+        3.5
+      ]
+    },
+    {
+      "step_id": "paper",
+      "status": "unknown",
+      "reason": "No paper towel dispenser or pulled sheet visible in frames.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "label": "Pull a paper towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible towel contact with hands or drying action observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "label": "Dry hands with the towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No door handle or hand gripping visible in frames.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "label": "Hold door handle through a towel",
+      "evidence_seconds": []
+    },
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No bin or towel lowering action visible in frames.",
+      "evidence_pair_ids": [],
+      "uncertainty": "high",
+      "label": "Lower towel into bin",
+      "evidence_seconds": []
+    }
+  ],
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "expected_procedure_supplied": true,
+  "reference": {
+    "title": "Visible handwashing and exit flow",
+    "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+    "steps": [
+      {
+        "id": "soap",
+        "label": "Dispense soap",
+        "criterion": "White soap appears on a palm beneath a dispenser; mechanism actuation may be occluded."
+      },
+      {
+        "id": "lather",
+        "label": "Rub hands with lather",
+        "criterion": "Hands rub with visible foam. Running water is not required."
+      },
+      {
+        "id": "rinse",
+        "label": "Rinse under running water",
+        "criterion": "A visible flowing water stream contacts the hands. Foam alone is not rinsing."
+      },
+      {
+        "id": "paper",
+        "label": "Pull a paper towel",
+        "criterion": "A sheet is visibly pulled out of a wall dispenser slot. Holding paper nearby is not enough."
+      },
+      {
+        "id": "dry",
+        "label": "Dry hands with the towel",
+        "criterion": "Paper contacts the hands as they rub or fold it between them; continued pulling from the slot is different."
+      },
+      {
+        "id": "door",
+        "label": "Hold door handle through a towel",
+        "criterion": "The hand grips a visible door lever through paper. Actual door opening is not required."
+      },
+      {
+        "id": "bin",
+        "label": "Lower towel into bin",
+        "criterion": "The hand moves paper below the rim of a lined bin. Visible release is not required."
+      }
+    ]
+  },
+  "input_modality": "native_video",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "window": "part-1"
+}

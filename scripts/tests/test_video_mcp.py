@@ -20,6 +20,53 @@ import generate_readme_gif
 
 
 class VideoMCPTest(unittest.TestCase):
+    def test_reference_review_and_reverse_control_without_confidence_scores(self):
+        async def check():
+            reference={"title":"Visible reference","steps":[{"id":"a","label":"A"},{"id":"b","label":"B"}]}
+            observations=[{"step_id":"a","status":"observed","reason":"Validation fixture",
+                "evidence_seconds":[0],"uncertainty":""},{"step_id":"b","status":"observed",
+                "reason":"Validation fixture","evidence_seconds":[.75],"uncertainty":""}]
+            with tempfile.TemporaryDirectory() as directory:
+                destination=Path(directory)/"verification.json"
+                with patch.object(video_mcp,"REFERENCE_REVIEW",destination):
+                    async with Client(video_mcp.mcp) as client:
+                        request={"reviewer":"validation fixture, not real vision inference","reference":reference,
+                            "observations":observations,"reviewed_seconds":[0,.75]}
+                        result=await client.call_tool("record_reference_verification",request)
+                        self.assertFalse(result.is_error)
+                        saved=json.loads(destination.read_text(encoding="utf-8"))
+                        reverse=json.loads(destination.with_name("reverse-verification.json").read_text(encoding="utf-8"))
+                        self.assertEqual(saved["order_status"],"supported_sample_order")
+                        self.assertEqual(reverse["order_status"],"violated")
+                        self.assertTrue(saved["expected_procedure_supplied"])
+                        self.assertNotIn("confidence",saved["steps"][0])
+                        original=destination.read_bytes()
+                        invalid={**request,"observations":[{**observations[0],"evidence_seconds":[.3]},observations[1]]}
+                        rejected=await client.call_tool("record_reference_verification",invalid)
+                        self.assertTrue(rejected.is_error)
+                        self.assertEqual(destination.read_bytes(),original)
+                        invalid={**request,"observations":[observations[0]]*2}
+                        rejected=await client.call_tool("record_reference_verification",invalid)
+                        self.assertTrue(rejected.is_error)
+                        self.assertEqual(destination.read_bytes(),original)
+        asyncio.run(check())
+
+    def test_unknown_reference_step_with_no_evidence_cannot_pass_order(self):
+        async def check():
+            with tempfile.TemporaryDirectory() as directory:
+                destination=Path(directory)/"verification.json"
+                with patch.object(video_mcp,"REFERENCE_REVIEW",destination):
+                    async with Client(video_mcp.mcp) as client:
+                        result=await client.call_tool("record_reference_verification",{
+                            "reviewer":"validation fixture","reference":{"title":"Reference","steps":[
+                                {"id":"a","label":"A"},{"id":"b","label":"B"}]},
+                            "observations":[{"step_id":"a","status":"unknown","reason":"Not observed","evidence_seconds":[]},
+                                {"step_id":"b","status":"observed","reason":"Fixture","evidence_seconds":[.75]}],
+                            "reviewed_seconds":[0,.75]})
+                        self.assertFalse(result.is_error)
+                        self.assertEqual(json.loads(destination.read_text(encoding="utf-8"))["order_status"],"unknown")
+        asyncio.run(check())
+
     def test_frame_and_review_roundtrip(self):
         async def check():
             source = json.loads((video_mcp.ASSETS / "review.json").read_text(encoding="utf-8"))

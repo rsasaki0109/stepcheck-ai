@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-10-08T10:35:16.817782+00:00",
+  "tool": "record_reference_verification",
+  "success": true,
+  "review_kind": "Actual host-attested visual review, not a Qwen response or hosted-model API call",
+  "order_status": "supported_sample_order",
+  "reverse_order_status": "violated",
+  "receipt_collected_at_utc": "2026-10-08T10:44:00.318570+00:00",
+  "current_request_sha256": "9406291d0a5f532d82dcf745e03aabca8322cdc844c2b19ba7e39443a5d9eafd",
+  "followup": "MCP read_frame at 21.5s was inspected; the host recorded that clearer handle evidence in a second successful call."
+}

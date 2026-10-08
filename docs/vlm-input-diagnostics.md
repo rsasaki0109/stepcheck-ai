@@ -134,9 +134,12 @@ await run_native_diagnostics(provider, VIDEO_PATH,
 今回の実験で確認できなかった動作を、成功済みの表示へ置き換えていません。
 
 その後の[Qwen3の動画入力実験](qwen3-native-video.md)では、重なる3区間と
-2fpsの全体入力をローカル6GB GPUで実行しました。READMEの最新GIFはこちらの実回答です。
+2fpsの全体入力をローカル6GB GPUで実行しました。その時点のGIFはリンク先に保存しています。
 これらは上記の45条件の比較ビューアーとは別に保存しています。
 全体の3工程は手拭き・取っ手・ゴミ箱の根拠に誤りがあり、7工程の順序は未確認です。
+
+READMEの最新GIFは、その後の[MCP/Codexによる基準フローの照合](reference-flow-verification.md)です。
+同じページに、基準を渡したQwenの全体・逆順・4区間の不成立の試行を別に保存しています。
 
 実装の参照先: Transformers 4.57.1の
 [画像処理](https://github.com/huggingface/transformers/blob/v4.57.1/src/transformers/models/qwen2_vl/image_processing_qwen2_vl_fast.py)、

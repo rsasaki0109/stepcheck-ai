@@ -1,0 +1,153 @@
+{
+  "reviewer": "Codex vision: actual MCP PNGs and chronological sheets viewed in this session after Qwen inference",
+  "reference": {
+    "title": "Visible handwashing and exit flow",
+    "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+    "steps": [
+      {
+        "id": "soap",
+        "label": "Dispense soap",
+        "criterion": "White soap appears on a palm beneath a dispenser; mechanism actuation may be occluded."
+      },
+      {
+        "id": "lather",
+        "label": "Rub hands with lather",
+        "criterion": "Hands rub with visible foam. Running water is not required."
+      },
+      {
+        "id": "rinse",
+        "label": "Rinse under running water",
+        "criterion": "A visible flowing water stream contacts the hands. Foam alone is not rinsing."
+      },
+      {
+        "id": "paper",
+        "label": "Pull a paper towel",
+        "criterion": "A sheet is visibly pulled out of a wall dispenser slot. Holding paper nearby is not enough."
+      },
+      {
+        "id": "dry",
+        "label": "Dry hands with the towel",
+        "criterion": "Paper contacts the hands as they rub or fold it between them; continued pulling from the slot is different."
+      },
+      {
+        "id": "door",
+        "label": "Hold door handle through a towel",
+        "criterion": "The hand grips a visible door lever through paper. Actual door opening is not required."
+      },
+      {
+        "id": "bin",
+        "label": "Lower towel into bin",
+        "criterion": "The hand moves paper below the rim of a lined bin. Visible release is not required."
+      }
+    ]
+  },
+  "observations": [
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "A palm is held beneath the dispenser; white soap appears on the palm in the next sampled view.",
+      "evidence_seconds": [
+        0,
+        0.75
+      ],
+      "uncertainty": "The dispensing mechanism is partly hidden by the hand."
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Foamy hands rub palms, fingers and backs together over the sink; no running stream is visible in these cited views.",
+      "evidence_seconds": [
+        2.25,
+        6,
+        9.75
+      ],
+      "uncertainty": "Representative samples do not establish the exact rubbing boundaries."
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "A visible faucet stream contacts the hands while they move under it.",
+      "evidence_seconds": [
+        12,
+        12.75
+      ],
+      "uncertainty": "A preceding crossfade obscures the exact transition from rubbing."
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "A hand pulls a white sheet from the wall slot and then holds the separated towel.",
+      "evidence_seconds": [
+        14.25,
+        15
+      ],
+      "uncertainty": ""
+    },
+    {
+      "step_id": "dry",
+      "status": "observed",
+      "reason": "Both hands rub and fold the white paper between palms beside the dispenser.",
+      "evidence_seconds": [
+        15.75,
+        16.5,
+        18.75,
+        19.5
+      ],
+      "uncertainty": ""
+    },
+    {
+      "step_id": "door",
+      "status": "observed",
+      "reason": "A hand grips the chrome door lever through a white paper towel.",
+      "evidence_seconds": [
+        21.5
+      ],
+      "uncertainty": "Actual door opening is not established."
+    },
+    {
+      "step_id": "bin",
+      "status": "observed",
+      "reason": "The hand and used white towel move into the opening below the lined bin rim.",
+      "evidence_seconds": [
+        22.5,
+        22.903
+      ],
+      "uncertainty": "The hand and rim obscure the exact moment of towel release."
+    }
+  ],
+  "reviewed_seconds": [
+    0.0,
+    0.75,
+    1.5,
+    2.25,
+    3.0,
+    3.75,
+    4.5,
+    5.25,
+    6.0,
+    6.75,
+    7.5,
+    8.25,
+    9.0,
+    9.75,
+    10.5,
+    11.25,
+    12.0,
+    12.75,
+    13.5,
+    14.25,
+    15.0,
+    15.75,
+    16.5,
+    17.25,
+    18.0,
+    18.75,
+    19.5,
+    20.25,
+    21.0,
+    21.75,
+    22.5,
+    22.903,
+    21.5
+  ]
+}

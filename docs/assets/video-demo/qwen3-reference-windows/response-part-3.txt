@@ -1,0 +1,53 @@
+{
+  "steps": [
+    {
+      "step_id": "soap",
+      "status": "unknown",
+      "reason": "No visible soap dispenser or white soap on palm observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "Uncertain due to lack of visual confirmation of soap dispensing mechanism."
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "Hands show visible foam from rubbing motion in sink.",
+      "evidence_pair_ids": [0, 1],
+      "uncertainty": "Foam visible during hand rubbing, no water flow required per criterion."
+    },
+    {
+      "step_id": "rinse",
+      "status": "unknown",
+      "reason": "No visible flowing water stream contacting hands observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "Water stream not visible; foam alone does not constitute rinsing per criterion."
+    },
+    {
+      "step_id": "paper",
+      "status": "observed",
+      "reason": "Paper towel visibly pulled from dispenser slot by hand.",
+      "evidence_pair_ids": [14, 15],
+      "uncertainty": "Paper clearly extracted from slot, not just held nearby."
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "No visible paper contacting hands during rubbing or folding observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "Paper not shown in contact with hands; only pulled from dispenser."
+    },
+    {
+      "step_id": "door",
+      "status": "unknown",
+      "reason": "No visible door handle or hand gripping it through paper observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "No evidence of hand gripping door handle through paper."
+    },
+    {
+      "step_id": "bin",
+      "status": "unknown",
+      "reason": "No visible hand moving paper below rim of lined bin observed.",
+      "evidence_pair_ids": [],
+      "uncertainty": "No bin or paper movement below rim visible in frames."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-"""Replay one source video with recorded VLM flow detection.
+"""Replay one source video with recorded VLM detection or reference verification.
 
 Four panels are equal source-time quarters, independent of the detected action names.
 No inferred attention, boxes, action boundaries, or live model calls are rendered.
@@ -20,37 +20,41 @@ FPS = 5
 
 
 def seen_actions(report, timestamp):
-    return [action for action in report["actions"] if action["first_seen_seconds"] <= timestamp]
+    return [action for action in report["actions"] if action["first_seen_seconds"] is not None
+            and action["first_seen_seconds"] <= timestamp]
 
 
 def render(timestamp, cache, report):
+    verification = report.get("analysis_mode") == "procedure_verification"
+    host_review = report.get("provider") == "codex-mcp"
     rows = max(1, math.ceil(len(report["actions"]) / 4))
+    row_height = 125 if verification else 110
     reference = report.get("_audit", {}).get("reference_flow")
     action_top = 180 if reference else 144
-    baseline_top = action_top + rows * 110
+    baseline_top = action_top + rows * row_height
     video_top = baseline_top + (100 if reference else 0)
-    canvas = Image.new("RGB", (1120, video_top + (860 if reference else 832)), "#0b1120")
+    canvas = Image.new("RGB", (1120, video_top + (886 if verification else 860 if reference else 832)), "#0b1120")
     draw = ImageDraw.Draw(canvas)
-    text(draw, (32, 24), "StepCheck AI  /  One video -> detected flow", "title")
+    text(draw, (32, 24), "StepCheck AI  /  One video -> " + ("verify a reference flow" if verification else "detected flow"), "title")
     method = ("GPU -> " + report["model"].split("/")[-1]) if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
     if report.get("_audit", {}).get("run", {}).get("framewise"):
         method += " / frame observations"
     elif report.get("input_modality") == "native_video":
         method += " / sampled video input"
-    text(draw, (32, 70), method + " -> actions + evidence times", color=MUTED)
-    text(draw, (32, 103), "Model output replay  |  Inspect the source to verify cited evidence", "label", AMBER)
+    text(draw, (32, 70), method + (" + given flow -> evidence + order" if verification else " -> actions + evidence times"), color=MUTED)
+    text(draw, (32, 103), ("Recorded Codex review" if host_review else "Model output replay") + "  |  Inspect the source to verify cited evidence", "label", AMBER)
     if reference:
-        text(draw, (32, 132), "Source-review baseline: " + reference["sequence"], "small", MUTED)
-        text(draw, (32, 151), "Baseline was not supplied to the model. Cards below are its unmodified predictions.", "small", MUTED)
+        text(draw, (32, 132), ("Given reference flow: " if verification else "Source-review baseline: ") + reference["sequence"], "small", MUTED)
+        text(draw, (32, 151), "Reference labels WERE supplied. Cards show Codex visual judgments recorded via MCP." if host_review else "Reference labels WERE supplied. Cards show model verdicts and independent evidence review." if verification else "Baseline was not supplied to the model. Cards below are its unmodified predictions.", "small", MUTED)
     visible = seen_actions(report, timestamp)
     # Only reveal labels once supporting evidence has appeared in source time.
     for index in range(max(1, len(report["actions"]))):
-        x, y = 32 + (index % 4) * 268, action_top + (index // 4) * 110
+        x, y = 32 + (index % 4) * 268, action_top + (index // 4) * row_height
         action = report["actions"][index] if report["actions"] else None
-        observed = action is not None and action in visible
+        observed = action is not None and (action in visible or verification and timestamp >= max(report["sampled_seconds"]))
         review = next((item for item in report.get("_audit", {}).get("actions", []) if action and item["id"] == action["id"]), None)
         mismatch = observed and review is not None and review["status"] != "supported"
-        box(draw, (x, y, x + 252, y + 104), outline=AMBER if mismatch else TEAL if observed else "#27364c")
+        box(draw, (x, y, x + 252, y + row_height - 6), outline=AMBER if mismatch else TEAL if observed else "#27364c")
         text(draw, (x + 12, y + 9), f"{index + 1:02d}" if action else "--", "label", TEAL if observed else MUTED)
         if observed:
             lines = []
@@ -67,18 +71,22 @@ def render(timestamp, cache, report):
             for line_index, line in enumerate(lines):
                 text(draw, (x + 42, y + 8 + line_index * 20), line, "body")
             times = [t for t in action["evidence_seconds"] if t <= timestamp]
-            text(draw, (x + 12, y + 62), f"Evidence cited: {times[0]:.2f} - {times[-1]:.2f}s", "small", TEAL)
+            evidence_text = f"Evidence cited: {times[0]:.2f} - {times[-1]:.2f}s" if times else "No supporting pair cited"
+            text(draw, (x + 12, y + 62), evidence_text, "small", TEAL if times else AMBER)
+            if verification:
+                text(draw, (x + 12, y + 79), ("Codex: " if host_review else "Model: ") + action["model_status"], "small", TEAL if action["model_status"] == "observed" else AMBER)
             if review:
-                text(draw, (x + 12, y + 79), "Review: " + review["status"].replace("_", " "), "small", AMBER if mismatch else TEAL)
+                text(draw, (x + 12, y + (96 if verification else 79)), ("Evidence: " if host_review else "Review: ") + review["status"].replace("_", " "), "small", AMBER if mismatch else TEAL)
         else:
             text(draw, (x + 42, y + 24), "Awaiting source evidence", "small", MUTED)
         if index < len(report["actions"]) - 1 and index % 4 < 3:
-            uncertain = report["transitions"][index]["status"] == "ambiguous"
-            text(draw, (x + 255, y + 37), "?" if uncertain else ">", "small", AMBER if uncertain else MUTED)
+            transition_status = report["transitions"][index]["status"]
+            uncertain = transition_status in ("ambiguous", "unknown")
+            text(draw, (x + 255, y + 37), "?" if uncertain else "<" if transition_status == "violated" else ">", "small", AMBER if uncertain or transition_status == "violated" else MUTED)
     if reference:
         complete = timestamp >= max(report["sampled_seconds"])
         order_status = reference["order_status"] if complete else "pending"
-        text(draw, (32, baseline_top + 2), "Independent 7-step comparison  /  Full flow + order: " + order_status, "small", AMBER)
+        text(draw, (32, baseline_top + 2), ("Codex source-evidence review  /  Sample order: " if host_review else "Independent evidence review  /  Sample order: " if verification else "Independent 7-step comparison  /  Full flow + order: ") + order_status, "small", TEAL if order_status == "supported_sample_order" else AMBER)
         for index, step in enumerate(reference["steps"]):
             x, y = 32 + index * 151, baseline_top + 26
             status = step["status"] if complete else "pending"
@@ -99,18 +107,25 @@ def render(timestamp, cache, report):
                 source_time = max(candidates)
                 frame = cache[source_time].resize((416, 312), Image.Resampling.LANCZOS)
                 canvas.paste(frame, (x + 56, y + 42))
+                if verification:
+                    citing = [a["id"] for a in report["actions"] if source_time in a["evidence_seconds"]]
+                    if citing:
+                        draw.rectangle((x + 54, y + 40, x + 474, y + 355), outline=TEAL, width=3)
+                        text(draw, (x + 285, y + 17), "Cited S" + ",".join(map(str,citing)), "small", TEAL)
                 # Timestamp tag is outside the source pixels.
                 text(draw, (x + 420, y + 17), f"@{source_time:g}s", "small", TEAL)
         else:
             text(draw, (x + 105, y + 170), "Waiting for this part of the video", color=MUTED)
     footer = video_top + 754
-    text(draw, (32, footer), f"Source {timestamp:.2f}/{report['duration_seconds']:.2f}s  |  {len(visible)} reported actions", "label", TEAL)
+    text(draw, (32, footer), f"Source {timestamp:.2f}/{report['duration_seconds']:.2f}s  |  {len(visible)} " + ("steps with cited samples" if verification else "reported actions"), "label", TEAL)
     text(draw, (32, footer + 27), "Times mark reviewed samples, not action boundaries. Short actions may be missed.", "small", MUTED)
-    note = "Amber cards: review found incomplete or incorrect evidence. Model output is unchanged." if report.get("_audit") else "No attention map. '?' marks ambiguous order. Model evidence can be wrong."
+    note = "Frame border = a source sample cited by Codex, not spatial attention. Recorded review replay." if host_review else "Frame border = a model-cited sample, not spatial attention. Amber = independent review concern." if verification else "Amber cards: review found incomplete or incorrect evidence. Model output is unchanged." if report.get("_audit") else "No attention map. '?' marks ambiguous order. Model evidence can be wrong."
     text(draw, (32, footer + 49), note, "small", AMBER)
     if reference:
         outcome = reference["summary"] if timestamp >= max(report["sampled_seconds"]) else "Review comparison: pending until all source quarters have played."
         text(draw, (32, footer + 72), outcome, "small", AMBER)
+        if verification:
+            text(draw, (32, footer + 95), report["_audit"].get("control_summary", "Reverse-reference control not completed."), "small", MUTED)
     return canvas.resize((960, round(canvas.height * 960 / 1120)), Image.Resampling.LANCZOS)
 
 

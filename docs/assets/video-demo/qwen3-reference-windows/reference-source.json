@@ -1,0 +1,13 @@
+{
+  "title": "Visible handwashing and exit flow",
+  "scope": "Reference for the visible actions in the bundled video, not a complete hygiene procedure. Hidden towel release and actual door opening are not required.",
+  "steps": [
+    {"id": "soap", "label": "Dispense soap", "criterion": "White soap appears on a palm beneath a dispenser; mechanism actuation may be occluded."},
+    {"id": "lather", "label": "Rub hands with lather", "criterion": "Hands rub with visible foam. Running water is not required."},
+    {"id": "rinse", "label": "Rinse under running water", "criterion": "A visible flowing water stream contacts the hands. Foam alone is not rinsing."},
+    {"id": "paper", "label": "Pull a paper towel", "criterion": "A sheet is visibly pulled out of a wall dispenser slot. Holding paper nearby is not enough."},
+    {"id": "dry", "label": "Dry hands with the towel", "criterion": "Paper contacts the hands as they rub or fold it between them; continued pulling from the slot is different."},
+    {"id": "door", "label": "Hold door handle through a towel", "criterion": "The hand grips a visible door lever through paper. Actual door opening is not required."},
+    {"id": "bin", "label": "Lower towel into bin", "criterion": "The hand moves paper below the rim of a lined bin. Visible release is not required."}
+  ]
+}

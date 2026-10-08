@@ -1,6 +1,7 @@
 # ColabでローカルVLMを使う
 
-READMEの最新GIFは、別の[ローカルGPUでのQwen3動画入力実験](qwen3-native-video.md)です。
+READMEの最新GIFは、[MCP経由のCodex視覚レビューと基準フローの照合](reference-flow-verification.md)です。
+別の[ローカルGPUでのQwen3動画入力実験](qwen3-native-video.md)も保存しています。
 以下のノートブックと記録は、Colabでの個別フレーム認識・整理の結果です。
 
 [Colabで開く](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
