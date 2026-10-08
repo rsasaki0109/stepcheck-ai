@@ -1,0 +1,32 @@
+{
+  "title": "Hand Washing",
+  "creator": "Anthony Albright",
+  "creator_url": "https://www.flickr.com/photos/anthonyalbright/",
+  "original_page": "https://www.flickr.com/photos/anthonyalbright/4997782896/",
+  "commons_page": "https://commons.wikimedia.org/wiki/File:Hand_Washing_video.webm",
+  "download_url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Hand_Washing_video.webm",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "downloaded_at_utc": "2026-10-08T13:10:41.865536+00:00",
+  "bytes": 7489984,
+  "sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "codec_type": "audio"
+      }
+    ],
+    "format": {
+      "duration": "32.036000"
+    }
+  },
+  "changes": "Source file is unmodified; sampling contact sheets add timestamp labels. Any published derived image or GIF from this source is CC BY-SA 2.0, separate from code licensing.",
+  "reference_commit": "a870f6643b13179a1bb17c1cb43ecd5e7a467553"
+}

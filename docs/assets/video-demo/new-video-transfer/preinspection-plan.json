@@ -1,0 +1,10 @@
+{
+  "frozen_at_utc": "2026-10-08T13:09:45.795134+00:00",
+  "reference_sha256": "be1c9b45c260511783e9a11e4ce582b61e4bda1ae3ff8b5d86b4859f9d596c05",
+  "reference_fixed_before_source_download_and_visual_inspection": true,
+  "selection_policy": "Choose a different reusable handwashing clip based on file metadata, not watched content. Source may not contain every requested action.",
+  "first_pass_interval_seconds": 2.0,
+  "followup_interval_seconds": 0.25,
+  "followup_max_frames": 24,
+  "success_rule": "Only visually cited observations and their sampled order count; unsupported actions remain unknown. Do not alter the reference or repair response timestamps after viewing."
+}

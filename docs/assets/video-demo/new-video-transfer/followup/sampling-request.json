@@ -1,0 +1,19 @@
+{
+  "text": [
+    "Review only these previously UNKNOWN steps against the supplied follow-up source images. Inspect the images afresh; the reference and search window are not evidence of an action. Use observed only with visible supporting evidence; otherwise keep unknown. Return exactly one observation per supplied step ID. Cite only exact timestamps in THESE images, not other images or previous reviews. Do not infer hidden motion or assign confidence. Do not calculate order. Return ONLY JSON with source_sha256 and observations. Each observation has step_id, status (observed or unknown), reason, evidence_seconds (list; may be empty for unknown), and uncertainty (string). Echo source_sha256: 8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332. Given target reference:\n{\"title\": \"Visible handwashing flow for a new-video check\", \"scope\": \"Predeclared visible-action reference for transfer checking, not a hygiene-quality assessment. Unseen actions remain unknown. No expected timestamps are supplied.\", \"steps\": [{\"id\": \"dry\", \"label\": \"Dry hands\", \"criterion\": \"A towel or paper visibly contacts and wipes the hands, or hands are held in a visibly operating air dryer. Holding a towel nearby is insufficient.\"}]}\nSampling scope: Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows."
+  ],
+  "images": [
+    {
+      "file": "sampling-0.png",
+      "sha256": "2a1b88e726efa77b5302edfbc64db051396289e3915dd62dda279e9b3fcdd8ab"
+    },
+    {
+      "file": "sampling-1.png",
+      "sha256": "58cf9fc6d4abc3b899a68426dcfbb6afccd109a12e989328588d6f4c9d907473"
+    }
+  ],
+  "include_context": "none",
+  "temperature": 0.0,
+  "max_tokens": 5000,
+  "adapter_note": "Exports actual MCP sampling content to the connected vision session; invokes no model API itself."
+}

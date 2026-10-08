@@ -1,0 +1,19 @@
+{
+  "text": [
+    "Visually verify this GIVEN reference against samples from ONE video. The reference supplies expected labels and visible criteria, not proof that actions occurred. Inspect each timestamped source image. Return exactly one observation for each step ID. Use status observed only with visible supporting evidence; otherwise unknown and explain why. Evidence seconds must be exact labels present in these images. Do not infer absent actions, repair the requested sequence, claim hidden events, or assign confidence scores. Do not calculate order: the server derives it from your cited timestamps. Return ONLY JSON with keys source_sha256 and observations. Each observation has step_id, status (observed or unknown), reason, evidence_seconds (a list; empty allowed for unknown), and uncertainty (a string). Echo this source_sha256: 8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332. Samples are discrete, not uninterrupted motion. Given reference:\n{\"title\": \"Visible handwashing flow for a new-video check\", \"scope\": \"Predeclared visible-action reference for transfer checking, not a hygiene-quality assessment. Unseen actions remain unknown. No expected timestamps are supplied.\", \"steps\": [{\"id\": \"wet\", \"label\": \"Wet hands with water\", \"criterion\": \"Running or poured water visibly contacts hands before a visible soap-lather episode. A faucet or sink alone is insufficient.\"}, {\"id\": \"soap\", \"label\": \"Apply soap to hands\", \"criterion\": \"Hands visibly receive soap from a dispenser, bottle, or bar. Lather alone does not prove application.\"}, {\"id\": \"lather\", \"label\": \"Rub hands with soap lather\", \"criterion\": \"Hands rub together with visible soap foam; rubbing without visible foam is uncertain.\"}, {\"id\": \"rinse\", \"label\": \"Rinse hands with water\", \"criterion\": \"After visible lather rubbing, water visibly contacts the hands; rubbing beside a faucet is insufficient.\"}, {\"id\": \"dry\", \"label\": \"Dry hands\", \"criterion\": \"A towel or paper visibly contacts and wipes the hands, or hands are held in a visibly operating air dryer. Holding a towel nearby is insufficient.\"}]}"
+  ],
+  "images": [
+    {
+      "file": "sampling-0.png",
+      "sha256": "d42b2594e239ff72d34b94411948fc9e7549256be1dbe2be17216cd7cabf8861"
+    },
+    {
+      "file": "sampling-1.png",
+      "sha256": "417c292ff9c749f0bb3f855512f7de82e36e92a86dfcb7c409c14b431865fd0c"
+    }
+  ],
+  "include_context": "none",
+  "temperature": 0.0,
+  "max_tokens": 5000,
+  "adapter_note": "Exports actual MCP sampling content to the connected vision session; invokes no model API itself."
+}

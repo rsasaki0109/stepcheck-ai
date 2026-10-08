@@ -48,6 +48,11 @@ identified six actions but left handle contact unknown with only the 32 uniform/
 The GIF above replays that run and its [actual follow-up sampling](docs/reference-flow-verification.md#未確認の工程を追加画像で再確認する).
 Search windows are hints from the given reference; they do not prove absence elsewhere.
 
+A [different-video check](docs/new-video-transfer.md) fixed a five-step reference before
+the first source inspection. Codex judged four steps observed, but drying stayed unknown
+after 12 additional samples, so the full flow stayed **unknown**. The video, raw MCP
+requests/responses, failed budget attempt, and an evidence GIF are saved for inspection.
+
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong
 evidence and invalid pair IDs. These raw outputs are preserved separately in the

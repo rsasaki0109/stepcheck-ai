@@ -1,0 +1,54 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "observations": [
+    {
+      "step_id": "wet",
+      "status": "observed",
+      "reason": "At 2 and 4 s the faucet stream visibly contacts cupped/rubbing hands before the later soap-bar and lather views.",
+      "evidence_seconds": [
+        2,
+        4
+      ],
+      "uncertainty": "These are discrete samples; the exact start of water contact is not measured."
+    },
+    {
+      "step_id": "soap",
+      "status": "observed",
+      "reason": "At 6 s a greenish soap bar is held and rubbed between the hands beside and under the flowing faucet. The visible bar contact supports soap application.",
+      "evidence_seconds": [
+        6
+      ],
+      "uncertainty": "Some contact is hidden by the fingers; the amount of soap is not measurable."
+    },
+    {
+      "step_id": "lather",
+      "status": "observed",
+      "reason": "At 12 s the hands rub together away from the water stream and a thin whitish soapy patch is visible on the hand/finger surfaces. This supports rubbing with lather rather than just standing at the sink.",
+      "evidence_seconds": [
+        12
+      ],
+      "uncertainty": "The lather is thin and the 320-pixel sampled view is small; exact coverage or hygiene quality is not established."
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "At 16, 20, and 24 s, after the cited lather-rubbing view, the hands are placed directly under the visible water stream and rotated through it.",
+      "evidence_seconds": [
+        16,
+        20,
+        24
+      ],
+      "uncertainty": "The stream also flows in earlier frames; the cited post-lather contact, not the faucet alone, is the evidence."
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "At 26 s the wet hands leave the faucet view. The 31.936 s view contains the running faucet and empty basin, with no hands contacting a towel or operating dryer. No drying action is visible in the supplied samples.",
+      "evidence_seconds": [
+        26,
+        31.936
+      ],
+      "uncertainty": "Drying could occur off camera or between samples; absence from these views is not proof that it did not happen."
+    }
+  ]
+}

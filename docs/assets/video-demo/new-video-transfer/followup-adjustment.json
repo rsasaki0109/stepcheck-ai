@@ -1,0 +1,8 @@
+{
+  "recorded_at_utc": "2026-10-08T13:15:10.387525+00:00",
+  "reason": "Predeclared 0.25 s follow-up exceeds 24-frame budget; server rejected before any vision sampling or output. Increase spacing to 0.5 s, retaining max_frames=24 and the frozen reference, before inspecting any new follow-up images.",
+  "interval_seconds_before": 0.25,
+  "interval_seconds_after": 0.5,
+  "max_frames": 24,
+  "reference_sha256": "be1c9b45c260511783e9a11e4ce582b61e4bda1ae3ff8b5d86b4859f9d596c05"
+}

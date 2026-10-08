@@ -1,0 +1,17 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "observations": [
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "The follow-up views at 24.5, 25, and 25.5 s show hands still under or beside the running water, then the hand moves out of view at 26 s. From 26.5 through 31.936 s the images show the faucet stream and empty basin. No towel-paper wiping or visibly operating hand dryer contacts the hands in these supplied images.",
+      "evidence_seconds": [
+        25.5,
+        26,
+        26.5,
+        31.936
+      ],
+      "uncertainty": "The camera does not follow the departing hands. Drying could occur off camera; this review does not classify it as not done."
+    }
+  ]
+}

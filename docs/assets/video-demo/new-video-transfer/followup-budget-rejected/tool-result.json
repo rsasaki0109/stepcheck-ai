@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "io.modelcontextprotocol/serverInfo": {
+      "name": "StepCheck video vision review",
+      "version": ""
+    }
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "Error executing tool refine_reference_flow: Refinement exceeds max_frames; increase the interval or frame budget.",
+      "annotations": null,
+      "meta": null
+    }
+  ],
+  "structured_content": null,
+  "is_error": true,
+  "result_type": "complete"
+}

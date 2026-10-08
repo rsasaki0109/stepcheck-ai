@@ -1,0 +1,303 @@
+{
+  "title": "Visible handwashing flow for a new-video check",
+  "analysis_mode": "procedure_verification",
+  "provider": "codex-mcp",
+  "model": "Codex host vision review",
+  "expected_procedure_supplied": true,
+  "input_modality": "MCP sampling source images",
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "duration_seconds": 32.036,
+  "sampled_seconds": [
+    0.0,
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0,
+    12.0,
+    14.0,
+    16.0,
+    18.0,
+    20.0,
+    22.0,
+    24.0,
+    24.5,
+    25.0,
+    25.5,
+    26.0,
+    26.5,
+    27.0,
+    27.5,
+    28.0,
+    28.5,
+    29.0,
+    29.5,
+    30.0,
+    30.5,
+    31.0,
+    31.5,
+    31.936,
+    32.0
+  ],
+  "sample_interval_seconds": null,
+  "frames": [
+    {
+      "timestamp_seconds": 0.0
+    },
+    {
+      "timestamp_seconds": 2.0
+    },
+    {
+      "timestamp_seconds": 4.0
+    },
+    {
+      "timestamp_seconds": 6.0
+    },
+    {
+      "timestamp_seconds": 8.0
+    },
+    {
+      "timestamp_seconds": 10.0
+    },
+    {
+      "timestamp_seconds": 12.0
+    },
+    {
+      "timestamp_seconds": 14.0
+    },
+    {
+      "timestamp_seconds": 16.0
+    },
+    {
+      "timestamp_seconds": 18.0
+    },
+    {
+      "timestamp_seconds": 20.0
+    },
+    {
+      "timestamp_seconds": 22.0
+    },
+    {
+      "timestamp_seconds": 24.0
+    },
+    {
+      "timestamp_seconds": 24.5
+    },
+    {
+      "timestamp_seconds": 25.0
+    },
+    {
+      "timestamp_seconds": 25.5
+    },
+    {
+      "timestamp_seconds": 26.0
+    },
+    {
+      "timestamp_seconds": 26.5
+    },
+    {
+      "timestamp_seconds": 27.0
+    },
+    {
+      "timestamp_seconds": 27.5
+    },
+    {
+      "timestamp_seconds": 28.0
+    },
+    {
+      "timestamp_seconds": 28.5
+    },
+    {
+      "timestamp_seconds": 29.0
+    },
+    {
+      "timestamp_seconds": 29.5
+    },
+    {
+      "timestamp_seconds": 30.0
+    },
+    {
+      "timestamp_seconds": 30.5
+    },
+    {
+      "timestamp_seconds": 31.0
+    },
+    {
+      "timestamp_seconds": 31.5
+    },
+    {
+      "timestamp_seconds": 31.936
+    },
+    {
+      "timestamp_seconds": 32.0
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "label": "Wet hands with water",
+      "model_status": "observed",
+      "reason": "At 2 and 4 s the faucet stream visibly contacts cupped/rubbing hands before the later soap-bar and lather views.",
+      "uncertainty": "These are discrete samples; the exact start of water contact is not measured.",
+      "evidence_seconds": [
+        2.0,
+        4.0
+      ],
+      "first_seen_seconds": 2.0,
+      "last_seen_seconds": 4.0,
+      "model_observations": [
+        {
+          "step_id": "wet",
+          "status": "observed",
+          "reason": "At 2 and 4 s the faucet stream visibly contacts cupped/rubbing hands before the later soap-bar and lather views.",
+          "evidence_seconds": [
+            2.0,
+            4.0
+          ],
+          "uncertainty": "These are discrete samples; the exact start of water contact is not measured.",
+          "index": 1,
+          "label": "Wet hands with water"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "label": "Apply soap to hands",
+      "model_status": "observed",
+      "reason": "At 6 s a greenish soap bar is held and rubbed between the hands beside and under the flowing faucet. The visible bar contact supports soap application.",
+      "uncertainty": "Some contact is hidden by the fingers; the amount of soap is not measurable.",
+      "evidence_seconds": [
+        6.0
+      ],
+      "first_seen_seconds": 6.0,
+      "last_seen_seconds": 6.0,
+      "model_observations": [
+        {
+          "step_id": "soap",
+          "status": "observed",
+          "reason": "At 6 s a greenish soap bar is held and rubbed between the hands beside and under the flowing faucet. The visible bar contact supports soap application.",
+          "evidence_seconds": [
+            6.0
+          ],
+          "uncertainty": "Some contact is hidden by the fingers; the amount of soap is not measurable.",
+          "index": 2,
+          "label": "Apply soap to hands"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "label": "Rub hands with soap lather",
+      "model_status": "observed",
+      "reason": "At 12 s the hands rub together away from the water stream and a thin whitish soapy patch is visible on the hand/finger surfaces. This supports rubbing with lather rather than just standing at the sink.",
+      "uncertainty": "The lather is thin and the 320-pixel sampled view is small; exact coverage or hygiene quality is not established.",
+      "evidence_seconds": [
+        12.0
+      ],
+      "first_seen_seconds": 12.0,
+      "last_seen_seconds": 12.0,
+      "model_observations": [
+        {
+          "step_id": "lather",
+          "status": "observed",
+          "reason": "At 12 s the hands rub together away from the water stream and a thin whitish soapy patch is visible on the hand/finger surfaces. This supports rubbing with lather rather than just standing at the sink.",
+          "evidence_seconds": [
+            12.0
+          ],
+          "uncertainty": "The lather is thin and the 320-pixel sampled view is small; exact coverage or hygiene quality is not established.",
+          "index": 3,
+          "label": "Rub hands with soap lather"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "label": "Rinse hands with water",
+      "model_status": "observed",
+      "reason": "At 16, 20, and 24 s, after the cited lather-rubbing view, the hands are placed directly under the visible water stream and rotated through it.",
+      "uncertainty": "The stream also flows in earlier frames; the cited post-lather contact, not the faucet alone, is the evidence.",
+      "evidence_seconds": [
+        16.0,
+        20.0,
+        24.0
+      ],
+      "first_seen_seconds": 16.0,
+      "last_seen_seconds": 24.0,
+      "model_observations": [
+        {
+          "step_id": "rinse",
+          "status": "observed",
+          "reason": "At 16, 20, and 24 s, after the cited lather-rubbing view, the hands are placed directly under the visible water stream and rotated through it.",
+          "evidence_seconds": [
+            16.0,
+            20.0,
+            24.0
+          ],
+          "uncertainty": "The stream also flows in earlier frames; the cited post-lather contact, not the faucet alone, is the evidence.",
+          "index": 4,
+          "label": "Rinse hands with water"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "label": "Dry hands",
+      "model_status": "unknown",
+      "reason": "The follow-up views at 24.5, 25, and 25.5 s show hands still under or beside the running water, then the hand moves out of view at 26 s. From 26.5 through 31.936 s the images show the faucet stream and empty basin. No towel-paper wiping or visibly operating hand dryer contacts the hands in these supplied images.",
+      "uncertainty": "The camera does not follow the departing hands. Drying could occur off camera; this review does not classify it as not done.",
+      "evidence_seconds": [
+        25.5,
+        26.0,
+        26.5,
+        31.936
+      ],
+      "first_seen_seconds": 25.5,
+      "last_seen_seconds": 31.936,
+      "model_observations": [
+        {
+          "step_id": "dry",
+          "status": "unknown",
+          "reason": "The follow-up views at 24.5, 25, and 25.5 s show hands still under or beside the running water, then the hand moves out of view at 26 s. From 26.5 through 31.936 s the images show the faucet stream and empty basin. No towel-paper wiping or visibly operating hand dryer contacts the hands in these supplied images.",
+          "evidence_seconds": [
+            25.5,
+            26.0,
+            26.5,
+            31.936
+          ],
+          "uncertainty": "The camera does not follow the departing hands. Drying could occur off camera; this review does not classify it as not done.",
+          "index": 5,
+          "label": "Dry hands"
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "from": 1,
+      "to": 2,
+      "status": "sampled_before"
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "status": "sampled_before"
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "status": "sampled_before"
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "status": "unknown"
+    }
+  ],
+  "model_order_status": "unknown",
+  "limitations": [
+    "Reference fixed in commit a870f66 before source download and first visual inspection in this session.",
+    "Four actions judged observed by Codex; drying is unknown even after additional images. No independent human ground truth or accuracy score.",
+    "Given reference, not open-ended discovery. Source is a continuous fixed-camera clip with hands leaving the field of view.",
+    "Sampled order only. No attention map or calibrated confidence."
+  ]
+}

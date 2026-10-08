@@ -1,0 +1,38 @@
+{
+  "tool": "verify_reference_flow",
+  "arguments": {
+    "sample_interval_seconds": 2.0,
+    "reference": {
+      "title": "Visible handwashing flow for a new-video check",
+      "scope": "Predeclared visible-action reference for transfer checking, not a hygiene-quality assessment. Unseen actions remain unknown. No expected timestamps are supplied.",
+      "steps": [
+        {
+          "id": "wet",
+          "label": "Wet hands with water",
+          "criterion": "Running or poured water visibly contacts hands before a visible soap-lather episode. A faucet or sink alone is insufficient."
+        },
+        {
+          "id": "soap",
+          "label": "Apply soap to hands",
+          "criterion": "Hands visibly receive soap from a dispenser, bottle, or bar. Lather alone does not prove application."
+        },
+        {
+          "id": "lather",
+          "label": "Rub hands with soap lather",
+          "criterion": "Hands rub together with visible soap foam; rubbing without visible foam is uncertain."
+        },
+        {
+          "id": "rinse",
+          "label": "Rinse hands with water",
+          "criterion": "After visible lather rubbing, water visibly contacts the hands; rubbing beside a faucet is insufficient."
+        },
+        {
+          "id": "dry",
+          "label": "Dry hands",
+          "criterion": "A towel or paper visibly contacts and wipes the hands, or hands are held in a visibly operating air dryer. Holding a towel nearby is insufficient."
+        }
+      ]
+    }
+  },
+  "reviewer": "Codex first session review of a different source via actual MCP sampling"
+}

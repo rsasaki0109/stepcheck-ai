@@ -277,7 +277,7 @@ def build_reference_verification(reviewer: str, reference: dict,
         "reviewer":reviewer,"method":method,
         "expected_procedure_supplied":True,"source_sha256":hashlib.sha256(VIDEO.read_bytes()).hexdigest(),
         "duration_seconds":duration,"sampled_seconds":sorted(set(reviewed_seconds)),
-        "scope_note":"Visible sample evidence only. Not proof of uninterrupted execution, hidden actions, or completeness outside reviewed images."}
+        "scope_note":"Visible sample evidence only. Not proof of uninterrupted execution, hidden door opening or towel release."}
     return report
 
 
