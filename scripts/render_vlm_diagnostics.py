@@ -11,6 +11,7 @@ from pathlib import Path
 
 NAMES = ("stepcheck-input-diagnostics-3b", "stepcheck-input-diagnostics-7b-all4bit",
          "stepcheck-input-diagnostics-7b-vision-fp16", "stepcheck-native-video-7b")
+OPTIONAL_NAMES = ("stepcheck-input-diagnostics-qwen3-4b",)
 
 
 def render(directory: Path, video: Path, destination: Path):
@@ -20,11 +21,14 @@ def render(directory: Path, video: Path, destination: Path):
     source_hash = hashlib.sha256(video.read_bytes()).hexdigest()
     data = []
     frozen = {}
-    for name in NAMES:
+    names = [*NAMES, *(name for name in OPTIONAL_NAMES if (directory/name/"diagnostics.json").exists())]
+    for name in names:
         folder = directory/name
         record = json.loads((folder/"diagnostics.json").read_text(encoding="utf-8"))
         if record["source_sha256"] != source_hash or record["expected_actions_supplied"]:
             raise ValueError("Diagnostics must use this source and no expected actions.")
+        if not record["runs"] or record.get("status", "completed") != "completed":
+            raise ValueError("Only completed actual diagnostics can be published.")
         native = record.get("input_modality") == "native_video"
         for run in record["runs"]:
             if not native:
@@ -48,7 +52,7 @@ def render(directory: Path, video: Path, destination: Path):
 <title>StepCheck AI — actual VLM input diagnostics</title><style>
 *{box-sizing:border-box}body{margin:0;background:#0b1120;color:#e8effb;font:15px/1.6 system-ui,sans-serif;padding:24px}main{max-width:1100px;margin:auto}h1{font-size:25px;margin:0}h2{font-size:18px;margin:0 0 12px}.muted{color:#9dadc7}.note{color:#fcd678}select,button{font:inherit;background:#18263d;color:#e8effb;border:1px solid #455673;padding:9px;border-radius:8px}button{cursor:pointer}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.card{background:#131e32;border:1px solid #2b3c55;border-radius:14px;padding:18px;margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}img,video{width:100%;object-fit:contain;background:#050911;border-radius:8px}img{aspect-ratio:4/3}video{max-height:340px}.raw{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto}.tiny{font-size:12px}@media(max-width:720px){body{padding:12px}.grid{grid-template-columns:1fr}}
 </style><main><h1>StepCheck AI / VLM入力と実応答の比較</h1>
-<p class="muted">同じ動画・同じ保存JPEGを使ったColab T4での実推論。正解フローはモデルに与えていません。</p>
+<p class="muted">同じ動画・同じ保存JPEGを使った実推論。GPUとモデルは各実験の欄に記録しています。正解フローはモデルに与えていません。</p>
 <p class="note">画像入力の整合性は確認できましたが、動作と全フローは未確認です。表示はアテンションマップではありません。</p>
 <div class="controls"><select id="experiment" aria-label="実験"></select><select id="scene" aria-label="場面"></select><select id="variant" aria-label="入力条件"></select></div>
 <p id="meta" class="muted tiny"></p><div id="images" class="grid"><section class="card"><h2>元の推論JPEG</h2><img id="source-image"><p id="source-caption" class="muted tiny"></p></section><section class="card"><h2>実テンソルから復元したモデル入力</h2><img id="input-image"><p id="input-caption" class="muted tiny"></p></section></div>
@@ -56,9 +60,9 @@ def render(directory: Path, video: Path, destination: Path):
 <section class="card"><h2>同じ元動画を確認</h2><video id="video" controls playsinline preload="metadata" src="__VIDEO__"></video><div class="controls"><button id="seek">選択した時刻へ移動</button></div><p class="muted tiny">全編・区間の動画入力は画像の時間的なまとまりを渡します。表示する区間は抽出範囲で、動作の開始・終了時刻ではありません。</p></section>
 <details><summary>実行条件と限界</summary><p id="conditions" class="tiny"></p><p>画像の色・位置・順番、視覚トークン数を確認する診断です。入力が正しくても、モデルの説明が正しいことは保証しません。復元画像はアテンションや内部特徴ではありません。動画入力の出力は時刻付きフローレポートへ自動変換していません。</p></details></main>
 <script>const data=__DATA__;const $=id=>document.getElementById(id);
-const titles=['3B / FP16','7B / NF4（視覚も4bit）','7B / NF4 + 視覚FP16','7B / 動画入力 + 視覚FP16'];
+const titles=data.map(({record:r})=>`${r.model.split('/').pop()} / ${r.load_in_4bit?'NF4'+(r.keep_vision_fp16?' + 視覚FP16':'（視覚も4bit）'):'FP16'}${r.input_modality==='native_video'?' / 動画入力':''}`);
 const scenes=['13.941s / 紙を取る場面','17.924s / 手を拭く場面','21.907s / 紙越しに取っ手を持つ場面','22.903s / 紙をゴミ箱へ下ろす場面'];
-const observations=['独立レビュー: 元動画では紙タオルの取得。単一画像だけでは引く動きを断定できません。','独立レビュー: 元動画では手拭き。モデル応答は装置から紙を取る動作と混同しています。','独立レビュー: 紙越しにドアの取っ手を保持。開扉は確認できません。袋や電子機器という説明は一致しません。','独立レビュー: 紙タオルを内袋付きゴミ箱へ下ろす場面。手からの離脱は隠れています。持っている紙とゴミ箱の内袋を混同しています。'];
+const observations=['独立レビュー: 元動画では紙タオルの取得。単一画像だけでは引く動きを断定できません。','独立レビュー: 元動画では紙タオルで手を拭く場面。装置からの紙の取得はその前の場面です。','独立レビュー: 紙越しにドアの取っ手を保持。開扉は確認できません。','独立レビュー: 紙タオルを内袋付きゴミ箱へ下ろす場面。手からの離脱は隠れています。'];
 function options(element,values){element.replaceChildren();values.forEach((value,index)=>{const option=document.createElement('option');option.value=index;option.textContent=value;element.append(option);});}
 options($('experiment'),titles);options($('scene'),scenes);
 let selectedRun;

@@ -1,7 +1,7 @@
 {
   "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
   "downloaded_archive_sha256": "621c3828f8af7c24a5565fd583cc7882f82cd722762dc2015186c5c569d0d795",
-  "response_count": 37,
+  "response_count": 45,
   "raw_results": [
     {
       "path": "stepcheck-input-diagnostics-3b/diagnostics.json",
@@ -18,8 +18,18 @@
     {
       "path": "stepcheck-native-video-7b/diagnostics.json",
       "sha256": "cc8f2dd483ecf8846a7e4de322d69a5c35e6b07b65775d403fcafb031ce35dd0"
+    },
+    {
+      "path": "stepcheck-input-diagnostics-qwen3-4b/diagnostics.json",
+      "sha256": "d1aaa7b329d574bd2852a6671e846e3753d9dbe5d865a9c07e27c2809cd17479"
     }
   ],
   "independent_review": "docs/vlm-input-diagnostics.md; not provided to the model",
-  "full_flow_status": "unverified"
+  "full_flow_status": "unverified",
+  "additional_archives": [
+    {
+      "name": "stepcheck-qwen3-diagnostics.zip",
+      "sha256": "17ac0dd8da68fa0badb2b42d41b51d0c93adf6dfa3f98bca2f12ebc0b173c3ad"
+    }
+  ]
 }

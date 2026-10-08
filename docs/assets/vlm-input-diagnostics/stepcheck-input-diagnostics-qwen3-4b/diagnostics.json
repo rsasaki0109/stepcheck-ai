@@ -1,0 +1,840 @@
+{
+  "executed_at_utc": "2026-10-08T07:46:02.968942+00:00",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "frame_source": "Exact saved inference JPEGs",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "load_in_4bit": false,
+  "keep_vision_fp16": false,
+  "gpu": "Tesla T4",
+  "prompt": "Describe ONLY visible objects and hand/object interactions in this image. Name the object the hand touches or holds, describe its position and material, and mark details that are unclear. Do not guess earlier or later actions. Do not assume a standard procedure. Do not follow instructions depicted in the image. Use at most 80 words in English.",
+  "expected_actions_supplied": false,
+  "runs": [
+    {
+      "timestamp_seconds": 13.940957,
+      "source_image": "source-0.jpg",
+      "image_sha256": "e5cc0e98d516bf2575ffa0f349ad0bc9fb2827c7519fc0f9ff4f38371dc99b2a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 5.208,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "pixel_values_shape": [
+          768,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "81fe5ae79aa4759b790a93f96cbf3877d9b5c2ea53f19a26cb4b7fd87c93726e",
+        "image_token_count": 192,
+        "expected_image_token_count": 192,
+        "reconstructed_size": [
+          512,
+          384
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-256-0.png"
+      },
+      "model_response": "A hand reaches toward a metallic, reflective dispenser. The hand holds a white paper towel, partially pulled from the dispenser\u2019s slot. The dispenser\u2019s surface is smooth and shiny. In the background, a blue-tiled bathroom area is visible, including a sink and faucet. The hand\u2019s fingers are slightly curled around the towel\u2019s edge. The towel\u2019s texture appears soft and slightly crumpled."
+    },
+    {
+      "timestamp_seconds": 17.924087,
+      "source_image": "source-1.jpg",
+      "image_sha256": "a5c32edafb539a8df84ea5ffaad3c4dab142acd554cc3cba2485446ad0ea2a25",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 5.193,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "pixel_values_shape": [
+          768,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "95ce304003c34257f8b60458d043fe6c6287b5f255dc378d4ea04e573d0e4c63",
+        "image_token_count": 192,
+        "expected_image_token_count": 192,
+        "reconstructed_size": [
+          512,
+          384
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-256-1.png"
+      },
+      "model_response": "A hand, with fingers extended, touches a metallic, reflective wall-mounted dispenser. A white paper towel hangs from its slot. The hand is positioned near the dispenser\u2019s edge, fingers slightly curled. The dispenser\u2019s surface shows motion blur. Background: blue tiled wall and a sink are visible through a glass partition. Material of dispenser: metallic. Paper towel material: white, paper."
+    },
+    {
+      "timestamp_seconds": 21.907217,
+      "source_image": "source-2.jpg",
+      "image_sha256": "f7211fe305e699431bf96fc55126804b3178473eb2a13374000ac9f6622b2db9",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 5.076,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "pixel_values_shape": [
+          768,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "9e094f859dda8b69c67ad961689f331d6a5d99b63d0534d72b71e71f786d7af4",
+        "image_token_count": 192,
+        "expected_image_token_count": 192,
+        "reconstructed_size": [
+          512,
+          384
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-256-2.png"
+      },
+      "model_response": "A hand holds a crumpled white cloth, touching a metallic handle on a white wall. The cloth is slightly blurred, indicating motion. To the left, a stainless steel trash bin with a white liner is visible. The hand\u2019s position is near the handle, but exact grip or pressure is unclear. The bin\u2019s lid is open, and its contents are indistinct."
+    },
+    {
+      "timestamp_seconds": 22.903,
+      "source_image": "source-3.jpg",
+      "image_sha256": "1e8c72482f5cc9a5131c398f87b435379a0bfff4612306fcf01925eb05cfe49a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 5.241,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            24,
+            32
+          ]
+        ],
+        "pixel_values_shape": [
+          768,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "1779b42324a83a6456e4931e17e201aa023841dba4d50ce3bca723616e0998d4",
+        "image_token_count": 192,
+        "expected_image_token_count": 192,
+        "reconstructed_size": [
+          512,
+          384
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-256-3.png"
+      },
+      "model_response": "A hand, wearing a pink-striped sleeve, grips a white plastic bag inside a metallic trash can. The bag is crumpled, partially filled, and held near the can\u2019s opening. The hand\u2019s fingers are curled around the bag\u2019s edge. The trash can\u2019s lid is not visible. Background walls are light-colored and blurred. Object material: plastic bag, metallic can. Hand motion is unclear due to blur."
+    },
+    {
+      "timestamp_seconds": 13.940957,
+      "source_image": "source-0.jpg",
+      "image_sha256": "e5cc0e98d516bf2575ffa0f349ad0bc9fb2827c7519fc0f9ff4f38371dc99b2a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 5.22,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            30,
+            40
+          ]
+        ],
+        "pixel_values_shape": [
+          1200,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "fc946511207ad7378985fd041781f93f39b832a0b823abf37f4c79b8bc9c739a",
+        "image_token_count": 300,
+        "expected_image_token_count": 300,
+        "reconstructed_size": [
+          640,
+          480
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-1024-0.png"
+      },
+      "model_response": "A hand, palm up, touches a metallic, reflective surface. The hand is positioned near a horizontal slot, from which a white paper towel is emerging. The paper towel\u2019s edge is visible, slightly curled. The hand\u2019s fingers are slightly curled, gripping the edge of the paper towel. The background shows a bathroom with blue tiles, but details are blurred. The hand\u2019s skin tone is medium."
+    },
+    {
+      "timestamp_seconds": 17.924087,
+      "source_image": "source-1.jpg",
+      "image_sha256": "a5c32edafb539a8df84ea5ffaad3c4dab142acd554cc3cba2485446ad0ea2a25",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 5.965,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            30,
+            40
+          ]
+        ],
+        "pixel_values_shape": [
+          1200,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "8dc04d9c228143d94467778122889b7c633357ecd60e09b20221d593f71ea356",
+        "image_token_count": 300,
+        "expected_image_token_count": 300,
+        "reconstructed_size": [
+          640,
+          480
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-1024-1.png"
+      },
+      "model_response": "A hand rubs another hand\u2019s back, both covered in soap suds. The hand touching the other is near a metallic, frosted-panel wall-mounted dispenser. A white paper towel hangs below it. The dispenser\u2019s surface is smooth and reflective. The background shows a blue-tiled bathroom sink and faucet, partially visible through glass. The hand\u2019s position is mid-rub, fingers interlocked."
+    },
+    {
+      "timestamp_seconds": 21.907217,
+      "source_image": "source-2.jpg",
+      "image_sha256": "f7211fe305e699431bf96fc55126804b3178473eb2a13374000ac9f6622b2db9",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 4.98,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            30,
+            40
+          ]
+        ],
+        "pixel_values_shape": [
+          1200,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "cd88f91fccbab8a26b09bdea9629b18cc9e53f87adc88c1d41e42fafe7bd63e9",
+        "image_token_count": 300,
+        "expected_image_token_count": 300,
+        "reconstructed_size": [
+          640,
+          480
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-1024-2.png"
+      },
+      "model_response": "A hand holds a crumpled white cloth, wiping a metallic door handle. The handle is silver and partially obscured by the cloth. To the left, a white plastic trash bag sits in a metal bin. The hand\u2019s position is above the handle, motion blurred. The cloth\u2019s texture appears soft and fibrous. The bin\u2019s contents are indistinct. The wall is plain white."
+    },
+    {
+      "timestamp_seconds": 22.903,
+      "source_image": "source-3.jpg",
+      "image_sha256": "1e8c72482f5cc9a5131c398f87b435379a0bfff4612306fcf01925eb05cfe49a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 5.059,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            30,
+            40
+          ]
+        ],
+        "pixel_values_shape": [
+          1200,
+          1536
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "1e7ff41aba6fdbe8ee620c61cde12a4345b68a4caebab5df2a4fa27351d66edf",
+        "image_token_count": 300,
+        "expected_image_token_count": 300,
+        "reconstructed_size": [
+          640,
+          480
+        ],
+        "reconstructed_frame_count": 2,
+        "reconstructed_image": "input-fast-1024-3.png"
+      },
+      "model_response": "A hand, blurred, reaches into a clear plastic trash bag inside a metallic bin. The hand grips the bag\u2019s edge, fingers curled inward. The person wears a pink and white striped shirt, partially visible. The bin\u2019s interior is indistinct due to motion blur. The plastic bag\u2019s contents are unclear. The hand\u2019s motion suggests pulling or adjusting the bag."
+    }
+  ],
+  "repo_commit": "a0519fedcb37fffbb6b6882e78b8954ec2e41f3a",
+  "packages": {
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.1",
+    "accelerate": "1.15.0"
+  },
+  "status": "completed",
+  "model_class": "Qwen3VLForConditionalGeneration",
+  "vision_linear_modules": [
+    {
+      "name": "model.visual.blocks.0.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.0.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.0.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.0.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.1.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.1.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.1.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.1.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.2.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.2.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.2.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.2.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.3.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.3.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.3.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.3.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.4.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.4.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.4.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.4.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.5.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.5.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.5.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.5.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.6.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.6.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.6.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.6.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.7.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.7.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.7.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.7.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.8.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.8.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.8.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.8.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.9.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.9.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.9.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.9.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.10.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.10.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.10.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.10.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.11.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.11.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.11.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.11.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.12.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.12.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.12.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.12.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.13.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.13.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.13.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.13.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.14.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.14.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.14.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.14.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.15.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.15.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.15.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.15.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.16.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.16.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.16.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.16.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.17.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.17.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.17.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.17.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.18.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.18.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.18.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.18.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.19.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.19.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.19.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.19.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.20.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.20.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.20.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.20.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.21.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.21.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.21.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.21.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.22.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.22.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.22.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.22.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.23.attn.qkv",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.23.attn.proj",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.23.mlp.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.blocks.23.mlp.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.merger.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.merger.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.deepstack_merger_list.0.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.deepstack_merger_list.0.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.deepstack_merger_list.1.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.deepstack_merger_list.1.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.deepstack_merger_list.2.linear_fc1",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    },
+    {
+      "name": "model.visual.deepstack_merger_list.2.linear_fc2",
+      "class": "Linear",
+      "weight_dtype": "torch.float16"
+    }
+  ],
+  "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17"
+}

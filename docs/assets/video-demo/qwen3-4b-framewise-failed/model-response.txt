@@ -1,0 +1,126 @@
+{
+  "method": "framewise observations then text grouping",
+  "observations": [
+    {
+      "frame_id": 0,
+      "timestamp_seconds": 0.0,
+      "observation": "A right hand is positioned under a black, wall-mounted hand sanitizer dispenser. The palm is open, facing upward, receiving a visible stream of clear liquid. The hand is slightly cupped, catching the flow. The dispenser’s nozzle is above the hand, dispensing liquid. The background shows blue tiled walls. No lather or soap is visible. The hand is not wet beyond the liquid stream. The dispenser’s base is partially visible, but its full structure is obscured."
+    },
+    {
+      "frame_id": 1,
+      "timestamp_seconds": 0.995783,
+      "observation": "A hand is submerged in a transparent bowl, fingers spread, holding a clear, curved object (possibly a spoon or tool) horizontally. The bowl contains clear liquid with visible bubbles. The hand’s position is mid-motion, gripping the object. Background shows a tiled surface. No lather, water stream, or paper is visible. The hand and object are partially obscured by the bowl’s transparency and reflections."
+    },
+    {
+      "frame_id": 2,
+      "timestamp_seconds": 1.991565,
+      "observation": "Hands are under running water from a chrome faucet, palms facing each other, fingers slightly curled. Visible lather covers palms and fingers. A bar of soap rests on the sink’s edge, out of direct contact. Water stream is clear, flowing from faucet spout. No visible paper. Hands are wet and soapy, with lather clinging to skin. Faucet handle is visible but not touched. Sink drain is visible below."
+    },
+    {
+      "frame_id": 3,
+      "timestamp_seconds": 2.987348,
+      "observation": "Hands are submerged under running water, palms facing each other, fingers slightly spread. Visible lather covers palms and fingers, with water streaming over them. A bar of soap rests on the sink’s edge, partially obscured. Faucet is chrome, water flowing from its spout. Sink is white ceramic with visible drain. No paper or other objects are visible. Hands are in motion, likely rubbing, but motion blur obscures precise positioning."
+    },
+    {
+      "frame_id": 4,
+      "timestamp_seconds": 3.98313,
+      "observation": "Hands clasped together under running water, covered in white lather. Fingers interlocked, palms facing each other, soapy residue visible on knuckles and backs of hands. Water stream flows from chrome faucet, directed toward hands. Bar of soap rests on sink edge, partially obscured. Sink basin white, drain visible below. No visible paper or other objects."
+    },
+    {
+      "frame_id": 5,
+      "timestamp_seconds": 4.978913,
+      "observation": "Hands are clasped together under running water, covered in visible white lather. Fingers interlocked, palms facing each other, with water streaming from faucet above. Left hand slightly higher, right hand lower, both submerged in water. Soap bar visible on sink edge, partially obscured. Water stream flows from faucet, not directly onto hands. No visible paper or other objects. Sink basin and drain visible, but not in focus."
+    },
+    {
+      "frame_id": 6,
+      "timestamp_seconds": 5.974696,
+      "observation": "Hands clasped, palms facing each other, submerged in running water. Visible lather covers palms and fingers. Left hand’s thumb rests against right hand’s palm. Right hand’s index finger slightly bent, touching left hand’s palm. Water stream flows from chrome faucet, visible as thin, clear stream. White soap bar rests on sink edge, out of direct contact. No visible paper. Faucet handle visible, but not touched."
+    },
+    {
+      "frame_id": 7,
+      "timestamp_seconds": 6.970478,
+      "observation": "Hands clasped together under running water, palms facing each other, actively rubbing with visible white lather covering fingers and palms. Water stream flows from chrome faucet, directed toward hands. A white bar of soap rests on sink edge, partially obscured. Sink basin visible with drain. No paper or other objects in frame. Hands positioned centrally, motion implied by lather distribution."
+    },
+    {
+      "frame_id": 8,
+      "timestamp_seconds": 7.966261,
+      "observation": "Hands are submerged in soapy water, palms facing each other, fingers interlocked and moving in a scrubbing motion. Visible lather covers palms and fingers, with some foam clinging to wrists. Water flows from a chrome faucet, creating a visible stream hitting the hands. A white soap bar rests on the sink edge, partially obscured. The sink basin is white ceramic with a drain visible. No other objects are clearly interacting with hands."
+    },
+    {
+      "frame_id": 9,
+      "timestamp_seconds": 8.962043,
+      "observation": "Hands under running water, palms facing each other, fingers slightly curled, covered in white lather. Water stream flows from chrome faucet, visible as clear stream hitting hands. Soap bar rests on sink edge, partially obscured. No visible paper. Lather appears thick, clinging to palms and fingers. Hands positioned mid-rinse, not scrubbing. Sink drain visible below. No other objects in direct contact with hands."
+    },
+    {
+      "frame_id": 10,
+      "timestamp_seconds": 9.957826,
+      "observation": "Hands are submerged under running water, covered in white lather. Fingers interlocked, palms facing each other, actively rubbing. Water stream flows from chrome faucet above. Soap bar rests on sink edge, partially visible. Drain visible below. No visible paper or other objects. Hands appear wet and soapy, with lather clinging to skin and between fingers. No obscured details."
+    },
+    {
+      "frame_id": 11,
+      "timestamp_seconds": 10.953609,
+      "observation": "Hands submerged in sink, palms facing each other, actively rubbing with visible white lather. Water streams from chrome faucet onto hands. Soap bar rests on sink edge, partially obscured. Drain visible below. No paper or other objects in frame. Hands covered in lather; fingers interlocked, motion suggests scrubbing. Water flow steady, not yet rinsing."
+    },
+    {
+      "frame_id": 12,
+      "timestamp_seconds": 11.949391,
+      "observation": "Hands submerged under running water, palms facing each other, covered in white lather. Water stream flows from chrome faucet, directed onto hands. Right hand partially obscured by left. Soap bar visible on sink edge, out of direct water flow. No visible paper or other objects. Arm in pink-striped sleeve visible, hand position suggests active rinsing. Lather appears thick and foamy, clinging to skin and between fingers."
+    },
+    {
+      "frame_id": 13,
+      "timestamp_seconds": 12.945174,
+      "observation": "Right hand under running water from faucet, left hand partially submerged, palms facing each other. Water stream visible, flowing from faucet spout. Lather not visible. Left hand’s fingers slightly curled. Right hand’s fingers extended. Both hands in sink basin. Person’s striped sleeve visible. Sink surface shows water droplets. Faucet chrome reflective. Soap dish visible in background, out of focus. No paper visible."
+    },
+    {
+      "frame_id": 14,
+      "timestamp_seconds": 13.940957,
+      "observation": "A right hand, palm up, receives a white paper towel dispensed from a metallic wall-mounted dispenser. The hand is positioned below the dispenser’s opening, fingers slightly curled. The paper towel is partially unrolled, visible at the dispenser’s edge. No lather, water stream, or other objects are visible. Background shows a bathroom sink and blue-tiled wall, but these are not interacting with the hand or paper towel. Hand and paper towel are in clear focus."
+    },
+    {
+      "frame_id": 15,
+      "timestamp_seconds": 14.936739,
+      "observation": "Left hand holds a crumpled white paper towel, right hand grips its edge near a metallic cabinet door. Paper towel partially obscures the door’s lower right corner. No visible lather, water stream, or paper edges beyond the crumpled towel. Cabinet door slightly ajar, revealing a glimpse of blue-tiled wall behind. Hands positioned mid-action, fingers curled around towel. No visible water or soap residue. Background elements blurred."
+    },
+    {
+      "frame_id": 16,
+      "timestamp_seconds": 15.932522,
+      "observation": "A right hand grips a white paper towel, pulling it from a metallic dispenser. The hand is blurred, indicating motion. The paper towel is partially extended, with its edge visible as it emerges. No lather, water stream, or other objects are visible. The dispenser’s metallic surface reflects ambient light. Background shows a blue-tiled bathroom wall and a faucet, but these are not interacted with. Hand and towel are the only interacting elements."
+    },
+    {
+      "frame_id": 17,
+      "timestamp_seconds": 16.928304,
+      "observation": "Left hand positioned beneath a metallic dispenser, palm facing down, fingers slightly curled. Right hand partially visible, palm up, near dispenser’s edge. A white paper towel is partially ejected, hanging from dispenser’s slot. No visible lather, water stream, or paper in use. Background shows bathroom tiles and sink reflection. Hands and paper towel are in focus; dispenser surface is smooth and metallic. No obscured or ambiguous details noted."
+    },
+    {
+      "frame_id": 18,
+      "timestamp_seconds": 17.924087,
+      "observation": "A right hand, palm facing down, is positioned near a metallic wall-mounted paper towel dispenser. Fingers are slightly curled, with thumb and index finger extended toward the dispenser’s edge. A single white paper towel is partially ejected, hanging from the dispenser’s slot. The hand is not touching the dispenser. No visible lather, water, or paper is being actively used or manipulated. The background shows a bathroom sink and blue-tiled wall, but no interaction with them."
+    },
+    {
+      "frame_id": 19,
+      "timestamp_seconds": 18.91987,
+      "observation": "A right hand holds a white paper towel, fingers curled around its edge, positioned near a metallic dispenser. The left hand is partially visible, palm facing down, near the towel’s base. The paper towel is partially dispensed, with a visible fold and edge. No lather, water stream, or other objects are visible. Background shows a bathroom mirror reflecting a sink and blue tiles. Details beyond the hands and towel are obscured or out of focus."
+    },
+    {
+      "frame_id": 20,
+      "timestamp_seconds": 19.915652,
+      "observation": "A right hand holds a small, crumpled white paper towel, fingers curled around it. The towel is partially obscured by the hand. A larger, unfolded white paper towel hangs from a metallic dispenser below. No visible lather, water stream, or other objects are present. The hand is positioned near the dispenser’s edge, not actively pulling or dispensing. Background shows a bathroom sink and blue tiles, but no interaction with them."
+    },
+    {
+      "frame_id": 21,
+      "timestamp_seconds": 20.911435,
+      "observation": "No visible hand or object interactions. Frame is uniformly gray-brown with no discernible features, textures, or motion. No lather, water stream, or paper visible. All details obscured or absent."
+    },
+    {
+      "frame_id": 22,
+      "timestamp_seconds": 21.907217,
+      "observation": "Right hand holds white cloth, wiping a metallic handle. Cloth is crumpled, partially obscuring handle. No visible lather, water stream, or paper. Left side shows a trash bin with white liner. Hand and cloth are blurred, indicating motion. Handle is partially obscured by hand and cloth. Background wall is plain white. No other objects or interactions visible."
+    },
+    {
+      "frame_id": 23,
+      "timestamp_seconds": 22.903,
+      "observation": "A right hand, wearing a pink and white striped sleeve, is partially inserted into a white plastic trash bag inside a metallic trash can. The hand grips a small, white, crumpled object, possibly paper or tissue, near the bag’s opening. The bag is slightly bulging, with visible folds and creases. The hand’s fingers are curled around the object, suggesting a grasping motion. The background is blurred, with indistinct metallic and white surfaces. No water, lather, or paper stream is visible."
+    }
+  ],
+  "grouping_response": "{\n  \"title\": \"手洗いと紙タオルの使用\",\n  \"actions\": [\n    {\n      \"label\": \"手を消毒液で洗う\",\n      \"reason\": \"手の下に黒い壁掛け式消毒液ディスペンサーがあり、手のひらが上向きに液体を受けており、ディスペンサーのノズルから液体が流れている。\",\n      \"evidence_frame_ids\": [\n        0\n      ],\n      \"uncertainty\": \"液体の流れの方向や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手を透明なボウルに浸す\",\n      \"reason\": \"手が透明なボウルに浸かっており、指が広がり、曲線的な物体を水平に握っている。ボウルには泡が見える。\",\n      \"evidence_frame_ids\": [\n        1\n      ],\n      \"uncertainty\": \"物体の種類や目的は不明。\"\n    },\n    {\n      \"label\": \"手を水と石鹸で洗う\",\n      \"reason\": \"手が流水から水に浸かっており、手のひらが向かい合っており、泡が手のひらと指に付着している。シンクの縁に石鹸が置かれている。\",\n      \"evidence_frame_ids\": [\n        2,\n        3,\n        4,\n        5,\n        6,\n        7,\n        8,\n        9,\n        10,\n        11,\n        12\n      ],\n      \"uncertainty\": \"手の動きや洗浄の詳細は動的であり、フレーム間の連続性が不明確。\"\n    },\n    {\n      \"label\": \"手を水で洗う\",\n      \"reason\": \"手が流水から水に浸かっており、泡が見えない。手のひらが向かい合っており、指が少し曲がっている。\",\n      \"evidence_frame_ids\": [\n        13\n      ],\n      \"uncertainty\": \"手の動きや洗浄の詳細は動的であり、フレーム間の連続性が不明確。\"\n    },\n    {\n      \"label\": \"紙タオルをディスペンサーから取り出す\",\n      \"reason\": \"右手が金属製の壁掛け式ディスペンサーから白い紙タオルを受け取っており、手のひらが下向きに位置している。\",\n      \"evidence_frame_ids\": [\n        14,\n        15,\n        16,\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n      \"evidence_frame_ids\": [\n        17,\n        18,\n        19,\n        20\n      ],\n      \"uncertainty\": \"紙タオルの使用目的や手の動きの詳細は不明。\"\n    },\n    {\n      \"label\": \"手で紙タオルを拭く\",\n      \"reason\": \"手が紙タオルを握っており、手のひらが下向きに位置している。紙タオルがディスペンサーから部分的に出てきている。\",\n     "
+}

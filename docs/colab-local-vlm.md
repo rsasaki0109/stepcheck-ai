@@ -59,7 +59,45 @@ diagnostics = await run_diagnostics(
 
 ## Colabで実行して確認したこと
 
-READMEの主GIFは、3B/FP16で24枚を個別認識した今回の実出力です。
+Qwen3-VL-4B / FP16でも同じ4場面の8回の実推論を保存しました。
+取っ手とゴミ箱の対象物認識は改善しましたが、手拭き・紙と内袋の混同は残っています。
+[条件・生応答・実入力の比較](vlm-input-diagnostics.md#qwen3-vl-4bで追加比較)を確認できます。
+
+Qwen3で全編24枚を個別認識した最初の試行は、フロー整理のJSONが出力上限で途切れました。
+同じ紙タオルの動作・根拠IDを繰り返した
+[失敗時の生出力](assets/video-demo/qwen3-4b-framewise-failed/model-response.txt)と
+[記録した条件](assets/video-demo/qwen3-4b-framewise-failed/failure.json)も残しています。
+不完全なJSONは成功レポートに補修していません。
+
+READMEの主GIFは、Qwen3-VL-4B / FP16で24枚を個別認識した再試行の実出力です。
+同じ動作・根拠IDの重複を避け、説明を短くする指示を加えると、有効なJSONで3動作を返しました。
+172.292秒で完了しました（重みとモデルはすでに読み込み済み）。
+「手洗い開始 → タオルの取得 → ゴミ箱への投入」の出力ですが、手拭きは取得にまとめられ、
+取っ手の時刻は投入の根拠に使われています。7動作の完全一致と順序は未確認です。
+初回の失敗は上記の別ファイルに残し、再試行で上書きしていません。
+
+![Actual Qwen3 flow and independent seven-step comparison](assets/qwen3-4b-framewise.gif)
+
+- [未修正の3動作と24枚の画像](assets/video-demo/qwen3-4b-framewise-flow.json)
+- [24観測とフロー整理の生応答](assets/video-demo/qwen3-4b-framewise-raw.txt)
+- [7動作との独立比較・順序の確認状況](assets/video-demo/qwen3-4b-framewise-review.json)
+- [GPU・モデル・依存パッケージ・実行条件](assets/video-demo/qwen3-4b-framewise-execution.json)
+
+同じ全編解析を実行するコマンド:
+
+```bash
+python scripts/run_local_video_flow.py docs/assets/video-demo/source.webm --model Qwen/Qwen3-VL-4B-Instruct --framewise --output .tmp-flow-local/qwen3-flow
+```
+
+GIFは実出力を保存した後の再生で、推論やアテンションではありません。
+4区間を元動画の順番で再生し、最後に7動作それぞれの欠落・部分一致と、全体・順序の未確認を表示します。
+再生成ではレポート・レビュー・元動画のハッシュを照合します。
+
+```bash
+python scripts/generate_detected_flow_gif.py --report docs/assets/video-demo/qwen3-4b-framewise-flow.json --audit docs/assets/video-demo/qwen3-4b-framewise-review.json --output docs/assets/qwen3-4b-framewise.gif
+```
+
+以下は以前の3B/FP16の実出力です。
 モデルの動作名・時刻は未修正で、黄色のカードだけが推論後のCodexレビューです。
 [以前の動画レビューによる7動作の基準](assets/video-demo/source-flow-baseline.json)と比較すると、
 紙の取得と手拭きの混同、すすぎの時刻違い、最後のゴミ箱を「水槽」とする誤認が残りました。

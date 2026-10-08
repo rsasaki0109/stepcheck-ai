@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "error_type": "FlowInferenceError / truncated JSON",
+  "recorded_at_utc": "2026-10-08T08:04:07.525481+00:00",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+  "gpu": "Tesla T4",
+  "load_in_4bit": false,
+  "framewise": true,
+  "max_pixels": 200704,
+  "max_new_tokens": 2400,
+  "expected_actions_supplied": false,
+  "observation_count": 24
+}

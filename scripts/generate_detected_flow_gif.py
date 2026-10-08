@@ -27,11 +27,12 @@ def render(timestamp, cache, report):
     rows = max(1, math.ceil(len(report["actions"]) / 4))
     reference = report.get("_audit", {}).get("reference_flow")
     action_top = 180 if reference else 144
-    video_top = action_top + rows * 110
+    baseline_top = action_top + rows * 110
+    video_top = baseline_top + (100 if reference else 0)
     canvas = Image.new("RGB", (1120, video_top + (860 if reference else 832)), "#0b1120")
     draw = ImageDraw.Draw(canvas)
     text(draw, (32, 24), "StepCheck AI  /  One video -> detected flow", "title")
-    method = ("Colab GPU -> " + report["model"].split("/")[-1]) if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
+    method = ("GPU -> " + report["model"].split("/")[-1]) if report["provider"] == "qwen-local" else "MCP frames -> Codex vision"
     if report.get("_audit", {}).get("run", {}).get("framewise"):
         method += " / frame observations"
     text(draw, (32, 70), method + " -> actions + evidence times", color=MUTED)
@@ -72,6 +73,18 @@ def render(timestamp, cache, report):
         if index < len(report["actions"]) - 1 and index % 4 < 3:
             uncertain = report["transitions"][index]["status"] == "ambiguous"
             text(draw, (x + 255, y + 37), "?" if uncertain else ">", "small", AMBER if uncertain else MUTED)
+    if reference:
+        complete = timestamp >= max(report["sampled_seconds"])
+        order_status = reference["order_status"] if complete else "pending"
+        text(draw, (32, baseline_top + 2), "Independent 7-step comparison  /  Full flow + order: " + order_status, "small", AMBER)
+        for index, step in enumerate(reference["steps"]):
+            x, y = 32 + index * 151, baseline_top + 26
+            status = step["status"] if complete else "pending"
+            color = TEAL if status == "supported" else AMBER if complete else MUTED
+            box(draw, (x, y, x + 141, y + 62), outline=color)
+            label = step["label"].replace("Hold door handle", "Door handle").replace("Lower towel into bin", "Lower into bin")
+            text(draw, (x + 9, y + 9), f"{step['index']}. {label}", "small", WHITE)
+            text(draw, (x + 9, y + 33), status.replace("_", " "), "small", color)
     quarter = report["duration_seconds"] / 4
     for index in range(4):
         x, y = 32 + (index % 2) * 548, video_top + (index // 2) * 374
@@ -91,7 +104,7 @@ def render(timestamp, cache, report):
     footer = video_top + 754
     text(draw, (32, footer), f"Source {timestamp:.2f}/{report['duration_seconds']:.2f}s  |  {len(visible)} reported actions", "label", TEAL)
     text(draw, (32, footer + 27), "Times mark reviewed samples, not action boundaries. Short actions may be missed.", "small", MUTED)
-    note = "Amber cards: reviewer found unsupported or mistimed evidence. Model output is unchanged." if report.get("_audit") else "No attention map. '?' marks ambiguous order. Model evidence can be wrong."
+    note = "Amber cards: review found incomplete or incorrect evidence. Model output is unchanged." if report.get("_audit") else "No attention map. '?' marks ambiguous order. Model evidence can be wrong."
     text(draw, (32, footer + 49), note, "small", AMBER)
     if reference:
         outcome = reference["summary"] if timestamp >= max(report["sampled_seconds"]) else "Review comparison: pending until all source quarters have played."
@@ -139,7 +152,7 @@ def main():
         sheet.paste(frames[round(index * (len(frames) - 1) / 7)], (0, index * height))
     palette = sheet.quantize(colors=256)
     frames = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
-    durations = [max(10, round((b - a) * 100) * 10) for a, b in zip(timeline, timeline[1:])] + [3500]
+    durations = [max(10, round((b - a) * 100) * 10) for a, b in zip(timeline, timeline[1:])] + [6500]
     target = args.output
     frames[0].save(target, save_all=True, append_images=frames[1:], duration=durations,
                    loop=0, optimize=True, disposal=1)

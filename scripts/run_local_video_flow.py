@@ -128,8 +128,8 @@ async def main():
                         help="Keep vision linear layers in FP16 when quantizing the language model.")
     parser.add_argument("--framewise", action="store_true",
                         help="Recognize each sampled image separately, then group its observations.")
-    parser.add_argument("--image-patches", type=int, choices=(64, 128, 256), default=256,
-                        help="Maximum image pixels = patches * 28 * 28; use 64 for 7B on T4.")
+    parser.add_argument("--image-patches", type=int, choices=(64, 128, 256, 1024), default=256,
+                        help="Image pixel budget = value * 28 * 28, not the actual token count; use 64 for joint 7B on T4.")
     args = parser.parse_args()
     result = await run_local_flow(args.video, args.output, max_frames=args.max_frames,
                                   model=args.model, load_in_4bit=args.load_in_4bit,

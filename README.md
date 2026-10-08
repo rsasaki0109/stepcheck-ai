@@ -10,9 +10,9 @@ One video → vision-language model → observed actions, order, and evidence fr
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rsasaki0109/stepcheck-ai/blob/main/notebooks/stepcheck_local_vlm.ipynb)
 
-![Actual local VLM predictions from one video, with source-flow comparison in four chronological panels](docs/assets/qwen-3b-framewise.gif)
+![Actual local VLM predictions from one video, with source-flow comparison in four chronological panels](docs/assets/qwen3-4b-framewise.gif)
 
-<sub>One real video → Qwen2.5-VL-3B on Colab T4 → frame observations → flow. Recorded inference replay; amber cards are an independent evidence review, not attention.</sub>
+<sub>One real video → Qwen3-VL-4B / FP16 on Colab T4 → frame observations → flow. Recorded inference replay; amber cards are an independent evidence review, not attention.</sub>
 
 </div>
 
@@ -36,7 +36,9 @@ whether the whole flow was verified. This single-video demo is not an accuracy b
 See [the raw predictions and review](docs/colab-local-vlm.md), or the separate
 [recorded Codex/MCP flow demo](docs/video-demo.md).
 The [controlled input diagnostics](docs/vlm-input-diagnostics.md) compare identical frames,
-3B/7B, preprocessing, vision precision, and native video input. The full flow remains unverified.
+Qwen2.5-VL 3B/7B and Qwen3-VL 4B, preprocessing, vision precision, and native video input.
+The Qwen3 full run reports three coarse actions; it mixes drying with towel retrieval
+and cites the door-handle frame for disposal. The full flow remains unverified.
 
 The web app now accepts **a single video** and lets you inspect each recognized
 action's supporting frames, source timestamps, reasons, and uncertainties. Video
@@ -64,7 +66,7 @@ structured output (the existing default is `gpt-4o`). For a recorded preview, ch
 Live recognition of a new upload is separate from that recorded demo.
 
 For **keyless live recognition**, open the [local-VLM Colab notebook](notebooks/stepcheck_local_vlm.ipynb).
-It runs Qwen2.5-VL-3B-Instruct on the runtime GPU, observes each sampled frame, and generates a flow/evidence viewer
+It offers Qwen2.5-VL-3B/7B and Qwen3-VL-4B on the runtime GPU, observes each sampled frame, and generates a flow/evidence viewer
 from the chosen video. See [Colab/local GPU setup](docs/colab-local-vlm.md). The same
 provider can be selected in the backend with `STEPCHECK_PROVIDER=qwen-local`.
 
