@@ -88,7 +88,7 @@ class QwenLocalProvider(VisionProvider):
             return
         try:
             import torch
-            from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
+            from transformers import AutoProcessor, AutoModelForImageTextToText
         except ImportError as exc:
             raise FlowUnavailableError("Install stepcheck-providers[local] and select a Colab GPU runtime.") from exc
         if not torch.cuda.is_available():
@@ -102,7 +102,7 @@ class QwenLocalProvider(VisionProvider):
             options["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True,
                 bnb_4bit_compute_dtype=torch.float16, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True,
                 llm_int8_skip_modules=["visual", "lm_head"] if self.keep_vision_fp16 else None)
-        self._model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        self._model = AutoModelForImageTextToText.from_pretrained(
             self.model_id, torch_dtype=torch.float16, device_map="cuda:0", attn_implementation="sdpa",
             **options,
         ).eval()

@@ -129,12 +129,17 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None,
         "keep_vision_fp16": getattr(provider, "keep_vision_fp16", False),
         "gpu": torch.cuda.get_device_name(0), "prompt": PROMPT,
         "expected_actions_supplied": False, "runs": []}
+    import subprocess
+    from importlib.metadata import version
+    metadata["repo_commit"] = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
+    metadata["packages"] = {name: version(name) for name in ("torch", "transformers", "accelerate")}
     old_processor = provider._processor
     old_pixels, old_limit = provider.max_pixels, provider.max_new_tokens
     try:
         provider.max_new_tokens = 220
         provider._load()
         old_processor = old_processor or provider._processor
+        metadata["model_class"] = type(provider._model).__name__
         metadata["vision_linear_modules"] = [{"name": name, "class": type(module).__name__,
             "weight_dtype": str(module.weight.dtype)} for name,module in provider._model.named_modules()
             if "visual" in name and hasattr(module, "weight") and type(module).__name__ in {"Linear", "Linear4bit"}]
