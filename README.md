@@ -35,6 +35,8 @@ Amber cards identify unsupported or mistimed evidence; the final comparison stat
 whether the whole flow was verified. This single-video demo is not an accuracy benchmark.
 See [the raw predictions and review](docs/colab-local-vlm.md), or the separate
 [recorded Codex/MCP flow demo](docs/video-demo.md).
+The [controlled input diagnostics](docs/vlm-input-diagnostics.md) compare identical frames,
+3B/7B, preprocessing, vision precision, and native video input. The full flow remains unverified.
 
 The web app now accepts **a single video** and lets you inspect each recognized
 action's supporting frames, source timestamps, reasons, and uncertainties. Video
@@ -233,22 +235,25 @@ Frontend: `NEXT_PUBLIC_API_BASE` (default `http://localhost:8000`).
 
 ## README animation
 
-The GIF is stored at [`docs/assets/demo.gif`](docs/assets/demo.gif). Embed it from the
+The main GIF is stored at [`docs/assets/qwen-3b-framewise.gif`](docs/assets/qwen-3b-framewise.gif). Embed it from the
 repository root with:
 
 ```markdown
-![StepCheck AI video recognition demo](docs/assets/demo.gif)
+![StepCheck AI actual local VLM flow and evidence review](docs/assets/qwen-3b-framewise.gif)
 ```
 
-To regenerate the GIF from the included video and saved Codex observations (requires FFmpeg):
+To regenerate it from the real video, saved model predictions, and independent review (requires FFmpeg):
 
 ```bash
 python -m pip install Pillow
-python scripts/generate_readme_gif.py
+python scripts/generate_detected_flow_gif.py --report docs/assets/video-demo/qwen-3b-framewise-flow.json --audit docs/assets/video-demo/qwen-3b-framewise-review.json --output docs/assets/qwen-3b-framewise.gif
 ```
 
-Rendering replays the saved review; it does not run inference. To perform a new visual
-review, use the [MCP frame tools](docs/video-demo.md). A vision-capable host supplies
+Rendering replays saved predictions and review; it does not run inference.
+Run a new model analysis with the [Colab notebook](notebooks/stepcheck_local_vlm.ipynb).
+The separate Codex/MCP procedure GIF is [`docs/assets/demo.gif`](docs/assets/demo.gif),
+generated with `python scripts/generate_readme_gif.py`.
+To perform a new visual review, use the [MCP frame tools](docs/video-demo.md). A vision-capable host supplies
 the recognition, so the MCP server itself needs no model API key.
 
 Video: CDC's [Clean hands short](https://commons.wikimedia.org/wiki/File:Clean_hands_short.webm),

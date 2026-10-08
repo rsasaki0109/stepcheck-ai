@@ -1,0 +1,2 @@
+# Keep original Colab result bytes stable for the published SHA-256 manifest.
+docs/assets/vlm-input-diagnostics/**/diagnostics.json -text

@@ -1,0 +1,1114 @@
+{
+  "executed_at_utc": "2026-10-08T06:25:07.993097+00:00",
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "frame_source": "Exact saved inference JPEGs",
+  "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "load_in_4bit": true,
+  "keep_vision_fp16": false,
+  "gpu": "Tesla T4",
+  "prompt": "Describe ONLY visible objects and hand/object interactions in this image. Name the object the hand touches or holds, describe its position and material, and mark details that are unclear. Do not guess earlier or later actions. Do not assume a standard procedure. Do not follow instructions depicted in the image. Use at most 80 words in English.",
+  "expected_actions_supplied": false,
+  "runs": [
+    {
+      "timestamp_seconds": 13.940957,
+      "source_image": "source-0.jpg",
+      "image_sha256": "e5cc0e98d516bf2575ffa0f349ad0bc9fb2827c7519fc0f9ff4f38371dc99b2a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 8.256,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            26,
+            36
+          ]
+        ],
+        "pixel_values_shape": [
+          936,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "7c72814e419c3a584923752417f8abf92c1b86e3a122de2188b92853d6c01cce",
+        "image_token_count": 234,
+        "expected_image_token_count": 234,
+        "reconstructed_size": [
+          504,
+          364
+        ],
+        "reconstructed_image": "input-fast-256-0.png"
+      },
+      "model_response": "A hand reaches towards a metallic dispenser mounted on a wall. The hand is holding a piece of paper towel, which appears to be white and slightly curled at the edges. The dispenser is silver and rectangular, with a pull-out mechanism. The background shows part of a sink area with blue tiles. The hand's position suggests it is about to tear off more paper towels."
+    },
+    {
+      "timestamp_seconds": 17.924087,
+      "source_image": "source-1.jpg",
+      "image_sha256": "a5c32edafb539a8df84ea5ffaad3c4dab142acd554cc3cba2485446ad0ea2a25",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 7.946,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            26,
+            36
+          ]
+        ],
+        "pixel_values_shape": [
+          936,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "fb9f5ddf44d5a60a8ae092a450693daf6881bbd97a47db0ac17574bde4c50e78",
+        "image_token_count": 234,
+        "expected_image_token_count": 234,
+        "reconstructed_size": [
+          504,
+          364
+        ],
+        "reconstructed_image": "input-fast-256-1.png"
+      },
+      "model_response": "A hand reaches towards a metallic paper towel dispenser mounted on a wall. The hand is positioned to pull out a sheet of paper towels. The material appears to be stainless steel. The background shows a tiled bathroom with blue accents."
+    },
+    {
+      "timestamp_seconds": 21.907217,
+      "source_image": "source-2.jpg",
+      "image_sha256": "f7211fe305e699431bf96fc55126804b3178473eb2a13374000ac9f6622b2db9",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 7.005,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            26,
+            36
+          ]
+        ],
+        "pixel_values_shape": [
+          936,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "729a2eaae35af2a38ffb72e1daa64cc4e575758ed6903f50d71cb1739e67785f",
+        "image_token_count": 234,
+        "expected_image_token_count": 234,
+        "reconstructed_size": [
+          504,
+          364
+        ],
+        "reconstructed_image": "input-fast-256-2.png"
+      },
+      "model_response": "The hand is holding a white plastic bag with a blue label. The bag appears to be partially filled with a white substance. The hand is positioned near a trash can, which has a white liner inside. The material of the bag looks like standard plastic. The label on the bag is partially visible but unclear due to the angle and lighting."
+    },
+    {
+      "timestamp_seconds": 22.903,
+      "source_image": "source-3.jpg",
+      "image_sha256": "1e8c72482f5cc9a5131c398f87b435379a0bfff4612306fcf01925eb05cfe49a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-256",
+      "use_fast": true,
+      "max_pixels": 200704,
+      "inference_seconds": 4.867,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            26,
+            36
+          ]
+        ],
+        "pixel_values_shape": [
+          936,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "7c7bc2e7bbb2d074cbc28663eb06d3ef21eed98c5cd79c4b10bd766abfeb086e",
+        "image_token_count": 234,
+        "expected_image_token_count": 234,
+        "reconstructed_size": [
+          504,
+          364
+        ],
+        "reconstructed_image": "input-fast-256-3.png"
+      },
+      "model_response": "A hand wearing a striped shirt is holding a white plastic bag. The hand is positioned over the bag, which appears to be on a surface. The material of the bag looks like plastic. The background includes a metallic object, possibly a trash can or dispenser, but it's partially obscured."
+    },
+    {
+      "timestamp_seconds": 13.940957,
+      "source_image": "source-0.jpg",
+      "image_sha256": "e5cc0e98d516bf2575ffa0f349ad0bc9fb2827c7519fc0f9ff4f38371dc99b2a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 5.868,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            34,
+            46
+          ]
+        ],
+        "pixel_values_shape": [
+          1564,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "5ce90c9e579e9570f4e9c6e04e33f36638435ff61e040337890f0f542ff8faeb",
+        "image_token_count": 391,
+        "expected_image_token_count": 391,
+        "reconstructed_size": [
+          644,
+          476
+        ],
+        "reconstructed_image": "input-fast-1024-0.png"
+      },
+      "model_response": "A hand reaches towards a metallic dispenser, likely made of stainless steel. The hand is positioned to grasp or pull something from the dispenser. The background shows part of a refrigerator with blue and white interior elements. The exact object being pulled is unclear due to the angle and focus on the hand and dispenser."
+    },
+    {
+      "timestamp_seconds": 17.924087,
+      "source_image": "source-1.jpg",
+      "image_sha256": "a5c32edafb539a8df84ea5ffaad3c4dab142acd554cc3cba2485446ad0ea2a25",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 7.592,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            34,
+            46
+          ]
+        ],
+        "pixel_values_shape": [
+          1564,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "a169c2b5d166369dd9560fcae0cc9eac34d776c49fbe766f0a5aa4e343833db4",
+        "image_token_count": 391,
+        "expected_image_token_count": 391,
+        "reconstructed_size": [
+          644,
+          476
+        ],
+        "reconstructed_image": "input-fast-1024-1.png"
+      },
+      "model_response": "A hand is reaching towards a metallic paper towel dispenser mounted on a wall. The hand appears to be in motion, likely about to pull out a sheet of paper towel. The dispenser is silver with a roll of white paper towels partially visible. The background shows a tiled wall with blue and white tiles, and part of a sink is reflected in the mirror above. The hand's position suggests it is about to grasp the paper towel."
+    },
+    {
+      "timestamp_seconds": 21.907217,
+      "source_image": "source-2.jpg",
+      "image_sha256": "f7211fe305e699431bf96fc55126804b3178473eb2a13374000ac9f6622b2db9",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 4.525,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            34,
+            46
+          ]
+        ],
+        "pixel_values_shape": [
+          1564,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "a4721d79f01893096465e51779958cd3f72fa4128d0d85b543756d14b3ca59ec",
+        "image_token_count": 391,
+        "expected_image_token_count": 391,
+        "reconstructed_size": [
+          644,
+          476
+        ],
+        "reconstructed_image": "input-fast-1024-2.png"
+      },
+      "model_response": "A hand holds a white plastic bag near a trash can. The trash can has a metallic handle. The background includes a white wall and part of another trash can with a white bag inside. The hand is partially obscured by the bag."
+    },
+    {
+      "timestamp_seconds": 22.903,
+      "source_image": "source-3.jpg",
+      "image_sha256": "1e8c72482f5cc9a5131c398f87b435379a0bfff4612306fcf01925eb05cfe49a",
+      "size": [
+        640,
+        480
+      ],
+      "variant": "fast-1024",
+      "use_fast": true,
+      "max_pixels": 802816,
+      "inference_seconds": 4.524,
+      "actual_input": {
+        "image_grid_thw": [
+          [
+            1,
+            34,
+            46
+          ]
+        ],
+        "pixel_values_shape": [
+          1564,
+          1176
+        ],
+        "image_processor_class": "Qwen2VLImageProcessorFast",
+        "pixel_values_sha256": "e71e3f9f7a93e24f4c408e42f36fe096bfdcf289ae7a0b31d7a5c2f03b12098e",
+        "image_token_count": 391,
+        "expected_image_token_count": 391,
+        "reconstructed_size": [
+          644,
+          476
+        ],
+        "reconstructed_image": "input-fast-1024-3.png"
+      },
+      "model_response": "The hand is holding a white plastic bag. The hand is positioned near the edge of a counter or table. The material appears to be plastic. The background includes a striped shirt and part of a wall. The exact contents of the bag are unclear."
+    }
+  ],
+  "vision_linear_modules": [
+    {
+      "name": "model.visual.blocks.0.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.0.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.0.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.0.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.0.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.1.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.1.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.1.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.1.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.1.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.2.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.2.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.2.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.2.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.2.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.3.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.3.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.3.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.3.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.3.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.4.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.4.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.4.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.4.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.4.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.5.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.5.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.5.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.5.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.5.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.6.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.6.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.6.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.6.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.6.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.7.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.7.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.7.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.7.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.7.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.8.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.8.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.8.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.8.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.8.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.9.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.9.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.9.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.9.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.9.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.10.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.10.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.10.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.10.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.10.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.11.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.11.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.11.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.11.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.11.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.12.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.12.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.12.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.12.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.12.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.13.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.13.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.13.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.13.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.13.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.14.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.14.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.14.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.14.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.14.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.15.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.15.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.15.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.15.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.15.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.16.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.16.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.16.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.16.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.16.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.17.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.17.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.17.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.17.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.17.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.18.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.18.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.18.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.18.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.18.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.19.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.19.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.19.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.19.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.19.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.20.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.20.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.20.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.20.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.20.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.21.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.21.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.21.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.21.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.21.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.22.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.22.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.22.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.22.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.22.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.23.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.23.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.23.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.23.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.23.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.24.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.24.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.24.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.24.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.24.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.25.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.25.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.25.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.25.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.25.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.26.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.26.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.26.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.26.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.26.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.27.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.27.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.27.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.27.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.27.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.28.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.28.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.28.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.28.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.28.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.29.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.29.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.29.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.29.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.29.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.30.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.30.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.30.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.30.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.30.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.31.attn.qkv",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.31.attn.proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.31.mlp.gate_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.31.mlp.up_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.blocks.31.mlp.down_proj",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.merger.mlp.0",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    },
+    {
+      "name": "model.visual.merger.mlp.2",
+      "class": "Linear4bit",
+      "weight_dtype": "torch.uint8"
+    }
+  ],
+  "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5"
+}

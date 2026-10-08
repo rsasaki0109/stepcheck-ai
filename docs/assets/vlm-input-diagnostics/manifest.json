@@ -1,0 +1,25 @@
+{
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "downloaded_archive_sha256": "621c3828f8af7c24a5565fd583cc7882f82cd722762dc2015186c5c569d0d795",
+  "response_count": 37,
+  "raw_results": [
+    {
+      "path": "stepcheck-input-diagnostics-3b/diagnostics.json",
+      "sha256": "bf6a5caa956ad992abe5ea3c80ebbf6ef32bc129b43b65b36f951cfa25d7ec8a"
+    },
+    {
+      "path": "stepcheck-input-diagnostics-7b-all4bit/diagnostics.json",
+      "sha256": "ba181690408dff8aa3565b2888119a66cbc8269c92625bdfc19a4b7616faccba"
+    },
+    {
+      "path": "stepcheck-input-diagnostics-7b-vision-fp16/diagnostics.json",
+      "sha256": "83e8763af33fe92db3d66efd2b62b480f707c092a53351c4b6d5a56a3efcc702"
+    },
+    {
+      "path": "stepcheck-native-video-7b/diagnostics.json",
+      "sha256": "cc8f2dd483ecf8846a7e4de322d69a5c35e6b07b65775d403fcafb031ce35dd0"
+    }
+  ],
+  "independent_review": "docs/vlm-input-diagnostics.md; not provided to the model",
+  "full_flow_status": "unverified"
+}

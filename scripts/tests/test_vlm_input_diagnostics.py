@@ -40,6 +40,31 @@ class VisionInputTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 inspect_input(inputs,processor,destination,99)
 
+    @unittest.skipUnless(importlib.util.find_spec("torch") and importlib.util.find_spec("numpy"),
+                         "Install the local VLM extra to check tensor reconstruction.")
+    def test_video_temporal_pairs_preserve_frame_order(self):
+        import torch
+        import numpy as np
+        from PIL import Image
+
+        colors = [(255,0,0),(0,255,0),(0,0,255),(255,255,0)]
+        patches = np.zeros((2,4,3,2,14,14),dtype=np.float32)
+        for index,color in enumerate(colors):
+            for channel,value in enumerate(color):
+                patches[index//2,:,channel,index%2] = value
+        processor = SimpleNamespace(video_processor=SimpleNamespace(patch_size=14,
+            merge_size=2,temporal_patch_size=2,do_normalize=False,do_rescale=False))
+        inputs = {'video_grid_thw':torch.tensor([[2,2,2]]),
+                  'pixel_values_videos':torch.tensor(patches.reshape(8,-1)),
+                  'input_ids':torch.tensor([[77,77]])}
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory)/'video.png'
+            report = inspect_input(inputs,processor,destination,77,modality='video')
+            image = np.array(Image.open(destination))
+            for index,color in enumerate(colors):
+                self.assertEqual(tuple(image[0,index*224]),color)
+            self.assertEqual(report['reconstructed_frame_count'],4)
+
 
 if __name__ == '__main__':
     unittest.main()
