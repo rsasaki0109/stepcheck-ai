@@ -40,9 +40,9 @@ async def test_local_request_has_actual_images_and_no_procedure():
     provider = create_provider("qwen-local")
     provider._generate = Mock(return_value=response())
     result = await provider.discover_flow(frames(), 2)
-    images, prompt = provider._generate.call_args.args
+    images, prompt, labels = provider._generate.call_args.args
     assert images[0].data == b"first"
-    assert "frame_id 1 at 1.23457s" in prompt
+    assert "frame_id 1 at 1.23457s" in labels[1]
     assert "No expected procedure" in prompt
     assert result.actions[0].evidence_seconds == [0, 1.234567]
     assert provider.supports_flow
