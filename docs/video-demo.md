@@ -1,14 +1,89 @@
-# Video flow verification demo
+# Detect a flow from one video
 
-The README GIF plays a real video **in source chronology** through four stage panels.
-An expected procedure flow sits above the video. Observations become visible at their
-recorded confirmation times, and a sequence checker compares those times with the
-expected order. Future stage images stay hidden until their source time is reached.
+The README GIF shows **open-ended flow discovery**, using one real video without
+passing a predefined procedure to the detection tool. `detect_flow()` decodes
+timestamped frames and requests visual recognition from the connected MCP host.
+The returned action list is ordered by its supporting sample times; overlapping
+evidence makes a transition ambiguous rather than establishing a strict order.
 
-The GIF replays a recorded Codex review. It does not run inference during playback,
-and it is not a recording of the web UI.
+The GIF replays the saved recognition. Its four panels are equal time quarters,
+independent of action labels. Future panels and action labels stay hidden until
+their supporting source times are reached. Inference does not run during playback.
 
-## Expected flow and observations
+## Discovered actions
+
+Results: [detected-flow.json](assets/video-demo/detected-flow.json).
+
+| Recognized action | Supporting sample times |
+| --- | --- |
+| Dispense soap | 0–0.75 s |
+| Rub hands with lather | 1.5–10.5 s |
+| Rinse under running water | 12–12.75 s |
+| Pull a paper towel | 14.25–15 s |
+| Dry hands with the towel | 15.75–19.5 s |
+| Hold the door handle through the towel | 21.75 s |
+| Lower the towel into the bin | 22.5–22.903 s |
+
+Ranges summarize discrete supporting samples, **not action start/end estimates**.
+Door opening is not established, and the towel's exact release is obscured.
+Pre-soap wetting was not visible and was not added to the discovered flow.
+The source has scene cuts and a crossfade, so the result cannot prove uninterrupted
+execution or completeness. The JSON preserves these limitations.
+
+This run used actual MCP sampling requests: the file adapter exported the requested
+images, Codex inspected them in this session, and the adapter returned Codex's JSON
+over MCP. No canned model response was used. This session had also performed the
+earlier procedure comparison below; this is **not a blinded accuracy evaluation**.
+No expected procedure or earlier observations are included in the sampling request.
+
+## Run detection
+
+Install `scripts/requirements-demo.txt` and make `ffmpeg` and `ffprobe` available.
+Launch `scripts/video_mcp.py` as a stdio MCP server in a vision-capable host with
+[MCP sampling support](https://py.sdk.modelcontextprotocol.io/handlers/dependencies/).
+Call `detect_flow(sample_interval_seconds=0.75)`; no procedure argument is needed.
+The server requests images-based inference from the host and validates its JSON,
+including whether each evidence timestamp refers to a supplied sample.
+
+For another local video, set `STEPCHECK_DEMO_VIDEO` to its absolute file path.
+Set `STEPCHECK_DETECTED_FLOW` to the output JSON path; the default is
+`docs/assets/video-demo/detected-flow.json`. Detection replaces that output only
+after validation. At most 96 frames are sampled per request; increase the interval
+for long videos. It processes samples from the video, not continuous motion.
+
+If your host does not support sampling, use `inspect_video_for_flow()`,
+`read_frame(timestamp_seconds)` and `record_detected_flow(...)`: the host must
+actually inspect the images before recording observations. Recording alone performs
+no inference and trusts the host's attestation of reviewed timestamps.
+
+The included adapter supports a vision session that can inspect image files:
+
+```bash
+python scripts/run_flow_detection.py --bridge-dir .tmp-flow-new
+```
+
+It exports the **actual sampling request images** and waits for that session to
+write `response.json` in the fresh bridge directory. The response must contain
+`title`, `actions` (each with `label`, `reason`, `evidence_seconds`, `uncertainty`),
+and `limitations`. This adapter does not call a model by itself. An ordinary
+sampling-capable host can call the tool directly without the adapter.
+
+To reproduce the README GIF from the included source and recorded detection:
+
+```bash
+python scripts/generate_detected_flow_gif.py
+python -m unittest discover -s scripts/tests -v
+```
+
+The renderer reads the recognized actions from JSON; it does not define a correct
+action list, invent attention, or run a model. The web app still accepts images;
+this single-video workflow is currently exposed through MCP.
+
+## Separate demo: verify an expected flow
+
+The older [comparison GIF](assets/demo.gif) and tools below retain the independent
+expected-flow check. Discovery lists observed actions; verification asks whether
+those observations satisfy a separately written procedure.
 
 - Procedure: [handwashing.md](../examples/handwashing.md).
 - Expected flow: [handwashing-flow.json](../examples/handwashing-flow.json), defined
@@ -78,6 +153,9 @@ executable with the absolute path to `scripts/video_mcp.py`. It uses the
 
 | Tool | Purpose |
 | --- | --- |
+| `inspect_video_for_flow()` | Return metadata and instructions without reading a procedure. |
+| `detect_flow(sample_interval_seconds)` | Request host vision inference through MCP sampling and save the detected flow. |
+| `record_detected_flow(reviewer, detection, reviewed_seconds)` | Record a host's open-ended visual review when sampling is unavailable. |
 | `inspect_video()` | Return duration, dimensions, procedure, and review instructions. |
 | `read_frame(timestamp_seconds)` | Return an actual decoded frame as MCP image content. |
 | `record_review(reviewer, observations)` | Save the host's observations and supporting timestamps. |
@@ -86,7 +164,8 @@ executable with the absolute path to `scripts/video_mcp.py`. It uses the
 This session used a Python MCP client to retrieve image responses, the session's image
 viewer for Codex visual inspection, and `record_review` to save the resulting observations.
 It did not install the server into the user's host settings. The host supplies the vision
-reasoning; the MCP server does not call a model or generate verdicts.
+reasoning; the server has no model credentials. `detect_flow` requests host inference
+through sampling; `record_review` and `record_detected_flow` only save supplied reviews.
 
 The original action review inspected 0.3, 1.5, 3.5, 5.5, 9.5, 12.5, 14.5, 18.5,
 21.5, 22.0, 22.4, and 22.8 seconds. Additional frames used for box annotations are

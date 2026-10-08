@@ -1,0 +1,187 @@
+{
+  "title": "Observed handwashing flow",
+  "actions": [
+    {
+      "label": "Dispense soap",
+      "reason": "A hand is held under the wall dispenser; white soap is visible on the palm in the next sample.",
+      "evidence_seconds": [
+        0.0,
+        0.75
+      ],
+      "uncertainty": "The dispenser actuation is partly hidden by the hand.",
+      "first_seen_seconds": 0.0,
+      "last_seen_seconds": 0.75,
+      "id": 1
+    },
+    {
+      "label": "Rub hands with lather",
+      "reason": "Foamy hands rub together over the sink, including palms, backs and fingers.",
+      "evidence_seconds": [
+        1.5,
+        2.25,
+        3.0,
+        3.75,
+        4.5,
+        5.25,
+        6.0,
+        6.75,
+        7.5,
+        8.25,
+        9.0,
+        9.75,
+        10.5
+      ],
+      "uncertainty": "These are sampled views of several rubbing motions, grouped as one activity.",
+      "first_seen_seconds": 1.5,
+      "last_seen_seconds": 10.5,
+      "id": 2
+    },
+    {
+      "label": "Rinse under running water",
+      "reason": "Hands are held and rubbed under the visible faucet stream; lather diminishes.",
+      "evidence_seconds": [
+        12.0,
+        12.75
+      ],
+      "uncertainty": "The 11.25-second crossfade does not establish the exact transition time.",
+      "first_seen_seconds": 12.0,
+      "last_seen_seconds": 12.75,
+      "id": 3
+    },
+    {
+      "label": "Pull a paper towel",
+      "reason": "A hand pulls a white sheet from the wall dispenser and then holds the separated towel.",
+      "evidence_seconds": [
+        14.25,
+        15.0
+      ],
+      "uncertainty": "",
+      "first_seen_seconds": 14.25,
+      "last_seen_seconds": 15.0,
+      "id": 4
+    },
+    {
+      "label": "Dry hands with the towel",
+      "reason": "Both hands rub and fold the white towel between them beside the dispenser.",
+      "evidence_seconds": [
+        15.75,
+        16.5,
+        17.25,
+        18.0,
+        18.75,
+        19.5
+      ],
+      "uncertainty": "",
+      "first_seen_seconds": 15.75,
+      "last_seen_seconds": 19.5,
+      "id": 5
+    },
+    {
+      "label": "Hold door handle with towel",
+      "reason": "A hand grips a chrome door lever through a white towel beside a lined waste bin.",
+      "evidence_seconds": [
+        21.75
+      ],
+      "uncertainty": "Actual door opening is not established by the sampled frames.",
+      "first_seen_seconds": 21.75,
+      "last_seen_seconds": 21.75,
+      "id": 6
+    },
+    {
+      "label": "Lower towel into the bin",
+      "reason": "The hand lowers the used white towel into the opening of the lined waste bin.",
+      "evidence_seconds": [
+        22.5,
+        22.903
+      ],
+      "uncertainty": "The hand and rim obscure the exact moment the towel is released.",
+      "first_seen_seconds": 22.5,
+      "last_seen_seconds": 22.903,
+      "id": 7
+    }
+  ],
+  "transitions": [
+    {
+      "from": 1,
+      "to": 2,
+      "status": "sampled_before",
+      "reason": "Order of supporting frames; not proof of continuous action boundaries."
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "status": "sampled_before",
+      "reason": "Order of supporting frames; not proof of continuous action boundaries."
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "status": "sampled_before",
+      "reason": "Order of supporting frames; not proof of continuous action boundaries."
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "status": "sampled_before",
+      "reason": "Order of supporting frames; not proof of continuous action boundaries."
+    },
+    {
+      "from": 5,
+      "to": 6,
+      "status": "sampled_before",
+      "reason": "Order of supporting frames; not proof of continuous action boundaries."
+    },
+    {
+      "from": 6,
+      "to": 7,
+      "status": "sampled_before",
+      "reason": "Order of supporting frames; not proof of continuous action boundaries."
+    }
+  ],
+  "sampled_seconds": [
+    0.0,
+    0.75,
+    1.5,
+    2.25,
+    3.0,
+    3.75,
+    4.5,
+    5.25,
+    6.0,
+    6.75,
+    7.5,
+    8.25,
+    9.0,
+    9.75,
+    10.5,
+    11.25,
+    12.0,
+    12.75,
+    13.5,
+    14.25,
+    15.0,
+    15.75,
+    16.5,
+    17.25,
+    18.0,
+    18.75,
+    19.5,
+    20.25,
+    21.0,
+    21.75,
+    22.5,
+    22.903
+  ],
+  "limitations": [
+    "Only timestamped frames sampled every 0.75 seconds and a near-end frame were reviewed; short actions between samples can be missed.",
+    "The source contains scene cuts and a crossfade; observations cannot establish uninterrupted execution.",
+    "No expected procedure was supplied to the sampling request. Pre-soap wetting is not visible and was not added.",
+    "First/last supporting sample times are not action start/end boundaries."
+  ],
+  "time_note": "First/last seen are supporting sample times, not action start/end boundaries.",
+  "reviewer": "Codex visual review in this session via MCP sampling adapter",
+  "method": "MCP sampling: host vision review of timestamped source-frame contact sheets",
+  "expected_procedure_supplied": false,
+  "source_sha256": "b6afe16e598ec730d92185308220298f48a0b0865f7bacb39f5d34eecd61bbf3",
+  "duration_seconds": 23.003
+}

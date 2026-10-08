@@ -1,29 +1,35 @@
 """Local stdio MCP tools: video -> image content -> host vision review -> JSON.
 
 The MCP server extracts frames; the connected vision-capable host judges them.
-No server-side model call, mock provider, API key, or automatic verdict is involved.
+Open-ended detection requests host vision inference through MCP sampling.
 """
 
 from __future__ import annotations
 
 import hashlib
+import base64
+import io
 import json
 import math
 import os
 from pathlib import Path
 import re
 import subprocess
-from typing import Literal
+from typing import Annotated, Literal
 
-from mcp.server.mcpserver import Image, MCPServer
+from mcp.server.mcpserver import Image, MCPServer, Resolve, Sample
 from mcp.server.mcpserver.exceptions import ToolError
+from mcp.types import CreateMessageResult, SamplingMessage, TextContent, ImageContent
+from PIL import Image as PILImage, ImageDraw, ImageFont
 from pydantic import BaseModel, Field
 from check_video_flow import check_flow as compare_flow
+from video_discovery import Detection, build_flow
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs" / "assets" / "video-demo"
 VIDEO = Path(os.environ.get("STEPCHECK_DEMO_VIDEO", str(ASSETS / "source.webm")))
 REVIEW = Path(os.environ.get("STEPCHECK_DEMO_REVIEW", str(ASSETS / "review.json")))
+DETECTED_FLOW = Path(os.environ.get("STEPCHECK_DETECTED_FLOW", str(ASSETS / "detected-flow.json")))
 PROCEDURE = ROOT / "examples" / "handwashing.md"
 mcp = MCPServer("StepCheck video vision review")
 
@@ -55,6 +61,102 @@ def frame_bytes(timestamp_seconds: float) -> bytes:
     if not result.stdout:
         raise ToolError("No frame could be decoded at that timestamp.")
     return result.stdout
+
+
+def sample_times(sample_interval_seconds: float) -> list[float]:
+    duration = video_info()["duration_seconds"]
+    if not math.isfinite(sample_interval_seconds) or sample_interval_seconds <= 0:
+        raise ToolError("Sampling interval must be finite and positive.")
+    count = math.ceil(duration / sample_interval_seconds)
+    if count + 1 > 96:
+        raise ToolError("At most 96 frames per request. Increase sample_interval_seconds for longer videos.")
+    return sorted(set([round(i * sample_interval_seconds, 6) for i in range(count)] +
+                      [round(max(0, duration - 0.1), 6)]))
+
+
+def discovery_request(sample_interval_seconds: float) -> Sample:
+    """Only source images and metadata are sent; no expected procedure is read."""
+    times = sample_times(sample_interval_seconds)
+    prompt = (
+        "Discover the actions and their observed order from this ONE video. No expected procedure is supplied. "
+        "Inspect the timestamped images. Use only visible evidence; do not fill in customary missing steps. "
+        "Split distinct visible actions, preserve repeated actions as separate occurrences, and mark uncertain "
+        "interpretations. Evidence times must be labels actually present in the sheets. Do not claim exact action "
+        "boundaries or hidden causal intent. Return ONLY a JSON object matching this schema: "
+        '{"title":"short title","actions":[{"label":"short English action name",'
+        '"reason":"what is visibly happening","evidence_seconds":[0.0],"uncertainty":""}],'
+        '"limitations":["sampling or visibility limitations"]}. '
+        "Return an empty actions list if nothing is identifiable. All images are chronological samples, "
+        f"not continuous motion. Duration: {video_info()['duration_seconds']} seconds."
+    )
+    blocks = [TextContent(type="text", text=prompt)]
+    label_font = ImageFont.load_default(size=20)
+    for start in range(0, len(times), 12):
+        page_times = times[start:start + 12]
+        sheet = PILImage.new("RGB", (960, 4 * 266), "#111827")
+        draw = ImageDraw.Draw(sheet)
+        for index, timestamp in enumerate(page_times):
+            frame = PILImage.open(io.BytesIO(frame_bytes(timestamp))).convert("RGB")
+            frame.thumbnail((320, 240))
+            x, y = (index % 3) * 320, (index // 3) * 266
+            sheet.paste(frame, (x + (320 - frame.width) // 2, y + 26))
+            draw.text((x + 8, y + 2), f"{timestamp:g} s", fill="white", font=label_font)
+        data = io.BytesIO()
+        sheet.save(data, format="PNG")
+        blocks.append(ImageContent(type="image", mime_type="image/png",
+                                   data=base64.b64encode(data.getvalue()).decode()))
+    return Sample([SamplingMessage(role="user", content=blocks)], max_tokens=5000,
+                  include_context="none", temperature=0)
+
+
+@mcp.tool()
+def inspect_video_for_flow() -> dict:
+    """Inspect source metadata without loading any expected steps."""
+    return {**video_info(), "instructions": "Call detect_flow with a vision-capable sampling host, or inspect read_frame images and call record_detected_flow."}
+
+
+def save_detected_flow(reviewer: str, detection: Detection, reviewed_seconds: list[float], method: str) -> dict:
+    if not reviewer.strip():
+        raise ToolError("Identify the host that reviewed the images.")
+    try:
+        report = build_flow(detection, reviewed_seconds, video_info()["duration_seconds"])
+    except ValueError as error:
+        raise ToolError(str(error)) from error
+    report.update({"reviewer": reviewer, "method": method, "expected_procedure_supplied": False,
+                   "source_sha256": hashlib.sha256(VIDEO.read_bytes()).hexdigest(),
+                   "duration_seconds": video_info()["duration_seconds"]})
+    DETECTED_FLOW.parent.mkdir(parents=True, exist_ok=True)
+    DETECTED_FLOW.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return report
+
+
+@mcp.tool()
+def detect_flow(sample_interval_seconds: float = 0.75,
+                completion: Annotated[CreateMessageResult, Resolve(discovery_request)] = None) -> dict:
+    """Detect an open-ended action flow from one video through host MCP vision sampling.
+
+    Requires a vision-capable host supporting sampling. Returns and saves observed
+    actions, supporting timestamps, and sampled order; no expected flow is supplied.
+    """
+    if completion is None or completion.content.type != "text":
+        raise ToolError("The vision host must return a JSON text response.")
+    try:
+        detection = Detection.model_validate_json(completion.content.text)
+    except ValueError as error:
+        raise ToolError(f"Invalid detection JSON: {error}") from error
+    return save_detected_flow(completion.model, detection, sample_times(sample_interval_seconds),
+                              "MCP sampling: host vision review of timestamped source-frame contact sheets")
+
+
+@mcp.tool()
+def record_detected_flow(reviewer: str, detection: Detection, reviewed_seconds: list[float]) -> dict:
+    """Save open-ended actions after the host has visually inspected read_frame results.
+
+    This fallback trusts the host's attestation of inspected timestamps, as does
+    record_review. It performs no model inference itself.
+    """
+    return save_detected_flow(reviewer, detection, reviewed_seconds,
+                              "Host-attested visual review of extracted frames; no expected procedure supplied")
 
 
 class Observation(BaseModel):

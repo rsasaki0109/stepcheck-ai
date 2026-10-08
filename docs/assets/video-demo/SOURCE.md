@@ -7,7 +7,12 @@
 - Status: public domain, as identified on the source page (U.S. federal government work).
 - Downloaded: 2026-10-08.
 
-`source.webm` is the original download. `../demo.gif` is a silent, resized replay of
+`source.webm` is the original download. `../detected-flow.gif` is a silent, resized
+replay of four equal time quarters with the open-ended action observations from
+`detected-flow.json`. Recognition was performed by Codex through an MCP sampling
+adapter, using sampled source frames. The GIF replays that result.
+
+`../demo.gif` is the earlier silent, resized replay of
 four stages in a 2×2 layout, played in source chronology, with an expected procedure
 flow and timestamp-based order checks. Boxes on reviewed frames are Codex annotations
 from `regions.json`. No heatmap or internal model attention values are displayed.

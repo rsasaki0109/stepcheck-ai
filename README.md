@@ -8,9 +8,9 @@ Markdown procedure + work images → vision-language model → per-step verdicts
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
-![Chronological handwashing video in four panels with an expected procedure flow and timestamp-based order checks](docs/assets/demo.gif)
+![One handwashing video in four chronological panels with the action flow detected from visual evidence](docs/assets/detected-flow.gif)
 
-<sub>Video plays in source order. The expected flow and observed timestamps are compared; unseen steps remain unknown. Boxes mark Codex annotations on reviewed frames.</sub>
+<sub>One video → observed actions → flow. Labels appear with their supporting frames. Recorded Codex recognition through MCP; no attention heatmap.</sub>
 
 </div>
 
@@ -20,15 +20,16 @@ steps and work images to a multimodal model (configured as `gpt-4o` by default),
 judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
 score and a human-readable reason grounded in the images.
 
-The GIF above plays **real video in source order**, with four stage panels and an
-independently defined [expected flow](examples/handwashing-flow.json). The local MCP
-tools expose frames for Codex visual review; a sequence checker compares the saved
-confirmation timestamps with that flow. Future stages stay hidden until their turn.
-Observed actions are in order, but the full flow is **unknown** because pre-soap
-wetting is not visible. The [computed order report](docs/assets/video-demo/order-review.json)
-contains the transition checks. Boxes are visual annotations on reviewed frames;
-no heatmap or internal attention values are displayed. This is a replay of recorded
-analysis. See [the video demo guide](docs/video-demo.md).
+The GIF above demonstrates **flow discovery from one real video**. The MCP
+`detect_flow()` tool sends timestamped source images to the connected vision host
+without supplying an expected procedure. Codex recognized seven actions, including
+pulling a paper towel and holding the door handle through that towel. The
+[detected flow](docs/assets/video-demo/detected-flow.json) contains the visual reasons,
+supporting timestamps, uncertainties, and computed order between observations.
+Four panels play the video's time quarters in source order; action labels appear
+only after supporting evidence is reached. This is a replay of recorded recognition,
+with no heatmap. See [the video demo guide](docs/video-demo.md) for running detection
+and, separately, comparing observations against an expected flow.
 
 The web app currently accepts images. Its `mock` provider is for offline development
 and tests; `openai` performs image analysis.
