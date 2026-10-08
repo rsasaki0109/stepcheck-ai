@@ -8,9 +8,9 @@ Markdown procedure + work images → vision-language model → per-step verdicts
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](docs/architecture.md) · [Build a provider](docs/providers.md)
 
-![Real handwashing video with Codex vision observations, evidence timestamps, and an updating procedure checklist](docs/assets/demo.gif)
+![Four handwashing video excerpts in a 2-by-2 grid with heatmap-style overlays on visually reviewed evidence regions](docs/assets/demo.gif)
 
-<sub>Real video + Codex visual frame review via local MCP tools. The GIF replays recorded observations and their evidence timestamps.</sub>
+<sub>Four real video excerpts with Codex-annotated evidence regions. Warm overlays highlight reviewed areas; they are not internal model attention maps.</sub>
 
 </div>
 
@@ -20,9 +20,11 @@ steps and work images to a multimodal model (configured as `gpt-4o` by default),
 judges each step as ✅ completed, ❌ not done, or ⚠️ undetermined — with a confidence
 score and a human-readable reason grounded in the images.
 
-The GIF above shows **real footage and actual Codex visual observations**, rather than
-mock verdicts. The local MCP tools extract frames for a vision-capable host to review;
-the GIF replays the saved results alongside the video. It is a recorded analysis, not
+The GIF above shows **four real video excerpts with actual Codex visual observations**.
+The local MCP tools extract frames for a vision-capable host to review. The GIF replays
+four stages in parallel with heatmap-style overlays of visually annotated evidence
+regions and source timestamps. The overlays are illustrative evidence cues, not model
+attention weights or computed saliency. It is a recorded analysis, not
 live inference or a recording of the web UI. See [the video demo guide](docs/video-demo.md).
 
 The web app currently accepts images. Its `mock` provider is for offline development
@@ -195,7 +197,8 @@ the recognition, so the MCP server itself needs no model API key.
 
 Video: CDC's [Clean hands short](https://commons.wikimedia.org/wiki/File:Clean_hands_short.webm),
 identified as public domain on its source page. See [source attribution](docs/assets/video-demo/SOURCE.md)
-and the [timestamped observations](docs/assets/video-demo/review.json).
+the [timestamped observations](docs/assets/video-demo/review.json), and the
+[evidence region annotations](docs/assets/video-demo/regions.json).
 
 ---
 

@@ -1,7 +1,8 @@
 # Video recognition demo
 
-The README GIF pairs a real video with observations made by Codex after inspecting
-video frames. It is not the mock provider and the footage is not generated.
+The README GIF shows four excerpts from a real video in a **2×2 grid**, with
+observations made by Codex after inspecting video frames. Each excerpt has a warm
+heatmap-style overlay on the visually identified evidence region.
 It replays recorded analysis; GIF playback does not call a model.
 
 ## What was reviewed
@@ -11,6 +12,8 @@ It replays recorded analysis; GIF playback does not call a model.
 - Results: [review.json](assets/video-demo/review.json), including a source SHA-256,
   the reviewer, reasons, confidence estimates, and evidence timestamps.
 - Attribution: [SOURCE.md](assets/video-demo/SOURCE.md).
+- Regions: [regions.json](assets/video-demo/regions.json), with excerpt boundaries,
+  normalized evidence boxes, labels, and localization keyframes.
 
 The local MCP server was called with a Python MCP client. Its image-content responses
 were saved locally and visually inspected by Codex using the session's image-view tool.
@@ -21,6 +24,23 @@ Reviewed source times: **0.3, 1.5, 3.5, 5.5, 9.5, 12.5, 14.5, 18.5, 21.5, 22.0, 
 The frames show soap, lathering, rinsing, paper-towel drying, and disposal.
 Pre-soap wetting is not shown, so that step remains **unknown**.
 Confidence values are subjective model estimates, not calibrated probabilities.
+
+## Evidence overlays
+
+The four panels show **soap / lather, rinse, dry, and discard**. They start together
+at their own source timestamps and play at the source speed; shorter excerpts hold
+on an exact end frame. Each panel displays its source-video timestamp.
+
+Codex visually localized evidence in additional source frames at 0.3, 0.8, 0.9, 1.5,
+3.5, 5.3, 11.7, 12.5, 13.0, 14.5, 16.5, 18.5, 19.2, 21.5, 22.4, and 22.8 seconds.
+The stored boxes use `[left, top, right, bottom]` coordinates in `[0, 1]` relative
+to the uncropped video. Between these keyframes, the renderer interpolates boxes
+for display. The transition after soap dispensing has no highlighted region.
+
+Corner marks show the annotated region; blurred violet, orange, and yellow layers
+make it easy to see. Glow color and intensity are a visual treatment, **not internal
+model attention weights, an object-tracker output, or computed pixel saliency**.
+No internal attention tensors are available from the recorded host review.
 
 ## Review through MCP
 
@@ -63,9 +83,9 @@ for another task. `record_review` writes the configured review file, replacing a
 python scripts/generate_readme_gif.py
 ```
 
-The renderer checks the video hash against the review and replays the footage at five
-frames per second. Results appear at the last supporting evidence timestamp; steps
-awaiting evidence remain pending. The final checklist is held for three seconds.
+The renderer checks the video hash against the review and region annotations,
+validates the boxes and excerpt boundaries, and replays the four excerpts at five
+frames per second. The animation includes a short hold after all four excerpts finish.
 The generator renders the bundled example. For another video, adapt its asset paths
 alongside the MCP configuration.
 
@@ -80,3 +100,5 @@ python -m unittest discover -s scripts/tests -v
 
 The integration checks exercise the actual MCP image response, reject invalid evidence
 timestamps and duplicate steps, and verify source hashing and saved observations.
+Overlay checks reject invalid region coordinates and video mismatches, and confirm
+that a transition without a visible region receives no highlight.
