@@ -36,6 +36,15 @@ def test_malformed_output_never_becomes_a_flow():
         parse_local_detection("I cannot identify the video.", frames())
 
 
+def test_empty_model_limitations_preserves_predictions_and_adds_system_scope():
+    raw = json.loads(response([1]))
+    raw["limitations"] = []
+    result = parse_local_detection(json.dumps(raw), frames())
+    assert result.actions[0].evidence_seconds == [1.234567]
+    assert result.actions[0].label == raw["actions"][0]["label"]
+    assert result.limitations[0].startswith("System:")
+
+
 async def test_local_request_has_actual_images_and_no_procedure():
     provider = create_provider("qwen-local")
     provider._generate = Mock(return_value=response())

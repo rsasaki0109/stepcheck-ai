@@ -30,7 +30,7 @@ class LocalDetection(BaseModel):
     model_config = ConfigDict(extra="forbid")
     title: str
     actions: list[LocalAction] = Field(max_length=50)
-    limitations: list[str] = Field(min_length=1)
+    limitations: list[str]
 
 
 def parse_local_detection(raw: str, frames: list[VideoFrame]) -> Detection:
@@ -49,7 +49,8 @@ def parse_local_detection(raw: str, frames: list[VideoFrame]) -> Detection:
             actions.append(DetectedAction(label=action.label, reason=action.reason,
                 uncertainty=action.uncertainty,
                 evidence_seconds=[frames[index].timestamp_seconds for index in action.evidence_frame_ids]))
-        return Detection(title=detected.title, actions=actions, limitations=detected.limitations)
+        return Detection(title=detected.title, actions=actions, limitations=[*detected.limitations,
+            "System: Local VLM predictions are unverified; sampled frames omit continuous motion."])
     except ValueError as exc:
         raise FlowInferenceError("Local VLM returned invalid JSON or unsupported evidence. Inspect its raw output and retry with fewer frames.") from exc
 
