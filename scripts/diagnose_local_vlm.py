@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import base64
 from datetime import datetime, timezone
 import hashlib
 import io
@@ -81,16 +82,26 @@ class CaptureProcessor:
         return inputs
 
 
-async def run_diagnostics(provider, video: Path, output: Path, *, variants=None):
+async def run_diagnostics(provider, video: Path, output: Path, *, variants=None, frames_report: Path | None = None):
     from transformers import AutoProcessor
     from PIL import Image
     import torch
 
     output.mkdir(parents=True, exist_ok=True)
+    source_hash = hashlib.sha256(video.read_bytes()).hexdigest()
+    saved = None
+    if frames_report is not None:
+        saved = json.loads(frames_report.read_text(encoding="utf-8"))
+        if saved["source_sha256"] != source_hash:
+            raise ValueError("Saved frames belong to a different source video.")
     frames = []
     for index, timestamp in enumerate(TIMES):
-        decoded = await asyncio.to_thread(read_video_frame, video, timestamp)
-        payload = decoded.image
+        if saved is None:
+            decoded = await asyncio.to_thread(read_video_frame, video, timestamp)
+            payload = decoded.image
+        else:
+            frame = next(f for f in saved["frames"] if f["timestamp_seconds"] == timestamp)
+            payload = ImagePayload(base64.b64decode(frame["image_url"].split(",", 1)[1]), "image/jpeg")
         filename = f"source-{index}.jpg"
         (output / filename).write_bytes(payload.data)
         with Image.open(io.BytesIO(payload.data)) as image:
@@ -100,7 +111,8 @@ async def run_diagnostics(provider, video: Path, output: Path, *, variants=None)
                        "size": size, "payload": payload})
     variants = variants or [(True, 256), (False, 256), (True, 1024), (False, 1024)]
     metadata = {"executed_at_utc": datetime.now(timezone.utc).isoformat(),
-        "source_sha256": hashlib.sha256(video.read_bytes()).hexdigest(),
+        "source_sha256": source_hash,
+        "frame_source": "Exact saved inference JPEGs" if saved is not None else "ffmpeg extraction",
         "model": provider.model_id, "load_in_4bit": provider.load_in_4bit,
         "gpu": torch.cuda.get_device_name(0), "prompt": PROMPT,
         "expected_actions_supplied": False, "runs": []}
