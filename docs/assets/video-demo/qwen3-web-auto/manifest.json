@@ -1,0 +1,76 @@
+{
+  "executed_at_utc": "2026-10-09T04:08:57.966507+00:00",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+  "offline": true,
+  "load_in_4bit": true,
+  "keep_vision_fp16": true,
+  "max_pixels": 200704,
+  "max_new_tokens": 2400,
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.1",
+    "accelerate": "1.15.0",
+    "bitsandbytes": "0.48.2"
+  },
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "reference_sha256": "be1c9b45c260511783e9a11e4ce582b61e4bda1ae3ff8b5d86b4859f9d596c05",
+  "base_commit": "728a894d5c53ec0b8689d3dd1afe6c31104a0ded",
+  "endpoint": "POST /api/video-flow/verify via FastAPI TestClient; real multipart upload and GPU inference",
+  "form": {
+    "sample_interval_seconds": "2",
+    "auto_refine": "true",
+    "refinement_interval_seconds": "0.25",
+    "refinement_max_frames": "12"
+  },
+  "backend_max_video_frames": 12,
+  "known_video": true,
+  "accuracy_benchmark": false,
+  "status": "stopped_without_response",
+  "calls": [
+    {
+      "directory": "pass-01",
+      "image_count": 12,
+      "status": "stopped_without_response"
+    }
+  ],
+  "code_sha256": {
+    "docs/assets/video-demo/qwen3-web-auto/run.py": "b049150bf0ca751d75ae6a74cd15beae91fd13e0a2fd39ca18e6981aad606392",
+    "providers/stepcheck_providers/qwen_local_provider.py": "aa438e682ccab9a74ac4acc07797a1cdd82e356836e0bb761fc2bb0deaa2ad76",
+    "providers/stepcheck_providers/reference_flow.py": "b8c0189ac935cf7b9a1a8cfcb186ddc684f6cd7d8c38c67e69f40fdf37dcb96d",
+    "providers/stepcheck_providers/reference_refinement.py": "9df9a4b2780ac27477080a4416e093f788cf1abc67d69b3a6a84660000c96324",
+    "backend/app/api/video_routes.py": "02185e19789006a5ec9ede2f9322ea968302aa710a6cb89b9426941efebf3cf4",
+    "backend/app/api/schemas.py": "670b678b33252a003d9f4851ef23e0830d8fc009561363c9e5102afeb39e4ebd",
+    "backend/app/application/verify_video_flow_use_case.py": "100cd206d715d2e2d863424a45ede090f03575a8a5e8ee9411c0e49599ba9177",
+    "backend/app/infrastructure/video.py": "8317b08ad76aef7490fedc65563a07989e183a1afb79946b8f9eb5eed36f9824"
+  },
+  "stopped_at_utc": "2026-10-09T04:19:38.999762+00:00",
+  "elapsed_seconds": 641.033,
+  "stop_reason": "Operator stopped after approximately 10 minutes without an initial response. No model output, API success or accuracy result was obtained.",
+  "files": {
+    "ATTRIBUTION.md": "83f877c0dd28ed8dddb802f7e3b48158e5b2ca73fc452bd0ee7799b958219f76",
+    "code/backend/app/api/schemas.py": "670b678b33252a003d9f4851ef23e0830d8fc009561363c9e5102afeb39e4ebd",
+    "code/backend/app/api/video_routes.py": "02185e19789006a5ec9ede2f9322ea968302aa710a6cb89b9426941efebf3cf4",
+    "code/backend/app/application/verify_video_flow_use_case.py": "100cd206d715d2e2d863424a45ede090f03575a8a5e8ee9411c0e49599ba9177",
+    "code/backend/app/infrastructure/video.py": "8317b08ad76aef7490fedc65563a07989e183a1afb79946b8f9eb5eed36f9824",
+    "code/docs/assets/video-demo/qwen3-web-auto/run.py": "b049150bf0ca751d75ae6a74cd15beae91fd13e0a2fd39ca18e6981aad606392",
+    "code/providers/stepcheck_providers/qwen_local_provider.py": "aa438e682ccab9a74ac4acc07797a1cdd82e356836e0bb761fc2bb0deaa2ad76",
+    "code/providers/stepcheck_providers/reference_flow.py": "b8c0189ac935cf7b9a1a8cfcb186ddc684f6cd7d8c38c67e69f40fdf37dcb96d",
+    "code/providers/stepcheck_providers/reference_refinement.py": "9df9a4b2780ac27477080a4416e093f788cf1abc67d69b3a6a84660000c96324",
+    "pass-01/frame-00.jpg": "1fff08ec89e5f09b9e2739143a9d0dc55d5c397f3165292b35244d9f7ae7812b",
+    "pass-01/frame-01.jpg": "5b64121bbcbdbfecfb7ecabbeb7029d2d50a230d943073ff1152e85e8c986b5d",
+    "pass-01/frame-02.jpg": "87e1a92ebc2922205d5ba71e5911b403450b0baf69b634b4c6d3a95d276dad83",
+    "pass-01/frame-03.jpg": "8783377e4f1989a507b262f8f8d97adf316d63886c3c2c22187d56a4574add58",
+    "pass-01/frame-04.jpg": "d254e93c593c8c15c3fbde8f8f6d6f7a84f25ff640cc50f4900ee3bdd4130219",
+    "pass-01/frame-05.jpg": "dff06733d4a1987de9e65c7ae76fee6074dcf44175fee85877ca2f6a595f9c31",
+    "pass-01/frame-06.jpg": "f4a6b8f57b0fdefb5fe25e7bec986ff6e952a1e597d11ab13ee613661c3bb222",
+    "pass-01/frame-07.jpg": "4067c03fa6276ba7dfd65476472146dd2e8e9b3a93fff668c2a870de6ef9df08",
+    "pass-01/frame-08.jpg": "cc8b2734e77066eaceee42ef2ee2414d5f385d5c1605da9d2f1bc41e29135397",
+    "pass-01/frame-09.jpg": "7df0a46a5710bafa15973d067e2c1d1c23597cde4fe635aef11b68ccc4133d53",
+    "pass-01/frame-10.jpg": "4ead9b55fd40f1d50472c15a41f5d76fd412d9e687da5d0000b65cd2820e716f",
+    "pass-01/frame-11.jpg": "37ebe19d4c3259546aa37928b6d0072b44effcf4dd4d87cac952857b94e08a7d",
+    "pass-01/request.json": "382c837b181537033bf2dfffe8ef89e077a02dbf0c3af540ee2c44f86b74dc59",
+    "run.py": "b049150bf0ca751d75ae6a74cd15beae91fd13e0a2fd39ca18e6981aad606392"
+  }
+}

@@ -20,11 +20,12 @@ export const demoVideoUrl = `${API_BASE}/api/video-flow/demo/video`;
 export const referenceDemoVideoUrl = `${API_BASE}/api/video-flow/reference-demo/video`;
 
 export async function verifyVideoReference(video: File, reference: ReferenceFlow, interval: number,
-  signal?: AbortSignal): Promise<VideoReferenceReport> {
+  signal?: AbortSignal, autoRefine = false): Promise<VideoReferenceReport> {
   const form = new FormData();
   form.append("video", video);
   form.append("reference_json", JSON.stringify(reference));
   form.append("sample_interval_seconds", String(interval));
+  form.append("auto_refine", String(autoRefine));
   return readResponse(await fetch(`${API_BASE}/api/video-flow/verify`, { method: "POST", body: form, signal }));
 }
 

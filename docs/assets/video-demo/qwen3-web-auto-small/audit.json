@@ -1,0 +1,64 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "report_sha256": "344102f3fc74855978011f39cf97a3a505b5758a9d13a06d9016e03861c92d6e",
+  "reviewer": "Codex independent inspection of captured source JPEGs, after inference; known video",
+  "notes": [
+    "Wet citations show water contact. Rinse citations show water, but the model does not establish the prior visible-lather criterion.",
+    "Thin white patches are ambiguous; no supplied citation establishes soap application or drying. Unknown is not not_done."
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "status": "supported"
+    },
+    {
+      "id": 2,
+      "status": "unknown"
+    },
+    {
+      "id": 3,
+      "status": "unknown"
+    },
+    {
+      "id": 4,
+      "status": "uncertain"
+    },
+    {
+      "id": 5,
+      "status": "unknown"
+    }
+  ],
+  "reference_flow": {
+    "sequence": "wet > soap > lather > rinse > dry",
+    "order_status": "unknown",
+    "summary": "Model: 2 observed / 3 unknown. Rinse's prior-lather criterion unresolved. Full flow unknown.",
+    "steps": [
+      {
+        "index": 1,
+        "label": "Wet",
+        "status": "supported"
+      },
+      {
+        "index": 2,
+        "label": "Soap",
+        "status": "unknown"
+      },
+      {
+        "index": 3,
+        "label": "Lather",
+        "status": "unknown"
+      },
+      {
+        "index": 4,
+        "label": "Rinse",
+        "status": "uncertain"
+      },
+      {
+        "index": 5,
+        "label": "Dry",
+        "status": "unknown"
+      }
+    ]
+  },
+  "control_summary": "Actual GPU: 12 initial + 9 follow-up images / 399s. Recorded final output. Reverse: 0 violations, 4 unknown."
+}

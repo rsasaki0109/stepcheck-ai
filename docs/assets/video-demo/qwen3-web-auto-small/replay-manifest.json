@@ -1,0 +1,22 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "recognition_runs_during_export": 0,
+  "model_verdicts_changed": false,
+  "files": {
+    "docs/assets/video-demo/qwen3-web-auto-small/api-response.json": "ae695e0f6435834a389ce2b10884268ccd7d2e625d79a144a032bacc300503f9",
+    "docs/assets/video-demo/qwen3-web-auto-small/manifest.json": "baa3cff20301320c6beb37d463efd1c6c0db6ec3fe86fae72e833efebdeb4bfb",
+    "docs/assets/video-demo/qwen3-web-auto-small/replay.json": "e73dbff8ecd7c245119db207b546de30bfdfdf6bf533a8b5a31499eadb7de0a4",
+    "docs/assets/video-demo/qwen3-web-auto-small/audit.json": "f763a88e3c3bc169326689b5d5b2f57e67a6a6c031df2cc8fdadc8a4ef742b11",
+    "docs/assets/video-demo/qwen3-web-auto-small/GIF-ATTRIBUTION.md": "f2be83aa3722e382031ca2d8a0529190a758c14687fac378a60d721fbcd02661",
+    "docs/assets/qwen3-web-auto.gif": "a366201eb8f90e3ead827a54b28218bfc6b364058a5ace0c1cf7a97dd46cef96",
+    "docs/assets/video-demo/qwen3-web-auto-small/export_replay.py": "d71717f55ad3827f6f8cfec1dba17006128f00a12623f87eed719b05339538e5",
+    "docs/assets/video-demo/qwen3-web-auto-small/replay-code/scripts/generate_detected_flow_gif.py": "6606e51e93ee62d391feb8e43659547b69b7b9b3a994a4101985fb6c06a27590",
+    "docs/assets/video-demo/qwen3-web-auto-small/replay-code/scripts/verify_qwen3_video_flow.py": "521edcd346b7569f4bf121029bdb8c871412e40c0d5191e6482d0e70a19d080b",
+    "docs/assets/video-demo/qwen3-web-auto-small/replay-code/scripts/generate_readme_gif.py": "667d630c6d9ee0a1b815ae812c8f2f2bf16b71b67da551721be9447fb6f1b0d0"
+  },
+  "archived_source_paths": {
+    "scripts/generate_detected_flow_gif.py": "docs/assets/video-demo/qwen3-web-auto-small/replay-code/scripts/generate_detected_flow_gif.py",
+    "scripts/verify_qwen3_video_flow.py": "docs/assets/video-demo/qwen3-web-auto-small/replay-code/scripts/verify_qwen3_video_flow.py",
+    "scripts/generate_readme_gif.py": "docs/assets/video-demo/qwen3-web-auto-small/replay-code/scripts/generate_readme_gif.py"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "observations": [
+    {
+      "step_id": "wet",
+      "status": "observed",
+      "reason": "手が水に触れている様子がframe_id 1とframe_id 2で確認可能。水が手に直接当たっている。",
+      "evidence_frame_ids": [
+        1,
+        2
+      ],
+      "uncertainty": "水の流れの方向や手の位置がわずかに曖昧だが、手が水に触れていることは明確。"
+    },
+    {
+      "step_id": "soap",
+      "status": "unknown",
+      "reason": "手にソープが直接適用された瞬間は見えず、フレーム内にソープの容器や手の動きの詳細が不明。",
+      "evidence_frame_ids": [],
+      "uncertainty": "手の動きやソープの適用がフレーム内に明確にないため、推定できない。"
+    },
+    {
+      "step_id": "lather",
+      "status": "unknown",
+      "reason": "手の動きが摩擦しているように見えるが、泡の生成が確認できないため、latherの有無が不明。",
+      "evidence_frame_ids": [
+        3
+      ],
+      "uncertainty": "手の動きは摩擦しているように見えるが、泡の生成が視覚的に確認できないため、latherの有無が不明。"
+    },
+    {
+      "step_id": "rinse",
+      "status": "observed",
+      "reason": "frame_id 6とframe_id 8で水が手に直接当たっている様子が確認可能。手が水に触れている。",
+      "evidence_frame_ids": [
+        6,
+        8
+      ],
+      "uncertainty": "水の流れの方向や手の位置がわずかに曖昧だが、手が水に触れていることは明確。"
+    },
+    {
+      "step_id": "dry",
+      "status": "unknown",
+      "reason": "手が乾燥する様子はフレーム内にない。手がタオルやエアドライヤーに触れている様子が確認できない。",
+      "evidence_frame_ids": [],
+      "uncertainty": "手が乾燥する様子はフレーム内にないため、推定できない。"
+    }
+  ]
+}

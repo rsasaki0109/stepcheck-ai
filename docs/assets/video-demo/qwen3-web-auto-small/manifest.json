@@ -1,0 +1,177 @@
+{
+  "executed_at_utc": "2026-10-09T04:19:55.227431+00:00",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+  "offline": true,
+  "load_in_4bit": true,
+  "keep_vision_fp16": true,
+  "max_pixels": 50176,
+  "max_new_tokens": 1200,
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.1",
+    "accelerate": "1.15.0",
+    "bitsandbytes": "0.48.2"
+  },
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "reference_sha256": "be1c9b45c260511783e9a11e4ce582b61e4bda1ae3ff8b5d86b4859f9d596c05",
+  "base_commit": "728a894d5c53ec0b8689d3dd1afe6c31104a0ded",
+  "endpoint": "POST /api/video-flow/verify via FastAPI TestClient; real multipart upload and GPU inference",
+  "form": {
+    "sample_interval_seconds": "2",
+    "auto_refine": "true",
+    "refinement_interval_seconds": "0.25",
+    "refinement_max_frames": "12"
+  },
+  "backend_max_video_frames": 12,
+  "known_video": true,
+  "accuracy_benchmark": false,
+  "status": "validated_response",
+  "calls": [
+    {
+      "directory": "pass-01",
+      "image_count": 12,
+      "status": "generated; application validation pending",
+      "elapsed_seconds": 245.985
+    },
+    {
+      "directory": "pass-02",
+      "image_count": 9,
+      "status": "generated; application validation pending",
+      "elapsed_seconds": 150.797
+    }
+  ],
+  "code_sha256": {
+    "docs/assets/video-demo/qwen3-web-auto-small/run.py": "c1e8d74f14004160e4671c54293b34be068e831d5aed1da6b498511d25455dbb",
+    "providers/stepcheck_providers/qwen_local_provider.py": "aa438e682ccab9a74ac4acc07797a1cdd82e356836e0bb761fc2bb0deaa2ad76",
+    "providers/stepcheck_providers/reference_flow.py": "b8c0189ac935cf7b9a1a8cfcb186ddc684f6cd7d8c38c67e69f40fdf37dcb96d",
+    "providers/stepcheck_providers/reference_refinement.py": "9df9a4b2780ac27477080a4416e093f788cf1abc67d69b3a6a84660000c96324",
+    "backend/app/api/video_routes.py": "02185e19789006a5ec9ede2f9322ea968302aa710a6cb89b9426941efebf3cf4",
+    "backend/app/api/schemas.py": "670b678b33252a003d9f4851ef23e0830d8fc009561363c9e5102afeb39e4ebd",
+    "backend/app/application/verify_video_flow_use_case.py": "100cd206d715d2e2d863424a45ede090f03575a8a5e8ee9411c0e49599ba9177",
+    "backend/app/infrastructure/video.py": "8317b08ad76aef7490fedc65563a07989e183a1afb79946b8f9eb5eed36f9824"
+  },
+  "http_status": 200,
+  "elapsed_seconds": 399.047,
+  "order_status": "unknown",
+  "workflow": {
+    "sampling_requests": 2,
+    "stop_reason": "unknown_after_followup",
+    "unknown_step_ids": [
+      "soap",
+      "lather",
+      "dry"
+    ],
+    "requested_refinement_interval_seconds": 0.25,
+    "max_frames": 12,
+    "interval_selection": {
+      "plan": {
+        "target_step_ids": [
+          "soap",
+          "lather",
+          "dry"
+        ],
+        "windows": [
+          {
+            "step_id": "soap",
+            "start_seconds": 5.806545,
+            "end_seconds": 17.419636
+          },
+          {
+            "step_id": "lather",
+            "start_seconds": 5.806545,
+            "end_seconds": 17.419636
+          },
+          {
+            "step_id": "dry",
+            "start_seconds": 23.226182,
+            "end_seconds": 31.936
+          }
+        ],
+        "sampled_seconds": [
+          5.806545,
+          8.709818,
+          9.806545,
+          13.806545,
+          17.419636,
+          23.226182,
+          27.226182,
+          31.226182,
+          31.936
+        ],
+        "added_seconds": [
+          9.806545,
+          13.806545,
+          27.226182,
+          31.226182
+        ],
+        "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows."
+      },
+      "chosen_interval_seconds": 4.0,
+      "attempts": [
+        {
+          "interval_seconds": 0.25,
+          "status": "over_budget"
+        },
+        {
+          "interval_seconds": 0.5,
+          "status": "over_budget"
+        },
+        {
+          "interval_seconds": 1.0,
+          "status": "over_budget"
+        },
+        {
+          "interval_seconds": 2.0,
+          "status": "over_budget"
+        },
+        {
+          "interval_seconds": 4.0,
+          "status": "fits",
+          "frames": 9
+        }
+      ],
+      "stop_reason": null
+    },
+    "policy": "At most one follow-up. Double interval to fit the complete requested image set; preserve unknowns and prior observed judgments."
+  },
+  "files": {
+    "api-response.json": "ae695e0f6435834a389ce2b10884268ccd7d2e625d79a144a032bacc300503f9",
+    "ATTRIBUTION.md": "83f877c0dd28ed8dddb802f7e3b48158e5b2ca73fc452bd0ee7799b958219f76",
+    "code/backend/app/api/schemas.py": "670b678b33252a003d9f4851ef23e0830d8fc009561363c9e5102afeb39e4ebd",
+    "code/backend/app/api/video_routes.py": "02185e19789006a5ec9ede2f9322ea968302aa710a6cb89b9426941efebf3cf4",
+    "code/backend/app/application/verify_video_flow_use_case.py": "100cd206d715d2e2d863424a45ede090f03575a8a5e8ee9411c0e49599ba9177",
+    "code/backend/app/infrastructure/video.py": "8317b08ad76aef7490fedc65563a07989e183a1afb79946b8f9eb5eed36f9824",
+    "code/docs/assets/video-demo/qwen3-web-auto-small/run.py": "c1e8d74f14004160e4671c54293b34be068e831d5aed1da6b498511d25455dbb",
+    "code/providers/stepcheck_providers/qwen_local_provider.py": "aa438e682ccab9a74ac4acc07797a1cdd82e356836e0bb761fc2bb0deaa2ad76",
+    "code/providers/stepcheck_providers/reference_flow.py": "b8c0189ac935cf7b9a1a8cfcb186ddc684f6cd7d8c38c67e69f40fdf37dcb96d",
+    "code/providers/stepcheck_providers/reference_refinement.py": "9df9a4b2780ac27477080a4416e093f788cf1abc67d69b3a6a84660000c96324",
+    "pass-01/frame-00.jpg": "1fff08ec89e5f09b9e2739143a9d0dc55d5c397f3165292b35244d9f7ae7812b",
+    "pass-01/frame-01.jpg": "5b64121bbcbdbfecfb7ecabbeb7029d2d50a230d943073ff1152e85e8c986b5d",
+    "pass-01/frame-02.jpg": "87e1a92ebc2922205d5ba71e5911b403450b0baf69b634b4c6d3a95d276dad83",
+    "pass-01/frame-03.jpg": "8783377e4f1989a507b262f8f8d97adf316d63886c3c2c22187d56a4574add58",
+    "pass-01/frame-04.jpg": "d254e93c593c8c15c3fbde8f8f6d6f7a84f25ff640cc50f4900ee3bdd4130219",
+    "pass-01/frame-05.jpg": "dff06733d4a1987de9e65c7ae76fee6074dcf44175fee85877ca2f6a595f9c31",
+    "pass-01/frame-06.jpg": "f4a6b8f57b0fdefb5fe25e7bec986ff6e952a1e597d11ab13ee613661c3bb222",
+    "pass-01/frame-07.jpg": "4067c03fa6276ba7dfd65476472146dd2e8e9b3a93fff668c2a870de6ef9df08",
+    "pass-01/frame-08.jpg": "cc8b2734e77066eaceee42ef2ee2414d5f385d5c1605da9d2f1bc41e29135397",
+    "pass-01/frame-09.jpg": "7df0a46a5710bafa15973d067e2c1d1c23597cde4fe635aef11b68ccc4133d53",
+    "pass-01/frame-10.jpg": "4ead9b55fd40f1d50472c15a41f5d76fd412d9e687da5d0000b65cd2820e716f",
+    "pass-01/frame-11.jpg": "37ebe19d4c3259546aa37928b6d0072b44effcf4dd4d87cac952857b94e08a7d",
+    "pass-01/request.json": "382c837b181537033bf2dfffe8ef89e077a02dbf0c3af540ee2c44f86b74dc59",
+    "pass-01/response.txt": "6c50529c1aab4776cd5be2311ff6cc9744592a546273603570a77fce6085bfa8",
+    "pass-02/frame-00.jpg": "87e1a92ebc2922205d5ba71e5911b403450b0baf69b634b4c6d3a95d276dad83",
+    "pass-02/frame-01.jpg": "8783377e4f1989a507b262f8f8d97adf316d63886c3c2c22187d56a4574add58",
+    "pass-02/frame-02.jpg": "2d3c6d5e2a8f74880949532357bd2496044de838e66486352dd28c5bd6101915",
+    "pass-02/frame-03.jpg": "6f7fb9030a62da2d54c61141fee854d9b9a289cfcce5a5ee0e8805dbf39a2bb1",
+    "pass-02/frame-04.jpg": "f4a6b8f57b0fdefb5fe25e7bec986ff6e952a1e597d11ab13ee613661c3bb222",
+    "pass-02/frame-05.jpg": "cc8b2734e77066eaceee42ef2ee2414d5f385d5c1605da9d2f1bc41e29135397",
+    "pass-02/frame-06.jpg": "8d72d4ac4bf1c244418a66587162c9f20d0b2e0351ebdba80e8c9b0b1d159956",
+    "pass-02/frame-07.jpg": "eb12471d85a55232e66927e99df57630f05511af86dfd2c41a1bfcef295efd4d",
+    "pass-02/frame-08.jpg": "37ebe19d4c3259546aa37928b6d0072b44effcf4dd4d87cac952857b94e08a7d",
+    "pass-02/request.json": "31b149b1176d48117df7643791eddb02a210db7fa9e661e159f1ca8c2db39ef5",
+    "pass-02/response.txt": "04a1b15dc153411d9372d8c2ed8ed779dfd7ced37994fa88cc84f2a4ebc116b8",
+    "run.py": "c1e8d74f14004160e4671c54293b34be068e831d5aed1da6b498511d25455dbb"
+  }
+}

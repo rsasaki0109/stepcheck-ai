@@ -11,6 +11,12 @@ const button = "rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:op
 const seconds = (t: number) => `${Number(t.toFixed(3))}s`;
 const orderText = { supported_sample_order: "引用画像の順序を支持", unknown: "未確認", violated: "引用画像の順序に違反" };
 const edgeText = { sampled_before: "引用画像ではこの順序", unknown: "順序は未確認", violated: "順序に違反" };
+const stopText: Record<string, string> = {
+  no_unknown_steps: "未確認の工程なし。追加確認が不要な場合は初回で終了します。",
+  unknown_after_followup: "追加確認後も未確認が残ったため終了しました。",
+  no_new_samples: "予算内で新しい画像を追加できず、初回の判断を保持しました。",
+  refinement_budget_exhausted: "画像予算に収められず、初回の判断を保持しました。",
+};
 const sampleReference: ReferenceFlow = { title: "映像で確認する手洗いの流れ", steps: [
   { id: "wet", label: "手を水で濡らす", criterion: "泡立てる前に、水が手に当たる。蛇口が近くにあるだけでは不十分。" },
   { id: "soap", label: "石けんを手につける", criterion: "容器や固形石けんから手に石けんをつける様子が見える。泡だけでは判定しない。" },
@@ -26,6 +32,7 @@ export default function VideoReferencePanel() {
   const [localUrl, setLocalUrl] = useState("");
   const [demoLoaded, setDemoLoaded] = useState(false);
   const [interval, setInterval] = useState(2);
+  const [autoRefine, setAutoRefine] = useState(true);
   const [report, setReport] = useState<VideoReferenceReport | null>(null);
   const [pass, setPass] = useState<"initial" | "final">("final");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -88,7 +95,7 @@ export default function VideoReferencePanel() {
     const controller = new AbortController(); request.current = controller;
     clearResult(); setLoading(true); setPass("final");
     try {
-      const result = demo ? await getReferenceDemo(controller.signal) : await verifyVideoReference(file!, reference, interval, controller.signal);
+      const result = demo ? await getReferenceDemo(controller.signal) : await verifyVideoReference(file!, reference, interval, controller.signal, autoRefine);
       if (controller.signal.aborted) return;
       if (demo) { setFile(null); setDemoLoaded(true); setReference(result.reference); if (fileInput.current) fileInput.current.value = ""; }
       setReport(result);
@@ -108,9 +115,10 @@ export default function VideoReferencePanel() {
   const sourceUrl = demoLoaded ? referenceDemoVideoUrl : localUrl;
   const valid = reference.title.trim() && reference.steps.length > 0 && reference.steps.every(s => s.label.trim());
   const canRun = Boolean(file && valid && status?.reference_ready && !loading && Number.isFinite(interval) && interval >= 0.25 && interval <= 30);
-  const quarters = report ? Array.from({ length: 4 }, (_, i) => {
+  const visibleFrames = report?.frames.filter(f => pass !== "initial" || !report.initial?.sampled_seconds || report.initial.sampled_seconds.includes(f.timestamp_seconds)) ?? [];
+  const quarters = report && visibleFrames.length ? Array.from({ length: 4 }, (_, i) => {
     const target = report.duration_seconds * i / 4;
-    return report.frames.reduce((a, b) => Math.abs(a.timestamp_seconds - target) <= Math.abs(b.timestamp_seconds - target) ? a : b);
+    return visibleFrames.reduce((a, b) => Math.abs(a.timestamp_seconds - target) <= Math.abs(b.timestamp_seconds - target) ? a : b);
   }) : [];
 
   return <section aria-label="動画で工程の順序を確認">
@@ -135,10 +143,11 @@ export default function VideoReferencePanel() {
         <label className="min-w-0 flex-1 text-sm">元動画<input ref={fileInput} type="file" accept="video/*" className="mt-2 block w-full min-w-0 text-sm" onChange={e => chooseFile(e.target.files?.[0] ?? null)} /></label>
         <label className="text-sm">画像の間隔（秒）<input type="number" min={0.25} max={30} step={0.25} value={interval} onChange={e => { clearResult(); setInterval(Number(e.target.value)); }} className={`${input} mt-1 max-w-32`} /></label>
       </div>
+      <label className="mt-4 flex items-start gap-2 text-sm"><input type="checkbox" checked={autoRefine} onChange={e => { clearResult(); setAutoRefine(e.target.checked); }} className="mt-1" />未確認の工程を追加画像で再確認する（最大1回）</label>
       <div className="mt-5 flex flex-wrap gap-3"><button type="button" disabled={!canRun} onClick={() => run(false)} className="rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40">{loading ? "確認中…" : "この動画で工程を確認"}</button>
         <button type="button" className={button} onClick={() => run(true)}>記録済みの工程確認を見る</button></div>
       {!status?.reference_ready && <p className={`mt-3 text-sm ${muted}`}>{status?.reference_reason || "モデル接続を確認しています。"} 記録済み結果は接続キーなしで見られます。</p>}
-      <p className={`mt-3 text-xs ${muted}`}>アップロードの確認は初回の画像判断を行います。記録済み結果では、前回の追加確認も比較できます。</p>
+      <p className={`mt-3 text-xs ${muted}`}>追加確認は未確認の工程だけに行います。画像予算に合わせて間隔を調整し、観測済みの判断は保持します。</p>
     </fieldset>
     {error && <p role="alert" className="mt-4 rounded-lg bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200">{error}</p>}
     {report && <section className={`${card} mt-6`} aria-label="動画の4区間"><h3 className="font-semibold">動画の4区間</h3>
@@ -177,13 +186,16 @@ export default function VideoReferencePanel() {
           <h4 className="mt-3 font-semibold">事前に与えた基準</h4><p className={`mt-1 ${muted}`}>{report.reference.steps.find(s => s.id === selected.step_id)?.criterion || "工程名を基準に確認しています。"}</p>
           <h4 className="mt-4 font-semibold">判断理由</h4><p className={`mt-1 ${muted}`}>{selected.reason}</p>
           <h4 className="mt-4 font-semibold">不確実性</h4><p className={`mt-1 ${muted}`}>{selected.uncertainty || "個別の不確実性は報告されていません。"}</p>
+          {report.initial && <p className={`mt-4 text-xs ${muted}`}>初回: {report.initial.steps.find(s => s.step_id === selected.step_id)?.status === "observed" ? "観測あり" : "未確認"} → 最終: {report.steps.find(s => s.step_id === selected.step_id)?.status === "observed" ? "観測あり" : "未確認"}</p>}
           <p className={`mt-4 text-xs ${muted}`}>元動画の引用時刻の画像です。ヒートマップや測定した信頼度ではありません。</p></div></div>
     </section>}
     {report && <details className={`${card} mt-6`}><summary className="cursor-pointer text-sm font-semibold">解析範囲・追加確認・出典</summary>
       <p className={`mt-3 text-sm ${muted}`}>{report.scope_note}</p>
-      {report.workflow && <><p className={`mt-3 text-sm ${muted}`}>記録上の画像判断: {report.workflow.sampling_requests}回 · 未確認: {report.workflow.unknown_step_ids.join(", ") || "なし"}</p>
+      {report.workflow && <><p className={`mt-3 text-sm ${muted}`}>{report.analysis_mode === "recorded_demo" ? "記録上の画像判断" : "今回の画像判断"}: {report.workflow.sampling_requests}回 · 未確認: {report.workflow.unknown_step_ids.join(", ") || "なし"}</p>
+        <p className={`mt-2 text-sm ${muted}`}>{stopText[report.workflow.stop_reason] ?? report.workflow.stop_reason}</p>
         {report.workflow.interval_selection?.attempts.map((a, i) => <p key={i} className={`mt-1 text-xs ${muted}`}>{seconds(a.interval_seconds)} 間隔: {a.status === "over_budget" ? "画像予算を超過" : a.status === "fits" ? `${a.frames}枚で予算内` : a.status}</p>)}</>}
-      {!report.workflow && <p className={`mt-3 text-sm ${muted}`}>今回のWeb確認は初回の判断です。追加確認は実行していません。</p>}
+      {!report.workflow && <p className={`mt-3 text-sm ${muted}`}>追加確認を選択していないため、初回の判断で終了しました。</p>}
+      {report.refinement && <><p className={`mt-3 text-sm ${muted}`}>追加確認: 新しい時刻 {report.refinement.added_seconds.length}枚 / 入力 {report.refinement.sampled_seconds.length}枚</p><p className={`mt-2 text-xs ${muted}`}>{report.refinement.selection_note}</p></>}
       {report.source_credit && <p className={`mt-3 break-words text-xs ${muted}`}>{report.source_credit}</p>}
       <p className={`mt-3 break-all text-xs ${muted}`}>{report.provider} / {report.model} · {report.frames.length}枚 · 動画SHA-256: {report.source_sha256}</p></details>}
   </section>;

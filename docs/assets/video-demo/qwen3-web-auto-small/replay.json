@@ -1,0 +1,227 @@
+{
+  "title": "Visible handwashing flow for a new-video check",
+  "analysis_mode": "procedure_verification",
+  "provider": "qwen-local",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "expected_procedure_supplied": true,
+  "input_modality": "sampled_images",
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "duration_seconds": 32.036,
+  "sampled_seconds": [
+    0.0,
+    2.903273,
+    5.806545,
+    8.709818,
+    9.806545,
+    11.613091,
+    13.806545,
+    14.516364,
+    17.419636,
+    20.322909,
+    23.226182,
+    26.129455,
+    27.226182,
+    29.032727,
+    31.226182,
+    31.936
+  ],
+  "sample_interval_seconds": null,
+  "frames": [
+    {
+      "timestamp_seconds": 0.0
+    },
+    {
+      "timestamp_seconds": 2.903273
+    },
+    {
+      "timestamp_seconds": 5.806545
+    },
+    {
+      "timestamp_seconds": 8.709818
+    },
+    {
+      "timestamp_seconds": 9.806545
+    },
+    {
+      "timestamp_seconds": 11.613091
+    },
+    {
+      "timestamp_seconds": 13.806545
+    },
+    {
+      "timestamp_seconds": 14.516364
+    },
+    {
+      "timestamp_seconds": 17.419636
+    },
+    {
+      "timestamp_seconds": 20.322909
+    },
+    {
+      "timestamp_seconds": 23.226182
+    },
+    {
+      "timestamp_seconds": 26.129455
+    },
+    {
+      "timestamp_seconds": 27.226182
+    },
+    {
+      "timestamp_seconds": 29.032727
+    },
+    {
+      "timestamp_seconds": 31.226182
+    },
+    {
+      "timestamp_seconds": 31.936
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "label": "Wet hands with water",
+      "model_status": "observed",
+      "reason": "手が水に触れている様子がframe_id 1とframe_id 2で確認可能。水が手に直接当たっている。",
+      "uncertainty": "水の流れの方向や手の位置がわずかに曖昧だが、手が水に触れていることは明確。",
+      "evidence_seconds": [
+        2.903273,
+        5.806545
+      ],
+      "first_seen_seconds": 2.903273,
+      "last_seen_seconds": 5.806545,
+      "model_observations": [
+        {
+          "step_id": "wet",
+          "index": 1,
+          "label": "Wet hands with water",
+          "status": "observed",
+          "reason": "手が水に触れている様子がframe_id 1とframe_id 2で確認可能。水が手に直接当たっている。",
+          "uncertainty": "水の流れの方向や手の位置がわずかに曖昧だが、手が水に触れていることは明確。",
+          "evidence_seconds": [
+            2.903273,
+            5.806545
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "label": "Apply soap to hands",
+      "model_status": "unknown",
+      "reason": "手洗いのための石鹸の適用は、画像に表示された手の動きや水の流れから推測されるが、石鹸の直接的な適用（ディスペンサー、ボトル、バーボンからの受取）は確認できない。",
+      "uncertainty": "手の動きは水の流れと重なり、石鹸の適用が水の流れの前にあるか、または同時に起こっているかが不明確である。",
+      "evidence_seconds": [],
+      "first_seen_seconds": null,
+      "last_seen_seconds": null,
+      "model_observations": [
+        {
+          "step_id": "soap",
+          "index": 2,
+          "label": "Apply soap to hands",
+          "status": "unknown",
+          "reason": "手洗いのための石鹸の適用は、画像に表示された手の動きや水の流れから推測されるが、石鹸の直接的な適用（ディスペンサー、ボトル、バーボンからの受取）は確認できない。",
+          "uncertainty": "手の動きは水の流れと重なり、石鹸の適用が水の流れの前にあるか、または同時に起こっているかが不明確である。",
+          "evidence_seconds": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "label": "Rub hands with soap lather",
+      "model_status": "unknown",
+      "reason": "手の間で摩耗している様子は確認できるが、泡の存在は明確ではない。手の動きが摩耗しているように見えるが、泡の視覚的証拠がないため、摩耗の有無は不明。",
+      "uncertainty": "手の動きと水の流れが重なり、泡の視覚的証拠が不明確であるため、摩耗の有無を判断する根拠が不足している。",
+      "evidence_seconds": [],
+      "first_seen_seconds": null,
+      "last_seen_seconds": null,
+      "model_observations": [
+        {
+          "step_id": "lather",
+          "index": 3,
+          "label": "Rub hands with soap lather",
+          "status": "unknown",
+          "reason": "手の間で摩耗している様子は確認できるが、泡の存在は明確ではない。手の動きが摩耗しているように見えるが、泡の視覚的証拠がないため、摩耗の有無は不明。",
+          "uncertainty": "手の動きと水の流れが重なり、泡の視覚的証拠が不明確であるため、摩耗の有無を判断する根拠が不足している。",
+          "evidence_seconds": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "label": "Rinse hands with water",
+      "model_status": "observed",
+      "reason": "frame_id 6とframe_id 8で水が手に直接当たっている様子が確認可能。手が水に触れている。",
+      "uncertainty": "水の流れの方向や手の位置がわずかに曖昧だが、手が水に触れていることは明確。",
+      "evidence_seconds": [
+        17.419636,
+        23.226182
+      ],
+      "first_seen_seconds": 17.419636,
+      "last_seen_seconds": 23.226182,
+      "model_observations": [
+        {
+          "step_id": "rinse",
+          "index": 4,
+          "label": "Rinse hands with water",
+          "status": "observed",
+          "reason": "frame_id 6とframe_id 8で水が手に直接当たっている様子が確認可能。手が水に触れている。",
+          "uncertainty": "水の流れの方向や手の位置がわずかに曖昧だが、手が水に触れていることは明確。",
+          "evidence_seconds": [
+            17.419636,
+            23.226182
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "label": "Dry hands",
+      "model_status": "unknown",
+      "reason": "手の乾燥のためのタオルや紙の接触、または空気乾燥機の操作は確認できない。手の位置や動きから乾燥の有無を判断する根拠が不足している。",
+      "uncertainty": "手の位置や動きから乾燥の有無を判断する根拠が不足している。",
+      "evidence_seconds": [],
+      "first_seen_seconds": null,
+      "last_seen_seconds": null,
+      "model_observations": [
+        {
+          "step_id": "dry",
+          "index": 5,
+          "label": "Dry hands",
+          "status": "unknown",
+          "reason": "手の乾燥のためのタオルや紙の接触、または空気乾燥機の操作は確認できない。手の位置や動きから乾燥の有無を判断する根拠が不足している。",
+          "uncertainty": "手の位置や動きから乾燥の有無を判断する根拠が不足している。",
+          "evidence_seconds": []
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "from": 1,
+      "to": 2,
+      "status": "unknown"
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "status": "unknown"
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "status": "unknown"
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "status": "unknown"
+    }
+  ],
+  "model_order_status": "unknown",
+  "limitations": [
+    "Given reference labels/criteria were supplied; this is not open-ended discovery.",
+    "Model verdicts and cited sample order require independent semantic verification.",
+    "Sample times are not action boundaries or proof of continuous execution.",
+    "No attention map or calibrated confidence was measured."
+  ]
+}

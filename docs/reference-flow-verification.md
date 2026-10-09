@@ -97,7 +97,8 @@ MCPサーバー自体は画像認識を行いません。判断者は画像を�
 python scripts/run_flow_detection.py --bridge-dir .tmp-flow-local/new-reference-run --reference examples/observed-handwashing-flow.json --output .tmp-flow-local/new-reference-run/verification.json --reviewer "connected vision session"
 ```
 
-このツールはMCPサーバー用です。Webアプリの動画APIにはまだ接続していません。
+このツールはMCPのsamplingホスト用です。[Webの工程確認](web-reference-verification.md)は
+OpenAIまたはローカルQwenを直接呼び、同じ引用・順序検証と追加確認の画像計画を使います。
 
 ## 未確認の工程を追加画像で再確認する
 

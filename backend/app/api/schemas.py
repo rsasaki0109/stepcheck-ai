@@ -120,6 +120,8 @@ class ReferencePassOut(BaseModel):
     steps: list[ReferenceStepOut]
     transitions: list[ReferenceTransitionOut]
     order_status: Literal["supported_sample_order", "unknown", "violated"]
+    sampled_seconds: list[float] | None = None
+    sample_interval_seconds: float | None = None
 
 
 class VideoReferenceOut(ReferencePassOut):
@@ -138,4 +140,5 @@ class VideoReferenceOut(ReferencePassOut):
     scope_note: str
     initial: ReferencePassOut | None = None
     workflow: dict | None = None
+    refinement: dict | None = None
     source_credit: str | None = None

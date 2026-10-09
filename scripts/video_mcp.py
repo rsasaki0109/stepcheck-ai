@@ -24,6 +24,7 @@ from PIL import Image as PILImage, ImageDraw, ImageFont
 from pydantic import BaseModel, Field
 from check_video_flow import check_flow as compare_flow
 from video_discovery import Detection, build_flow
+from stepcheck_providers import reference_refinement as shared_refinement
 from verify_qwen3_video_flow import compare_order
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -333,65 +334,25 @@ class NoNewSamplesError(ToolError):
 
 
 def refinement_plan(previous: dict, sample_interval_seconds: float, max_frames: int) -> dict:
-    observations = prior_observations(previous)
-    if not math.isfinite(sample_interval_seconds) or sample_interval_seconds <= 0:
-        raise ToolError("Refinement interval must be finite and positive.")
-    if not 2 <= max_frames <= 96:
-        raise ToolError("Refinement frame budget must be between 2 and 96.")
-    duration = previous["duration_seconds"]
-    old_times = set(previous["sampled_seconds"])
-    windows, times = [], set()
-    for index, observation in enumerate(observations):
-        if observation.status != "unknown":
-            continue
-        before = next((s for s in reversed(observations[:index]) if s.status == "observed"), None)
-        after = next((s for s in observations[index + 1:] if s.status == "observed"), None)
-        start = max(before.evidence_seconds) if before else 0.0
-        end = min(after.evidence_seconds) if after else max(0, duration - 0.1)
-        if start >= end:
-            start, end = 0.0, max(0, duration - 0.1)
-        count = math.ceil((end - start) / sample_interval_seconds)
-        # Bound construction as well as the eventual image request.
-        if count > 10000:
-            raise RefinementBudgetError("Refinement would exceed the frame budget; increase the interval.")
-        candidates = {round(start + i * sample_interval_seconds, 6) for i in range(count + 1)
-                      if start + i * sample_interval_seconds <= end}
-        candidates -= old_times
-        context = {start, end} | {t for t in observation.evidence_seconds if start <= t <= end}
-        times.update(candidates | context)
-        windows.append({"step_id": observation.step_id, "start_seconds": start, "end_seconds": end})
-    if not windows:
-        raise ToolError("No unknown steps to refine.")
-    if len(times) > max_frames:
-        raise RefinementBudgetError("Refinement exceeds max_frames; increase the interval or frame budget.")
-    if not times - old_times:
-        raise NoNewSamplesError("No new samples at this interval; choose a finer interval.")
-    return {"target_step_ids": [w["step_id"] for w in windows], "windows": windows,
-            "sampled_seconds": sorted(times), "added_seconds": sorted(times - old_times),
-            "selection_note": "Search windows use adjacent observed steps in the given reference as hints. They do not prove absence elsewhere or exclude out-of-order actions outside these windows."}
+    prior_observations(previous)
+    try:
+        return shared_refinement.plan_refinement(previous["steps"], previous["sampled_seconds"],
+            previous["duration_seconds"], sample_interval_seconds, max_frames)
+    except shared_refinement.RefinementBudgetError as error:
+        raise RefinementBudgetError(str(error)) from error
+    except shared_refinement.NoNewSamplesError as error:
+        raise NoNewSamplesError(str(error)) from error
+    except ValueError as error:
+        raise ToolError(str(error)) from error
 
 
 def fit_refinement_budget(previous: dict, sample_interval_seconds: float, max_frames: int) -> dict:
-    """Double spacing before requesting vision; never silently drop context images."""
-    attempts = []
-    interval = sample_interval_seconds
-    for _ in range(16):
-        try:
-            plan = refinement_plan(previous, interval, max_frames)
-        except RefinementBudgetError:
-            attempts.append({"interval_seconds": interval, "status": "over_budget"})
-            interval *= 2
-        except NoNewSamplesError:
-            attempts.append({"interval_seconds": interval, "status": "no_new_samples"})
-            return {"plan": None, "chosen_interval_seconds": None, "attempts": attempts,
-                    "stop_reason": "no_new_samples"}
-        else:
-            attempts.append({"interval_seconds": interval, "status": "fits",
-                             "frames": len(plan["sampled_seconds"])})
-            return {"plan": plan, "chosen_interval_seconds": interval, "attempts": attempts,
-                    "stop_reason": None}
-    return {"plan": None, "chosen_interval_seconds": None, "attempts": attempts,
-            "stop_reason": "refinement_budget_exhausted"}
+    prior_observations(previous)
+    try:
+        return shared_refinement.fit_refinement_budget(previous["steps"], previous["sampled_seconds"],
+            previous["duration_seconds"], sample_interval_seconds, max_frames)
+    except ValueError as error:
+        raise ToolError(str(error)) from error
 
 
 def refinement_request(previous: dict, sample_interval_seconds: float, max_frames: int) -> Sample:

@@ -76,8 +76,12 @@ The contracts in `stepcheck_providers.reference_flow` require exactly one `obser
 can have no citation. Missing actions are never automatically `not_done`, and this
 contract has no confidence score. `build_reference_flow` rejects missing/duplicate IDs
 and unsupplied evidence, retains reference order, and derives sample order independently.
-OpenAI and local Qwen implement the capability; mock does not. The Web API currently
-performs an initial pass; automatic unknown refinement remains in the MCP workflow.
+OpenAI and local Qwen implement the capability; mock does not. The Web API can perform
+one automatic follow-up using the planner shared with MCP. Its second call supplies only
+the unknown reference IDs and the selected context/new images. Return exactly those IDs,
+and cite only images supplied in that call. The application preserves known judgments;
+providers do not implement the iteration or merge. A decoding, inference or validation
+error on either pass fails the request instead of returning a partial success.
 See [Web reference verification](web-reference-verification.md).
 
 The contract was chosen so the roadmap items need **no application changes**:

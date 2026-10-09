@@ -89,6 +89,7 @@ export interface ReferencePass {
   steps: ReferenceStepResult[];
   transitions: { from: string; to: string; status: "sampled_before" | "unknown" | "violated" }[];
   order_status: "supported_sample_order" | "unknown" | "violated";
+  sampled_seconds?: number[] | null;
 }
 
 export interface VideoReferenceReport extends ReferencePass {
@@ -110,4 +111,6 @@ export interface VideoReferenceReport extends ReferencePass {
     interval_selection?: { chosen_interval_seconds: number | null;
       attempts: { interval_seconds: number; status: string; frames?: number }[] } | null } | null;
   source_credit: string | null;
+  refinement?: { target_step_ids: string[]; sampled_seconds: number[]; added_seconds: number[];
+    windows: { step_id: string; start_seconds: number; end_seconds: number }[]; selection_note: string } | null;
 }

@@ -79,8 +79,13 @@ Codex review, source-hash checked against the bundled video. It performs no infe
 `VerifyVideoFlowUseCase` with a given reference. The optional provider method
 `verify_reference_flow` returns observed/unknown judgments, validated against the exact
 supplied step IDs and frame timestamps. The shared `stepcheck_providers.reference_flow`
-order comparator is also used by MCP and Qwen verification scripts. The Web path performs
-one initial pass, while the MCP workflow owns automatic follow-up sampling.
+order comparator is also used by MCP and Qwen verification scripts. When `auto_refine=true`,
+the Web use case shares the pure `reference_refinement` planner with MCP: fit all context
+and new images within the effective provider budget, then review unknown IDs once more.
+The application validates citations against each pass, preserves prior observed judgments,
+checks the source hash across passes and recalculates order from the merged observations.
+Providers implement the same single-review interface for both passes; MCP uses its sampling
+host instead. Missing evidence stays unknown. No follow-up failure becomes partial success.
 
 `/api/video-flow/reference-demo` replays the actual two-pass Codex MCP record. It validates
 the source hash, initial-report provenance, cited sample order and preservation of prior

@@ -64,10 +64,30 @@ Open the [recorded evidence report](docs/assets/automatic-reference-report.html)
 checkout to inspect the same run; GitHub displays the HTML as a file.
 
 The web app also accepts **one video plus an ordered reference**. Edit the steps and
-visible criteria, then inspect each verdict and its cited frames. OpenAI and local Qwen
-implement this first-pass verification API; mock stays unavailable. A keyless, separately
+visible criteria, then inspect each verdict and its cited frames. With automatic refinement
+enabled, it checks unknown steps once more with additional source images, fitting the image
+budget and preserving earlier observed judgments. Initial/final views show the actual images
+reviewed at each stage and the stopping reason. OpenAI and local Qwen implement this API;
+mock stays unavailable. A keyless, separately
 labeled replay shows the actual two-pass Codex MCP run, with drying and full order still
 unknown. See [web reference verification and its validation limits](docs/web-reference-verification.md).
+
+An [actual local-Qwen upload run](docs/qwen3-web-auto.md) completed both passes in about
+399 seconds on a GTX 1660 Ti. Soap, lather and drying stayed unknown, so the full flow
+stayed unknown. Submitted images, raw responses and an earlier stopped run are saved;
+this verifies execution, not recognition accuracy.
+
+<details>
+<summary>Actual local-Qwen automatic verification: full flow remains unknown</summary>
+
+![Recorded local-Qwen final verdicts, four chronological source panels and independent evidence concerns](docs/assets/qwen3-web-auto.gif)
+
+This replays the final output of a 399-second batch run. Green borders mark cited
+samples; amber review flags uncertain evidence. Soap, lather and drying remain
+unknown. It shows no measured attention or confidence. See the [raw two-pass run
+and stopping conditions](docs/qwen3-web-auto.md).
+
+</details>
 
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong
@@ -322,7 +342,7 @@ npm run build
 
 - [ ] JEPA / representation-model provider
 - [x] Single-video upload, frame-based flow discovery, and evidence review in the web app / API
-- [x] Given-reference video verification, sampled-order checks, and recorded MCP replay in the web app / API
+- [x] Given-reference video verification, one automatic unknown follow-up, sampled-order checks, and recorded MCP replay in the web app / API
 - [ ] Video-native temporal models
 - [ ] PDF procedure ingestion
 - [ ] Audio narration as an additional signal
@@ -349,3 +369,4 @@ method.
 see [video attribution](docs/assets/video-demo/SOURCE.md). Anthony Albright's handwashing
 video and its derived images/GIFs are CC BY-SA 2.0;
 see [attribution and modifications](docs/assets/video-demo/new-video-transfer/ATTRIBUTION.md).
+The local-Qwen replay has [additional GIF attribution](docs/assets/video-demo/qwen3-web-auto-small/GIF-ATTRIBUTION.md).
