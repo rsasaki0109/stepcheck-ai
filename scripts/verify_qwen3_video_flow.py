@@ -21,6 +21,7 @@ from typing import Literal
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "providers"), str(ROOT / "backend")]
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from stepcheck_providers.reference_flow import compare_order
 from app.infrastructure.video import inspect_duration, read_video_frame
 from diagnose_qwen3_temporal import MODEL, REVISION, check_time_tokens, expected_pair_times, write_json
 from diagnose_local_vlm import inspect_input
@@ -61,23 +62,6 @@ def parse_verification(raw: str, reference: dict, pairs: list[list[int]], fps: f
         steps.append({**verdict.model_dump(), "index":index, "label":expected["label"],
                       "evidence_seconds":times})
     return {"title": reference["title"], "steps":steps, **compare_order(steps)}
-
-
-def compare_order(steps: list[dict]) -> dict:
-    """Derive order from cited samples, never from list positions or expected labels."""
-    transitions = []
-    for left, right in zip(steps, steps[1:]):
-        a, b = left["evidence_seconds"], right["evidence_seconds"]
-        status = "unknown"
-        if left["status"] == right["status"] == "observed" and a and b:
-            if max(a) < min(b): status = "sampled_before"
-            elif min(a) > max(b): status = "violated"
-        transitions.append({"from":left["step_id"], "to":right["step_id"], "status":status})
-    statuses = [t["status"] for t in transitions]
-    overall = "violated" if "violated" in statuses else "supported_sample_order" if statuses and all(
-        s=="sampled_before" for s in statuses) else "unknown"
-    return {"transitions":transitions, "order_status":overall,
-            "time_note":"Cited sample order, not continuous execution or exact action boundaries."}
 
 
 def parse_window_verification(raw: str, reference: dict, pairs: list[list[int]], fps: float) -> dict:

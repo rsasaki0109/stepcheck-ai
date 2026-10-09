@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 
 from .types import StepVerdict, VerificationInput
 from .flow import Detection, FlowUnavailableError, VideoFrame
+from .reference_flow import ReferenceFlow, ReferenceJudgment
 
 
 class VisionProvider(ABC):
@@ -19,6 +20,12 @@ class VisionProvider(ABC):
     #: Stable identifier used for registration and selection (e.g. "openai").
     name: str = "base"
     supports_flow: bool = False
+    supports_reference_flow: bool = False
+
+    async def verify_reference_flow(self, reference: ReferenceFlow, frames: list[VideoFrame],
+                                    duration_seconds: float) -> ReferenceJudgment:
+        """Review given steps against timestamped video images. Optional capability."""
+        raise FlowUnavailableError(f"Provider '{self.name}' does not support reference video verification.")
 
     async def discover_flow(self, frames: list[VideoFrame], duration_seconds: float) -> Detection:
         """Recognize actions without an expected procedure. Optional provider capability."""

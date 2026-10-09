@@ -80,7 +80,8 @@ python scripts/run_flow_detection.py --video docs/assets/video-demo/new-video-tr
 **アダプターはモデルAPIを呼びません。画像を見るホストの回答は各段階で必要です。**
 自動化したのはMCPの呼び出し制御・画像計画・追加確認への遷移・終了処理です。
 通常の対応ホストならアダプターを使わず、同じツールの依存解決型samplingで回答できます。
-Webアプリの動画APIにはまだ接続していません。
+MCPの自動追加確認はWebアップロードAPIへはまだ接続していません。
+[Webの工程確認](web-reference-verification.md)では初回のVLM判断と、この実MCP記録の再生に対応しています。
 
 ## ブラウザで根拠を確認する
 

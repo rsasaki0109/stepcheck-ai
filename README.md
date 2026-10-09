@@ -63,6 +63,12 @@ views, clickable cited frames, initial/final verdicts, and the actual submitted 
 Open the [recorded evidence report](docs/assets/automatic-reference-report.html) from a local
 checkout to inspect the same run; GitHub displays the HTML as a file.
 
+The web app also accepts **one video plus an ordered reference**. Edit the steps and
+visible criteria, then inspect each verdict and its cited frames. OpenAI and local Qwen
+implement this first-pass verification API; mock stays unavailable. A keyless, separately
+labeled replay shows the actual two-pass Codex MCP run, with drying and full order still
+unknown. See [web reference verification and its validation limits](docs/web-reference-verification.md).
+
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong
 evidence and invalid pair IDs. These raw outputs are preserved separately in the
@@ -269,21 +275,21 @@ Frontend: `NEXT_PUBLIC_API_BASE` (default `http://localhost:8000`).
 
 ## README animation
 
-The main GIF is stored at [`docs/assets/qwen-3b-framewise.gif`](docs/assets/qwen-3b-framewise.gif). Embed it from the
+The main GIF is stored at [`docs/assets/codex-reference-refinement.gif`](docs/assets/codex-reference-refinement.gif). Embed it from the
 repository root with:
 
 ```markdown
-![StepCheck AI actual local VLM flow and evidence review](docs/assets/qwen-3b-framewise.gif)
+![StepCheck AI recorded MCP review and follow-up evidence](docs/assets/codex-reference-refinement.gif)
 ```
 
-To regenerate it from the real video, saved model predictions, and independent review (requires FFmpeg):
+To regenerate it from the real video and the saved first/follow-up MCP judgments (requires FFmpeg):
 
 ```bash
 python -m pip install Pillow
-python scripts/generate_detected_flow_gif.py --report docs/assets/video-demo/qwen-3b-framewise-flow.json --audit docs/assets/video-demo/qwen-3b-framewise-review.json --output docs/assets/qwen-3b-framewise.gif
+python scripts/generate_reference_refinement_gif.py --before docs/assets/video-demo/codex-reference-refinement/before-verification.json --after docs/assets/video-demo/codex-reference-refinement/verification.json --output docs/assets/codex-reference-refinement.gif
 ```
 
-Rendering replays saved predictions and review; it does not run inference.
+Rendering replays saved judgments; it does not run inference.
 Run a new model analysis with the [Colab notebook](notebooks/stepcheck_local_vlm.ipynb).
 The separate Codex/MCP procedure GIF is [`docs/assets/demo.gif`](docs/assets/demo.gif),
 generated with `python scripts/generate_readme_gif.py`.
@@ -316,6 +322,7 @@ npm run build
 
 - [ ] JEPA / representation-model provider
 - [x] Single-video upload, frame-based flow discovery, and evidence review in the web app / API
+- [x] Given-reference video verification, sampled-order checks, and recorded MCP replay in the web app / API
 - [ ] Video-native temporal models
 - [ ] PDF procedure ingestion
 - [ ] Audio narration as an additional signal
@@ -338,5 +345,7 @@ method.
 
 ## License
 
-[MIT](LICENSE) © StepCheck AI contributors. The included CDC footage is public domain;
-see [video attribution](docs/assets/video-demo/SOURCE.md).
+[MIT](LICENSE) © StepCheck AI contributors (code). The CDC footage is public domain;
+see [video attribution](docs/assets/video-demo/SOURCE.md). Anthony Albright's handwashing
+video and its derived images/GIFs are CC BY-SA 2.0;
+see [attribution and modifications](docs/assets/video-demo/new-video-transfer/ATTRIBUTION.md).

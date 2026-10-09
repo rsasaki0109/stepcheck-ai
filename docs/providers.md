@@ -68,6 +68,18 @@ without an inference API key. It is loaded once per backend process, limits samp
 frames for GPU memory, and maps validated model frame IDs to actual source timestamps.
 See [Colab/local VLM setup](colab-local-vlm.md).
 
+Given-reference video verification is a separate optional capability:
+set `supports_reference_flow = True` and implement
+`verify_reference_flow(reference: ReferenceFlow, frames: list[VideoFrame], duration_seconds: float) -> ReferenceJudgment`.
+The contracts in `stepcheck_providers.reference_flow` require exactly one `observed` or
+`unknown` judgment for each reference ID. Observed needs a supplied timestamp; unknown
+can have no citation. Missing actions are never automatically `not_done`, and this
+contract has no confidence score. `build_reference_flow` rejects missing/duplicate IDs
+and unsupplied evidence, retains reference order, and derives sample order independently.
+OpenAI and local Qwen implement the capability; mock does not. The Web API currently
+performs an initial pass; automatic unknown refinement remains in the MCP workflow.
+See [Web reference verification](web-reference-verification.md).
+
 The contract was chosen so the roadmap items need **no application changes**:
 
 | Future capability | How the contract already supports it |

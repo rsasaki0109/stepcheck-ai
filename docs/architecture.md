@@ -73,6 +73,20 @@ The web UI seeks a local video when an action is selected and displays its decod
 evidence images. `/api/video-flow/demo` is a separately labeled replay of the saved
 Codex review, source-hash checked against the bundled video. It performs no inference.
 
+## Given-reference video verification
+
+`POST /api/video-flow/verify` uses the same bounded upload/decoder and calls
+`VerifyVideoFlowUseCase` with a given reference. The optional provider method
+`verify_reference_flow` returns observed/unknown judgments, validated against the exact
+supplied step IDs and frame timestamps. The shared `stepcheck_providers.reference_flow`
+order comparator is also used by MCP and Qwen verification scripts. The Web path performs
+one initial pass, while the MCP workflow owns automatic follow-up sampling.
+
+`/api/video-flow/reference-demo` replays the actual two-pass Codex MCP record. It validates
+the source hash, initial-report provenance, cited sample order and preservation of prior
+observations before decoding frames. The UI labels the replay, permits initial/final
+comparison, and keeps unknown drying. See [Web reference verification](web-reference-verification.md).
+
 ## Extension points
 
 See [`providers.md`](./providers.md) for how the design accommodates JEPA, video models,

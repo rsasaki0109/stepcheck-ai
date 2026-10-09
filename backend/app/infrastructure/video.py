@@ -27,7 +27,7 @@ class DecoderUnavailableError(RuntimeError):
 class SampledVideo:
     duration_seconds: float
     frames: list[VideoFrame]
-    sample_interval_seconds: float
+    sample_interval_seconds: float | None
 
 
 def decoder_ready() -> bool:

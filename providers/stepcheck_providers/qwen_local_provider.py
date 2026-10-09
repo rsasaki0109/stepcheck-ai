@@ -7,6 +7,7 @@ import importlib.util
 import io
 import json
 import threading
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 
@@ -14,6 +15,7 @@ from .base import VisionProvider
 from .flow import Detection, DetectedAction, FlowInferenceError, FlowUnavailableError, VideoFrame
 from .registry import register_provider
 from .types import StepVerdict, VerificationInput
+from .reference_flow import ReferenceFlow, ReferenceJudgment, reference_prompt
 
 DEFAULT_MODEL = "Qwen/Qwen2.5-VL-3B-Instruct"
 
@@ -31,6 +33,38 @@ class LocalDetection(BaseModel):
     title: str
     actions: list[LocalAction] = Field(max_length=50)
     limitations: list[str]
+
+
+class LocalReferenceObservation(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    step_id: str
+    status: Literal["observed", "unknown"]
+    reason: str
+    evidence_frame_ids: list[StrictInt] = Field(max_length=96)
+    uncertainty: str
+
+
+class LocalReferenceJudgment(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    observations: list[LocalReferenceObservation] = Field(min_length=1, max_length=30)
+
+
+def parse_local_reference(raw: str, frames: list[VideoFrame]) -> ReferenceJudgment:
+    content = raw.strip()
+    if content.startswith("```json") and content.endswith("```"):
+        content = content[7:-3].strip()
+    try:
+        result = LocalReferenceJudgment.model_validate_json(content)
+        observations = []
+        for item in result.observations:
+            if any(i < 0 or i >= len(frames) for i in item.evidence_frame_ids):
+                raise ValueError("Unsupplied frame ID.")
+            observations.append({"step_id": item.step_id, "status": item.status, "reason": item.reason,
+                "uncertainty": item.uncertainty,
+                "evidence_seconds": [frames[i].timestamp_seconds for i in item.evidence_frame_ids]})
+        return ReferenceJudgment(observations=observations)
+    except ValueError as exc:
+        raise FlowInferenceError("Local reference verification returned invalid JSON or unsupported evidence.") from exc
 
 
 def parse_local_detection(raw: str, frames: list[VideoFrame]) -> Detection:
@@ -58,6 +92,7 @@ def parse_local_detection(raw: str, frames: list[VideoFrame]) -> Detection:
 @register_provider("qwen-local")
 class QwenLocalProvider(VisionProvider):
     supports_flow = True
+    supports_reference_flow = True
     max_flow_frames = 24
 
     def __init__(self, model: str = DEFAULT_MODEL, max_new_tokens: int = 2400,
@@ -129,6 +164,24 @@ class QwenLocalProvider(VisionProvider):
                                                 skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
             self.last_raw_response = raw
             return raw
+
+    async def verify_reference_flow(self, reference: ReferenceFlow, frames: list[VideoFrame],
+                                    duration_seconds: float) -> ReferenceJudgment:
+        if not frames or len(frames) > self.max_flow_frames:
+            raise FlowInferenceError("Local reference verification supports 1–24 sampled frames.")
+        labels = [f"frame_id {i} at {f.timestamp_seconds!r}s (the following image only):"
+                  for i, f in enumerate(frames)]
+        prompt = reference_prompt(reference, duration_seconds) + (
+            "\nFor this local response, cite zero-based evidence_frame_ids from the image labels "
+            "instead of timestamps. Return ONLY JSON matching this schema, no markdown:\n"
+            + json.dumps(LocalReferenceJudgment.model_json_schema()))
+        try:
+            raw = await asyncio.to_thread(self._generate, [f.image for f in frames], prompt, labels)
+        except FlowUnavailableError:
+            raise
+        except Exception as exc:
+            raise FlowInferenceError("Local reference GPU inference failed. Check dependencies, memory and frame budget.") from exc
+        return parse_local_reference(raw, frames)
 
     async def discover_flow(self, frames: list[VideoFrame], duration_seconds: float) -> Detection:
         if not frames or len(frames) > 32:

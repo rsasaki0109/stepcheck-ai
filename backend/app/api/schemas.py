@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from typing import Literal
 
 from ..domain import VerificationReport
+from stepcheck_providers.reference_flow import ReferenceFlow
 
 
 class StepResultOut(BaseModel):
@@ -97,3 +98,44 @@ class VideoFlowOut(BaseModel):
     frames: list[VideoFrameOut]
     limitations: list[str]
     time_note: str
+
+
+class ReferenceStepOut(BaseModel):
+    step_id: str
+    index: int
+    label: str
+    status: Literal["observed", "unknown"]
+    reason: str
+    uncertainty: str
+    evidence_seconds: list[float]
+
+
+class ReferenceTransitionOut(BaseModel):
+    from_: str = Field(alias="from")
+    to: str
+    status: Literal["sampled_before", "unknown", "violated"]
+
+
+class ReferencePassOut(BaseModel):
+    steps: list[ReferenceStepOut]
+    transitions: list[ReferenceTransitionOut]
+    order_status: Literal["supported_sample_order", "unknown", "violated"]
+
+
+class VideoReferenceOut(ReferencePassOut):
+    title: str
+    reference: ReferenceFlow
+    provider: str
+    model: str
+    analysis_mode: Literal["live", "recorded_demo"]
+    source_sha256: str
+    duration_seconds: float
+    sample_interval_seconds: float | None
+    expected_procedure_supplied: Literal[True]
+    sampled_seconds: list[float]
+    frames: list[VideoFrameOut]
+    time_note: str
+    scope_note: str
+    initial: ReferencePassOut | None = None
+    workflow: dict | None = None
+    source_credit: str | None = None

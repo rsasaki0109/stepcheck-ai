@@ -33,6 +33,8 @@ export interface VideoFlowStatus {
   max_video_bytes: number;
   max_video_seconds: number;
   max_video_frames: number;
+  reference_ready: boolean;
+  reference_reason: string | null;
 }
 
 export interface VideoAction {
@@ -65,4 +67,47 @@ export interface VideoFlowReport {
   frames: VideoFrame[];
   limitations: string[];
   time_note: string;
+}
+
+export interface ReferenceFlow {
+  title: string;
+  scope?: string;
+  steps: { id: string; label: string; criterion: string }[];
+}
+
+export interface ReferenceStepResult {
+  step_id: string;
+  index: number;
+  label: string;
+  status: "observed" | "unknown";
+  reason: string;
+  uncertainty: string;
+  evidence_seconds: number[];
+}
+
+export interface ReferencePass {
+  steps: ReferenceStepResult[];
+  transitions: { from: string; to: string; status: "sampled_before" | "unknown" | "violated" }[];
+  order_status: "supported_sample_order" | "unknown" | "violated";
+}
+
+export interface VideoReferenceReport extends ReferencePass {
+  title: string;
+  reference: ReferenceFlow;
+  provider: string;
+  model: string;
+  analysis_mode: "live" | "recorded_demo";
+  source_sha256: string;
+  duration_seconds: number;
+  sample_interval_seconds: number | null;
+  expected_procedure_supplied: true;
+  sampled_seconds: number[];
+  frames: VideoFrame[];
+  time_note: string;
+  scope_note: string;
+  initial: ReferencePass | null;
+  workflow: { sampling_requests: number; stop_reason: string; unknown_step_ids: string[];
+    interval_selection?: { chosen_interval_seconds: number | null;
+      attempts: { interval_seconds: number; status: string; frames?: number }[] } | null } | null;
+  source_credit: string | null;
 }
