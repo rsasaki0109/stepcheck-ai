@@ -68,14 +68,16 @@ class AutomaticWorkflowTest(unittest.TestCase):
 
     def test_one_call_drives_two_sampling_rounds_and_fits_budget(self):
         saved, calls = self.run_workflow([observed("a", [0]), observed("b", [], "unknown"), observed("c", [20])],
-            [observed("b", [8])])
+            [observed("b", [10])])
         self.assertEqual(len(calls), 2)
         self.assertEqual(saved["order_status"], "supported_sample_order")
         self.assertEqual(saved["workflow"]["stop_reason"], "no_unknown_steps")
         selection = saved["workflow"]["interval_selection"]
-        self.assertEqual(selection["chosen_interval_seconds"], 8)
+        self.assertIsNone(selection["chosen_interval_seconds"])
+        self.assertEqual(selection["strategy"], "gap_bisection")
+        self.assertEqual(selection["plan"]["sampled_seconds"], [0, 5, 10, 20])
         self.assertTrue(all(a["status"] == "over_budget" for a in selection["attempts"][:-1]))
-        self.assertEqual(selection["attempts"][-1]["frames"], 4)
+        self.assertEqual(len(selection["plan"]["sampled_seconds"]), 4)
         self.assertNotIn('"id": "a"', calls[1].messages[0].content[0].text)
 
     def test_unknown_after_followup_stops_instead_of_repeated_sampling(self):

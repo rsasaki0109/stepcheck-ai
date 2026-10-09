@@ -54,7 +54,8 @@ after 12 additional samples, so the full flow stayed **unknown**. The video, raw
 requests/responses, failed budget attempt, and an evidence GIF are saved for inspection.
 
 `verify_reference_flow_auto(reference)` now runs initial review and one follow-up in a
-single MCP tool call, widening the follow-up interval to fit its image budget. It stops
+single MCP tool call, retaining context and adding midpoint images in the largest gaps
+between previously reviewed times within its image budget. It stops
 with unknowns preserved when evidence is still missing. See the [actual automatic workflow
 and one-command adapter](docs/automatic-reference-workflow.md); recognition still requires
 a vision-capable sampling host.
@@ -76,6 +77,11 @@ An [actual local-Qwen upload run](docs/qwen3-web-auto.md) completed both passes 
 399 seconds on a GTX 1660 Ti. Soap, lather and drying stayed unknown, so the full flow
 stayed unknown. Submitted images, raw responses and an earlier stopped run are saved;
 this verifies execution, not recognition accuracy.
+
+Automatic refinement now [fills the largest gaps between reviewed times](docs/adaptive-reference-sampling.md).
+With the same frozen initial answer and 12-image budget, one real Qwen follow-up used
+seven new images instead of four and reduced the largest scoped review gap from 2.90s
+to 1.45s. Soap, lather and drying still stayed unknown; recognition did not improve in this run.
 
 <details>
 <summary>Actual local-Qwen automatic verification: full flow remains unknown</summary>

@@ -108,9 +108,11 @@ export interface VideoReferenceReport extends ReferencePass {
   scope_note: string;
   initial: ReferencePass | null;
   workflow: { sampling_requests: number; stop_reason: string; unknown_step_ids: string[];
-    interval_selection?: { chosen_interval_seconds: number | null;
+    interval_selection?: { chosen_interval_seconds: number | null; strategy?: string;
       attempts: { interval_seconds: number; status: string; frames?: number }[] } | null } | null;
   source_credit: string | null;
   refinement?: { target_step_ids: string[]; sampled_seconds: number[]; added_seconds: number[];
-    windows: { step_id: string; start_seconds: number; end_seconds: number }[]; selection_note: string } | null;
+    windows: { step_id: string; start_seconds: number; end_seconds: number }[]; selection_note: string;
+    sampling_strategy?: string; coverage?: { before_max_gap_seconds: number; after_max_gap_seconds: number;
+      requested_max_gap_seconds: number; budget_limited: boolean } } | null;
 }

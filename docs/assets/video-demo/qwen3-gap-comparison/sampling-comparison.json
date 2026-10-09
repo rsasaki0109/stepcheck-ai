@@ -1,0 +1,11 @@
+{
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "initial_reused": true,
+  "same_followup_budget": 12,
+  "before_max_gap_seconds": 2.903273,
+  "uniform_after_max_gap_seconds": 2.903273,
+  "gap_after_max_gap_seconds": 1.451637,
+  "recognition_improved": false,
+  "uniform_order": "unknown",
+  "gap_order": "unknown"
+}

@@ -17,8 +17,8 @@ class NoNewSamplesError(ValueError):
 def validate_options(interval, max_frames):
     if not math.isfinite(interval) or interval <= 0:
         raise ValueError("Refinement interval must be finite and positive.")
-    if not isinstance(max_frames, int) or not 2 <= max_frames <= 96:
-        raise ValueError("Refinement frame budget must be an integer between 2 and 96.")
+    if not 2 <= max_frames <= 96:
+        raise ValueError("Refinement frame budget must be between 2 and 96.")
 
 
 def refinement_scope(steps, reviewed_seconds, duration):

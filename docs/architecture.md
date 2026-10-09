@@ -82,6 +82,9 @@ supplied step IDs and frame timestamps. The shared `stepcheck_providers.referenc
 order comparator is also used by MCP and Qwen verification scripts. When `auto_refine=true`,
 the Web use case shares the pure `reference_refinement` planner with MCP: fit all context
 and new images within the effective provider budget, then review unknown IDs once more.
+Automatic selection preserves mandatory context and bisects the largest gaps between
+previously reviewed times within the search windows. Desired temporal spacing is a stopping
+target, subject to the image budget, and carries no semantic confidence or attention claim.
 The application validates citations against each pass, preserves prior observed judgments,
 checks the source hash across passes and recalculates order from the merged observations.
 Providers implement the same single-review interface for both passes; MCP uses its sampling

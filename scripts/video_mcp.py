@@ -357,6 +357,11 @@ def fit_refinement_budget(previous: dict, sample_interval_seconds: float, max_fr
 
 def refinement_request(previous: dict, sample_interval_seconds: float, max_frames: int) -> Sample:
     plan = refinement_plan(previous, sample_interval_seconds, max_frames)
+    return refinement_request_for_plan(previous, plan)
+
+
+def refinement_request_for_plan(previous: dict, plan: dict) -> Sample:
+    prior_observations(previous)
     target = {**previous["reference"], "steps": [s for s in previous["reference"]["steps"]
                                                if s["id"] in plan["target_step_ids"]]}
     prompt = (
@@ -380,6 +385,11 @@ def refinement_request(previous: dict, sample_interval_seconds: float, max_frame
 def build_refinement_result(previous: dict, sample_interval_seconds: float, max_frames: int,
                             completion: CreateMessageResult) -> dict:
     plan = refinement_plan(previous, sample_interval_seconds, max_frames)
+    return refinement_result_for_plan(previous, plan, completion)
+
+
+def refinement_result_for_plan(previous: dict, plan: dict, completion: CreateMessageResult) -> dict:
+    prior_observations(previous)
     if completion is None or completion.content.type != "text":
         raise ToolError("The vision host must return a JSON text response.")
     try:
@@ -469,7 +479,9 @@ def auto_followup_request(max_frames: int,
                           selection: Annotated[dict, Resolve(auto_interval_selection)]) -> Sample | None:
     if selection["plan"] is None:
         return None
-    return refinement_request(initial, selection["chosen_interval_seconds"], max_frames)
+    if len(selection["plan"]["sampled_seconds"]) > max_frames:
+        raise ToolError("Automatic refinement plan exceeds max_frames.")
+    return refinement_request_for_plan(initial, selection["plan"])
 
 
 @mcp.tool()
@@ -486,7 +498,7 @@ def verify_reference_flow_auto(reference: dict, sample_interval_seconds: float =
     """
     report, count = initial, 1
     if selection["plan"] is not None:
-        report = build_refinement_result(initial, selection["chosen_interval_seconds"], max_frames, completion)
+        report = refinement_result_for_plan(initial, selection["plan"], completion)
         count = 2
         stop_reason = "unknown_after_followup" if any(s["status"] == "unknown" for s in report["steps"]) else "no_unknown_steps"
     else:
@@ -496,7 +508,7 @@ def verify_reference_flow_auto(reference: dict, sample_interval_seconds: float =
         "unknown_step_ids": [s["step_id"] for s in report["steps"] if s["status"] == "unknown"],
         "requested_refinement_interval_seconds": refinement_interval_seconds,
         "max_frames": max_frames, "interval_selection": selection,
-        "policy": "At most one follow-up. Double interval to fit the complete requested image set; preserve unknowns and prior observed judgments."}}
+        "policy": shared_refinement.POLICY}}
     write_reference_verification(report, initial if count == 2 else None)
     REFERENCE_REVIEW.with_name("initial-verification.json").write_text(
         json.dumps(initial, ensure_ascii=False, indent=2), encoding="utf-8")

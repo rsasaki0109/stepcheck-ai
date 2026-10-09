@@ -1,0 +1,139 @@
+{
+  "executed_at_utc": "2026-10-09T06:37:22.617829+00:00",
+  "experiment": "One NEW real follow-up with prior actual initial judgments frozen. Not two new GPU calls or a fresh upload.",
+  "known_video": true,
+  "accuracy_benchmark": false,
+  "initial_reused": true,
+  "initial_source": "docs/assets/video-demo/qwen3-web-auto-small/api-response.json",
+  "initial_source_sha256": "ae695e0f6435834a389ce2b10884268ccd7d2e625d79a144a032bacc300503f9",
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "model_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+  "load_in_4bit": true,
+  "keep_vision_fp16": true,
+  "max_pixels": 50176,
+  "max_new_tokens": 1200,
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "offline": true,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.1",
+    "accelerate": "1.15.0",
+    "bitsandbytes": "0.48.2"
+  },
+  "refinement_max_frames": 12,
+  "requested_interval_seconds": 0.25,
+  "new_gpu_inference_calls": 1,
+  "status": "validated_response",
+  "code_sha256": {
+    "docs/assets/video-demo/qwen3-gap-comparison/run.py": "315d1c8eddda23c285103e5e924a0f7c670c796a6562eebf488f3365e3e1ff7d",
+    "providers/stepcheck_providers/reference_refinement.py": "a66e1ee70186c830d797d0623c57b3d7ba616d893bcbc9ecf121ae9f659a57b0",
+    "providers/stepcheck_providers/reference_flow.py": "b8c0189ac935cf7b9a1a8cfcb186ddc684f6cd7d8c38c67e69f40fdf37dcb96d",
+    "providers/stepcheck_providers/qwen_local_provider.py": "aa438e682ccab9a74ac4acc07797a1cdd82e356836e0bb761fc2bb0deaa2ad76",
+    "backend/app/infrastructure/video.py": "8317b08ad76aef7490fedc65563a07989e183a1afb79946b8f9eb5eed36f9824",
+    "backend/app/application/verify_video_flow_use_case.py": "100cd206d715d2e2d863424a45ede090f03575a8a5e8ee9411c0e49599ba9177"
+  },
+  "base_commit": "ed60d8f5e3f6a2a38b102801743b253a36fa0283",
+  "followup_image_count": 12,
+  "new_inference_seconds": 149.39,
+  "workflow": {
+    "sampling_requests": 2,
+    "stop_reason": "unknown_after_followup",
+    "unknown_step_ids": [
+      "soap",
+      "lather",
+      "dry"
+    ],
+    "requested_refinement_interval_seconds": 0.25,
+    "max_frames": 12,
+    "interval_selection": {
+      "plan": {
+        "target_step_ids": [
+          "soap",
+          "lather",
+          "dry"
+        ],
+        "windows": [
+          {
+            "step_id": "soap",
+            "start_seconds": 5.806545,
+            "end_seconds": 17.419636
+          },
+          {
+            "step_id": "lather",
+            "start_seconds": 5.806545,
+            "end_seconds": 17.419636
+          },
+          {
+            "step_id": "dry",
+            "start_seconds": 23.226182,
+            "end_seconds": 31.936
+          }
+        ],
+        "sampled_seconds": [
+          5.806545,
+          7.258182,
+          8.709818,
+          10.161455,
+          13.064728,
+          15.968,
+          17.419636,
+          23.226182,
+          24.677819,
+          27.581091,
+          30.484364,
+          31.936
+        ],
+        "added_seconds": [
+          7.258182,
+          10.161455,
+          13.064728,
+          15.968,
+          24.677819,
+          27.581091,
+          30.484364
+        ],
+        "sampling_strategy": "gap_bisection",
+        "coverage": {
+          "before_max_gap_seconds": 2.903273,
+          "after_max_gap_seconds": 1.451637,
+          "requested_max_gap_seconds": 0.25,
+          "budget_limited": true
+        },
+        "selection_note": "Search windows use adjacent observed steps as hints. Required context is retained; new images bisect the largest gaps between all previously reviewed timestamps within these windows. Temporal spacing is not action evidence, spatial attention, or proof of absence or order outside the windows."
+      },
+      "chosen_interval_seconds": null,
+      "strategy": "gap_bisection",
+      "attempts": [],
+      "stop_reason": null
+    },
+    "policy": "At most one follow-up. Preserve required context; bisect the largest unreviewed time gaps within the search windows until the requested spacing or image budget is reached. Preserve unknowns and prior observed judgments."
+  },
+  "order_status": "unknown",
+  "elapsed_seconds": 150.109,
+  "files": {
+    "code/backend/app/application/verify_video_flow_use_case.py": "100cd206d715d2e2d863424a45ede090f03575a8a5e8ee9411c0e49599ba9177",
+    "code/backend/app/infrastructure/video.py": "8317b08ad76aef7490fedc65563a07989e183a1afb79946b8f9eb5eed36f9824",
+    "code/docs/assets/video-demo/qwen3-gap-comparison/run.py": "315d1c8eddda23c285103e5e924a0f7c670c796a6562eebf488f3365e3e1ff7d",
+    "code/providers/stepcheck_providers/qwen_local_provider.py": "aa438e682ccab9a74ac4acc07797a1cdd82e356836e0bb761fc2bb0deaa2ad76",
+    "code/providers/stepcheck_providers/reference_flow.py": "b8c0189ac935cf7b9a1a8cfcb186ddc684f6cd7d8c38c67e69f40fdf37dcb96d",
+    "code/providers/stepcheck_providers/reference_refinement.py": "a66e1ee70186c830d797d0623c57b3d7ba616d893bcbc9ecf121ae9f659a57b0",
+    "followup/frame-00.jpg": "87e1a92ebc2922205d5ba71e5911b403450b0baf69b634b4c6d3a95d276dad83",
+    "followup/frame-01.jpg": "6a17c5a047571c465dceeb7740491df884d29c7d4ef26c3e886205ec8b893eb2",
+    "followup/frame-02.jpg": "8783377e4f1989a507b262f8f8d97adf316d63886c3c2c22187d56a4574add58",
+    "followup/frame-03.jpg": "cb7f213c357c43f85d2b6cbf188b7472e12f1472409bb2cfbff8cdc2d49503d7",
+    "followup/frame-04.jpg": "a67d49d3bcf6565f670eda495f02609da8f80fc2811b35c7276105f8f956caad",
+    "followup/frame-05.jpg": "a61c2678ce7efa8e609e2ec99ba784b1b50483302aa6538a53c2662cca6e3d0e",
+    "followup/frame-06.jpg": "f4a6b8f57b0fdefb5fe25e7bec986ff6e952a1e597d11ab13ee613661c3bb222",
+    "followup/frame-07.jpg": "cc8b2734e77066eaceee42ef2ee2414d5f385d5c1605da9d2f1bc41e29135397",
+    "followup/frame-08.jpg": "3e81e186d5b2b1078f081bf75fb20fcaa167bc4a5d5e58a5bbf79329649c056a",
+    "followup/frame-09.jpg": "b1a778568c73f25bb2c208bd967d138e9b96ad0caf1d0ee93a92fee70b7afc36",
+    "followup/frame-10.jpg": "8912ec389769d29f129a8c0bf3271ea4e3d4fa664f3ef436e98b48cc150e0bc5",
+    "followup/frame-11.jpg": "37ebe19d4c3259546aa37928b6d0072b44effcf4dd4d87cac952857b94e08a7d",
+    "followup/request.json": "ccbbd94c323f8104c09e89d89f9c7a12256379848b1f48576e97f2cd561d49ab",
+    "followup/response.txt": "a687e1b8923fb998b06ccd006be251f4cd0a5773a0f3559df798397faa8d9be9",
+    "reference-source.json": "be1c9b45c260511783e9a11e4ce582b61e4bda1ae3ff8b5d86b4859f9d596c05",
+    "run.py": "315d1c8eddda23c285103e5e924a0f7c670c796a6562eebf488f3365e3e1ff7d",
+    "verification.json": "934306508cf955160a8701940fe2c8b3175b9e90fbca4c61235f347d8413e6b3"
+  }
+}

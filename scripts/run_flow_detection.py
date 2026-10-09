@@ -30,7 +30,7 @@ async def main():
     mode.add_argument("--refine-from", type=Path, help="Prior verification JSON; calls refine_reference_flow for unknown steps")
     parser.add_argument("--max-frames", type=int, default=24, help="Refinement request frame budget")
     parser.add_argument("--auto-refine", action="store_true", help="With --reference: perform initial review and one budget-fitted follow-up in one MCP call")
-    parser.add_argument("--refinement-interval", type=float, default=0.25, help="Requested follow-up interval for --auto-refine; automatically widened to fit budget")
+    parser.add_argument("--refinement-interval", type=float, default=0.25, help="Desired maximum reviewed-time gap within search windows; new frames are selected within the budget")
     parser.add_argument("--output", type=Path, help="Server output JSON (required for verification/refinement)")
     args = parser.parse_args()
     if args.auto_refine and not args.reference:

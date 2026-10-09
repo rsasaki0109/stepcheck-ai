@@ -1,0 +1,10 @@
+{
+  "files": {
+    "docs/assets/video-demo/qwen3-web-auto-small/api-response.json": "ae695e0f6435834a389ce2b10884268ccd7d2e625d79a144a032bacc300503f9",
+    "docs/assets/video-demo/qwen3-gap-comparison/verification.json": "934306508cf955160a8701940fe2c8b3175b9e90fbca4c61235f347d8413e6b3",
+    "docs/assets/video-demo/qwen3-gap-comparison/manifest.json": "15ec7ea2100f2e9a50d27bb976bb3af5a7e561466e3a55468a7ae34ba2796d86",
+    "docs/assets/video-demo/qwen3-gap-comparison/sampling-comparison.json": "d4d0e602ab91b41de85af6194984b76dd7ee7bf056cdad2b906dc23b54c96db1",
+    "docs/assets/refinement-sampling-comparison.svg": "b7b269651e37e6b56d87ba268023c3737b7e75f17f54f017825ea9b79977d460",
+    "docs/assets/video-demo/qwen3-gap-comparison/plot_sampling.py": "48030b05eecce53a99ba87589d69e2d41cbaaa9bb87e4f627e1b3edd5bccfc21"
+  }
+}

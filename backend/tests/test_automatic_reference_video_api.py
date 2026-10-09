@@ -89,10 +89,11 @@ def test_two_real_image_passes_budget_fit_and_preserved_known_judgments(configur
     assert result["order_status"] == "supported_sample_order"
     assert result["initial"]["order_status"] == "unknown"
     assert result["initial"]["sampled_seconds"] == [0, 20, 31.936]
-    assert result["workflow"]["interval_selection"]["chosen_interval_seconds"] == 16
-    assert result["refinement"]["added_seconds"] == [16]
+    assert result["workflow"]["interval_selection"]["chosen_interval_seconds"] is None
+    assert result["workflow"]["interval_selection"]["strategy"] == "gap_bisection"
+    assert result["refinement"]["added_seconds"] == [10, 25.968]
     assert result["sample_interval_seconds"] is None
-    assert result["sampled_seconds"] == [0, 16, 20, 31.936]
+    assert result["sampled_seconds"] == [0, 10, 20, 25.968, 31.936]
     assert [s.id for s in provider.requests[1][0].steps] == ["b"]
     assert provider.requests[1][1][0] is provider.requests[0][1][0]
     assert provider.requests[1][1][-1] is provider.requests[0][1][-1]

@@ -147,7 +147,7 @@ export default function VideoReferencePanel() {
       <div className="mt-5 flex flex-wrap gap-3"><button type="button" disabled={!canRun} onClick={() => run(false)} className="rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40">{loading ? "確認中…" : "この動画で工程を確認"}</button>
         <button type="button" className={button} onClick={() => run(true)}>記録済みの工程確認を見る</button></div>
       {!status?.reference_ready && <p className={`mt-3 text-sm ${muted}`}>{status?.reference_reason || "モデル接続を確認しています。"} 記録済み結果は接続キーなしで見られます。</p>}
-      <p className={`mt-3 text-xs ${muted}`}>追加確認は未確認の工程だけに行います。画像予算に合わせて間隔を調整し、観測済みの判断は保持します。</p>
+      <p className={`mt-3 text-xs ${muted}`}>追加確認は未確認の工程だけに行います。必要な文脈画像を残し、画像予算内でレビュー時刻の空白を埋めます。観測済みの判断は保持します。</p>
     </fieldset>
     {error && <p role="alert" className="mt-4 rounded-lg bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200">{error}</p>}
     {report && <section className={`${card} mt-6`} aria-label="動画の4区間"><h3 className="font-semibold">動画の4区間</h3>
@@ -196,6 +196,7 @@ export default function VideoReferencePanel() {
         {report.workflow.interval_selection?.attempts.map((a, i) => <p key={i} className={`mt-1 text-xs ${muted}`}>{seconds(a.interval_seconds)} 間隔: {a.status === "over_budget" ? "画像予算を超過" : a.status === "fits" ? `${a.frames}枚で予算内` : a.status}</p>)}</>}
       {!report.workflow && <p className={`mt-3 text-sm ${muted}`}>追加確認を選択していないため、初回の判断で終了しました。</p>}
       {report.refinement && <><p className={`mt-3 text-sm ${muted}`}>追加確認: 新しい時刻 {report.refinement.added_seconds.length}枚 / 入力 {report.refinement.sampled_seconds.length}枚</p><p className={`mt-2 text-xs ${muted}`}>{report.refinement.selection_note}</p></>}
+      {report.refinement?.coverage && <><p className={`mt-3 text-sm ${muted}`}>検索範囲内のレビュー時刻の最大空白: {seconds(report.refinement.coverage.before_max_gap_seconds)} → {seconds(report.refinement.coverage.after_max_gap_seconds)}</p><p className={`mt-2 text-xs ${muted}`}>{report.refinement.coverage.budget_limited ? "画像予算に達したため、希望する間隔まで埋められていません。" : "希望する間隔まで時刻の空白を埋めました。"} 画像の間隔は動作の認識精度を示しません。</p></>}
       {report.source_credit && <p className={`mt-3 break-words text-xs ${muted}`}>{report.source_credit}</p>}
       <p className={`mt-3 break-all text-xs ${muted}`}>{report.provider} / {report.model} · {report.frames.length}枚 · 動画SHA-256: {report.source_sha256}</p></details>}
   </section>;
