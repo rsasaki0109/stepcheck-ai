@@ -58,6 +58,10 @@ single MCP tool call, widening the follow-up interval to fit its image budget. I
 with unknowns preserved when evidence is still missing. See the [actual automatic workflow
 and one-command adapter](docs/automatic-reference-workflow.md); recognition still requires
 a vision-capable sampling host.
+The adapter accepts `--video` and automatically exports `report.html`, with four chronological
+views, clickable cited frames, initial/final verdicts, and the actual submitted image sheets.
+Open the [recorded evidence report](docs/assets/automatic-reference-report.html) from a local
+checkout to inspect the same run; GitHub displays the HTML as a file.
 
 The **Qwen3 local experiments remain unverified**: open-ended native video returns three
 coarse actions; supplying reference steps and checking four windows still produces wrong

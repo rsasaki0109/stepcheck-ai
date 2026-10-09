@@ -1,0 +1,35 @@
+{
+  "kind": "HTML export of the recorded automatic MCP run; no new inference",
+  "recorded_run_commit": "9514e8e2b99bb5f890330f409682c919260e790d",
+  "source_sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332",
+  "source_linked_relatively": "video-demo/new-video-transfer/source.webm",
+  "order_status": "unknown",
+  "unknown_step_ids": [
+    "dry"
+  ],
+  "media_license": "CC BY-SA 2.0",
+  "source": "Anthony Albright / Hand Washing, https://commons.wikimedia.org/wiki/File:Hand_Washing_video.webm",
+  "modifications": "Source frames resized to JPEG thumbnails; actual sampling PNG sheets embedded unchanged. Video unchanged. Recorded verdicts presented interactively.",
+  "artifacts": [
+    {
+      "path": "docs/assets/automatic-reference-report.html",
+      "sha256": "ad23cacc62fcfcfed8de5d5aa9c59dc8de9c978ca0205142a07cabeb303e7f98"
+    },
+    {
+      "path": "docs/assets/video-demo/automatic-reference-workflow/verification.json",
+      "sha256": "194708a4c598266af49a746390d0413d814aeca35f81ed9d84cbf6300a2fef7e"
+    },
+    {
+      "path": "docs/assets/video-demo/automatic-reference-workflow/initial-verification.json",
+      "sha256": "e0bcce5aaa265f0a9e530fb68d699e45c6d86cb3b6a96d4ef16621377609bad9"
+    },
+    {
+      "path": "docs/assets/video-demo/automatic-reference-workflow/tool-result.json",
+      "sha256": "65e7c7300d9403d7c6b0a6dd51a65b3370c0746528933fd5d4a97db5f6e742b8"
+    },
+    {
+      "path": "docs/assets/video-demo/new-video-transfer/source.webm",
+      "sha256": "8ad356691e9312a182d30a02dcffca118dbbc4c6480a4570b41b6ab662502332"
+    }
+  ]
+}

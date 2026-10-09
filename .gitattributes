@@ -14,3 +14,6 @@ docs/assets/video-demo/codex-reference-sampling/* -text -whitespace
 docs/assets/video-demo/codex-reference-refinement/* -text -whitespace
 docs/assets/video-demo/new-video-transfer/** -text -whitespace
 docs/assets/video-demo/automatic-reference-workflow/** -text -whitespace
+# Generated viewer includes base64 images; preserve exported bytes without a huge text diff.
+docs/assets/automatic-reference-report.html -text -diff
+docs/assets/automatic-reference-report-manifest.json -text

@@ -21,6 +21,8 @@ from mcp.types import CreateMessageResult, TextContent
 async def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--bridge-dir", type=Path, required=True)
+    parser.add_argument("--video", type=Path, help="Source video; overrides STEPCHECK_DEMO_VIDEO")
+    parser.add_argument("--source-credit", default="", help="Source attribution displayed in the HTML report")
     parser.add_argument("--interval", type=float, help="Defaults to 0.75 s for detection/verification, 0.25 s for refinement")
     parser.add_argument("--reviewer", default="vision session through file MCP adapter")
     mode = parser.add_mutually_exclusive_group()
@@ -41,6 +43,9 @@ async def main():
         raise ValueError("Specify --output for verification/refinement to preserve earlier evidence.")
     if args.refine_from and args.output.resolve() == args.refine_from.resolve():
         raise ValueError("Refinement output must differ from the prior report path.")
+    video = (args.video or Path(os.environ.get("STEPCHECK_DEMO_VIDEO",
+        str(Path(__file__).resolve().parents[1] / "docs/assets/video-demo/source.webm")))).resolve()
+    source_hash = hashlib.sha256(video.read_bytes()).hexdigest()
     interval = args.interval if args.interval is not None else (0.25 if args.refine_from else 0.75)
     arguments = {"sample_interval_seconds": interval}
     if args.reference:
@@ -53,7 +58,8 @@ async def main():
         tool_name = "verify_reference_flow_auto"
         arguments.update(refinement_interval_seconds=args.refinement_interval, max_frames=args.max_frames)
     (args.bridge_dir / "tool-request.json").write_text(json.dumps({"tool": tool_name,
-        "arguments": arguments, "reviewer": args.reviewer}, indent=2), encoding="utf-8")
+        "arguments": arguments, "reviewer": args.reviewer, "source_video": str(video),
+        "source_sha256": source_hash}, indent=2), encoding="utf-8")
 
     sampling_index = 0
 
@@ -98,6 +104,7 @@ async def main():
                                    content=TextContent(type="text", text=answer))
 
     server_env = dict(os.environ)
+    server_env["STEPCHECK_DEMO_VIDEO"] = str(video)
     if args.output:
         server_env["STEPCHECK_REFERENCE_REVIEW" if args.reference or args.refine_from else "STEPCHECK_DETECTED_FLOW"] = str(args.output.resolve())
     server = StdioServerParameters(command=sys.executable, env=server_env,
@@ -111,6 +118,16 @@ async def main():
                 print(content.text, flush=True)
         if result.is_error:
             raise RuntimeError("Flow detection failed; see MCP result above.")
+    if args.reference or args.refine_from:
+        from render_reference_report import render_report
+        report = json.loads(args.output.read_text(encoding="utf-8"))
+        if report["source_sha256"] != source_hash:
+            raise ValueError("Source video changed during the MCP workflow.")
+        initial_path = args.output.with_name("initial-verification.json") if args.auto_refine else args.refine_from
+        initial = json.loads(initial_path.read_text(encoding="utf-8")) if initial_path else None
+        destination = render_report(report, video, args.bridge_dir / "report.html",
+            initial=initial, bridge=args.bridge_dir, credit=args.source_credit)
+        print(f"REPORT_HTML {destination.resolve()}", flush=True)
 
 
 if __name__ == "__main__":

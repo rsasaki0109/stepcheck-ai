@@ -70,8 +70,7 @@ verify_reference_flow_auto(
 画像を見てファイルを書ける視覚対応セッション用です。新しい空のディレクトリを指定します。
 
 ```powershell
-$env:STEPCHECK_DEMO_VIDEO=(Resolve-Path 'docs/assets/video-demo/new-video-transfer/source.webm').Path
-python scripts/run_flow_detection.py --bridge-dir .tmp-flow-local/new-automatic-run --reference examples/new-video-handwashing-flow.json --interval 2 --auto-refine --output .tmp-flow-local/new-automatic-run/verification.json --reviewer "connected vision session"
+python scripts/run_flow_detection.py --video docs/assets/video-demo/new-video-transfer/source.webm --bridge-dir .tmp-flow-local/new-automatic-run --reference examples/new-video-handwashing-flow.json --interval 2 --auto-refine --output .tmp-flow-local/new-automatic-run/verification.json --reviewer "connected vision session" --source-credit "Anthony Albright / Hand Washing; CC BY-SA 2.0; https://commons.wikimedia.org/wiki/File:Hand_Washing_video.webm; Changes: timestamp sampling and resizing."
 ```
 
 `pass-01`の実画像を確認して、その段階で求められたJSONを`pass-01/response.json`へ返します。
@@ -83,11 +82,46 @@ python scripts/run_flow_detection.py --bridge-dir .tmp-flow-local/new-automatic-
 通常の対応ホストならアダプターを使わず、同じツールの依存解決型samplingで回答できます。
 Webアプリの動画APIにはまだ接続していません。
 
+## ブラウザで根拠を確認する
+
+成功した確認・追加確認のあと、アダプターは`--bridge-dir`へ`report.html`を自動出力します。
+動画・引用時刻の縮小画像・実際の入力画像一覧を埋め込むので、HTML単体で開けます。
+`--video`は環境変数より優先され、動画のハッシュもツール要求の記録に保存します。
+
+- 1本の動画の4区間に近いレビュー画像と、元動画の再生
+- 工程ごとの事前基準、判断理由、不確実性、引用時刻への移動
+- 初回／最終結果の切り替え、順序チェックと残った未確認
+- 追加確認の間隔調整と、SHA-256を照合した実MCP入力画像一覧
+
+これは保存済みの視覚判断を確認する画面です。開くだけで新しい推論は行いません。
+「未確認」を「未実施」や「完了」に変えず、色は工程の状態だけを表します。
+ヒートマップ・アテンション・測定していない信頼度は表示しません。
+
+前回の実MCP結果を使った[確認画面](assets/automatic-reference-report.html)も保存しました。
+リポジトリを取得してこのファイルをブラウザで開いてください。GitHub上ではHTMLのソース表示になります。
+保存版は元動画を相対パスで参照するため、`docs/assets`以下の配置を保つ必要があります。
+派生画像のライセンスは元映像と同じCC BY-SA 2.0です。出典は画面の「元データと出典」に表示します。
+[書き出したHTMLと元データのハッシュ](assets/automatic-reference-report-manifest.json)も保存しています。
+
+推論をやり直さず、既存の結果から単独HTMLを作る場合:
+
+```powershell
+python scripts/render_reference_report.py --report docs/assets/video-demo/automatic-reference-workflow/verification.json --initial docs/assets/video-demo/automatic-reference-workflow/initial-verification.json --video docs/assets/video-demo/new-video-transfer/source.webm --bridge-dir docs/assets/video-demo/automatic-reference-workflow --output .tmp-flow-local/evidence-report.html --source-credit "Anthony Albright / Hand Washing; CC BY-SA 2.0; https://commons.wikimedia.org/wiki/File:Hand_Washing_video.webm; Changes: timestamp sampling and resizing."
+```
+
+`--linked-video`を付けると元動画だけを相対参照にし、HTMLの容量を減らせます。
+別動画、未レビュー時刻の引用、記録と一致しない順序、初回結果の不一致、
+別のMCP実行の画像や改変された入力画像はエラーとして拒否します。
+
 ## 検証
 
-スクリプトのテスト50件が通過しました。追加の5件は実際のMCP依存解決の往復を使い、
+スクリプトのテスト56件が通過しました。自動制御の5件は実際のMCP依存解決の往復を使い、
 2段階の回答、予算調整、未確認での終了、順序違反を保った追加確認の省略、不正な引用・JSONの拒否を確認しています。
 テスト内の回答は合成fixtureで、VLMの認識精度を測るものではありません。
+レポートの6件では元動画・引用・順序・初回・入力画像の整合性、HTMLへの文字列挿入の防止と、
+実stdio経由での`--video`優先とHTML出力を確認しています。
+Chromiumで元動画再生、工程選択とシーク、初回／最終切り替え、入力画像の表示、
+デスクトップ／スマホ幅を確認し、JavaScriptエラーはありませんでした。
 
 ```powershell
 python -m unittest discover -s scripts/tests
